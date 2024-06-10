@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import { useLogin } from "hooks/useLogin";
 import Header from "components/Header";
 import Footer from "components/Footer";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function LoginPage() {
   const [loginData, setLoginData] = useState({
     email: "",
     user_password: "",
   });
-
+  const [visible, setVisible] = useState(false);
   const { login, isLoading, error } = useLogin();
 
   const handleChange = (fieldName: any, value: any) => {
@@ -108,26 +109,36 @@ export default function LoginPage() {
                 >
                   Password
                 </Heading>
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type="password"
-                  required
-                  name="user_password"
-                  autoComplete="on"
-                  onChange={(value: any) =>
-                    handleChange("user_password", value)
-                  }
-                  placeholder="Enter your password"
-                  // suffix={
-                  //   <Img
-                  //     src="images/img_basileyeclosedsolid.svg"
-                  //     alt="basil:eye-closed-solid"
-                  //   />
-                  // }
-                  className="w-full mt-3.5 gap-[35px] font-inter rounded-[5px]"
-                />
+                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                  <Input
+                    color="teal_900"
+                    size="xs"
+                    variant="fill"
+                    type={visible ? "text" : "password"}
+                    required
+                    name="user_password"
+                    autoComplete="on"
+                    onChange={(value: any) =>
+                      handleChange("user_password", value)
+                    }
+                    placeholder="Enter your password"
+                    // suffix={
+                    //   <Img
+                    //     src="images/img_basileyeclosedsolid.svg"
+                    //     alt="basil:eye-closed-solid"
+                    //   />
+                    // }
+                    className="w-full -[35px] font-inter rounded-[5px]"
+                  />
+                  <span
+                    onClick={() => {
+                      setVisible(!visible);
+                    }}
+                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  >
+                    {visible ? <EyeIcon /> : <EyeOffIcon />}
+                  </span>
+                </div>
                 {/* <div className="flex flex-row justify-between items-start w-full mt-[7px]">
                   <div className="flex flex-row justify-center w-1/4">
                     <div className="flex flex-row items-start justify-start w-full">
@@ -202,10 +213,11 @@ export default function LoginPage() {
                 </Link>
               </span>
             </Text>
+            <Text as="p"></Text>
             {error && (
               <>
                 <div className="mt-3 p-2 bg-red-100 text-red-500 rounded border border-red-500 m-y2 mx-0">
-                  {error.toString()}
+                  The email id or password is incorrect
                 </div>
               </>
             )}

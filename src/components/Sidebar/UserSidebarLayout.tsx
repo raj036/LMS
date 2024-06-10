@@ -8,8 +8,10 @@ import {
   GraduationCap,
   CalendarCheck2,
   LibraryBig,
+  CircleUserIcon,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { Heading } from "components/Heading";
 
 const UserSidebarLayout = () => {
   const location = useLocation();
@@ -18,6 +20,15 @@ const UserSidebarLayout = () => {
     <>
       <div>
         <Sidebar>
+          <div>
+            <div className="flex justify-center my-5">
+              <CircleUserIcon className="w-[50px] h-[50px]"/>
+            </div>
+            <h4 className="text-[18px]">
+              Welcome
+            </h4>
+          </div>
+
           <Link to={"/dashboard/user"}>
             <SidebarItem
               icon={<LayoutDashboard size={20} />}

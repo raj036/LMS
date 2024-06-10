@@ -24,6 +24,8 @@ import {
   BadgeInfo,
   Presentation,
   BookMarked,
+  EyeIcon,
+  EyeOffIcon
 } from "lucide-react";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";

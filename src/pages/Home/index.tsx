@@ -119,7 +119,7 @@ export default function HomePage() {
                         <Text
                           size="lg"
                           as="p"
-                          className=" sm:w-[75%] w-[35%] sm:top-[32%] lg:top-[42%] xs:w-[75%] xs:top-[44%] top-[32%] right-0 left-0 m-auto text-center leading-[22px] absolute"
+                          className=" sm:w-[75%] w-[35%] sm:top-[32%] xs:text-[14px] lg:top-[42%] xs:w-[75%] xs:top-[34%] top-[32%] right-0 left-0 m-auto text-center leading-[22px] absolute"
                         >
                           {/* Unlock your academic potential with our tailored
                           programs and experienced educators, guiding you
@@ -130,7 +130,7 @@ export default function HomePage() {
                         </Text>
                         <Heading
                           as="h1"
-                          className="w-[65%] sm:w-[75%] sm:text-[22px] top-[18%] xs:text-[22px] sm:top-[6%] right-0 left-0 m-auto text-center absolute"
+                          className="w-[65%] sm:w-[75%] sm:text-[22px] top-[18%] xs:text-[18px] sm:top-[6%] right-0 left-0 m-auto text-center absolute"
                         >
                           {/* ILATE Learning Centre
                           <br />
@@ -143,14 +143,14 @@ export default function HomePage() {
                         <Link to="/requestdemo">
                           <Button
                             size="lg"
-                            className="sm:top-[58%] lg:top-[59%] sm:w-full xs:top-[65%] md:top-[63%] top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                            className="sm:top-[58%] lg:top-[59%] xs:h-[40px] sm:w-full xs:top-[65%] md:top-[63%] top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
                           >
                             Request a Demo
                           </Button>
                         </Link>
                         <Button
                           size="lg"
-                          className="sm:top-[70%] lg:top-[59%] md:top-[63%] sm:w-full xs:top-[75%] top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                          className="sm:top-[70%] lg:top-[59%] md:top-[63%] xs:h-[40px] sm:w-full xs:top-[75%] top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
                           onClick={handleGetAdmissionClick}
                         >
                           Get Admission
@@ -226,7 +226,7 @@ export default function HomePage() {
                             <Text
                               size="xl"
                               as="p"
-                              className="mt-[39px] text-[16px] md:text-[14px] !font-medium text-justify"
+                              className="mt-[39px] text-[16px] md:text-[14px] xs:leading-6 !font-medium text-justify"
                             >
                               I thoroughly enjoyed my experience in the
                               engineering program at XYZ University. The
@@ -251,7 +251,7 @@ export default function HomePage() {
                   />
                 </div>
 
-                <div className="flex sm:block flex-row justify-start items-center w-full sm:mt-[300px] mt-[132px] md:mt-[100px] gap-[35px] max-w-[1400px]">
+                <div className="flex sm:block flex-row justify-start items-center w-full xs:mt-[230px] sm:mt-[300px] mt-[132px] md:mt-[100px] gap-[35px] max-w-[1400px]">
                   <Img
                     src="images/img_placeholder_image.png"
                     alt="placeholder_one"
@@ -734,7 +734,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[31%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[31%] xs:bottom-[29%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"
@@ -797,7 +797,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[-42%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[-42%] xs:bottom-[-47%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"

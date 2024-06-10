@@ -48,8 +48,8 @@ export default function Footer({ ...props }: Props) {
       console.error("Error Submitting Query", error);
       if (error || error.response.status !== 200) {
         Swal.fire({
-          title: "Error Submitting Enquiry!",
-          text: `${error?.response?.data?.detail}`,
+          title: "Technical Issue",
+          text: `Error Occured While Submitting Admission Enquiry!`,
           icon: "error",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {

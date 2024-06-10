@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { initFlowbite } from "flowbite";
 import userImg from "../../assets/profile.jpg";
 import axios from "helper/axios";
+import { XIcon, SidebarCloseIcon } from "lucide-react";
 
 interface Props {
   className?: string;
@@ -15,6 +16,7 @@ interface Props {
 export default function Header({ ...props }: Props) {
   const { user }: any = useAuthContext();
   const [myData, setMyData] = useState<any>([]);
+  const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
   const { logout } = useLogout();
 
@@ -69,15 +71,22 @@ export default function Header({ ...props }: Props) {
     });
   };
 
+  const handleToggle = () => {
+    setToggle(true);
+  };
+  const handleToggleClose = () => {
+    setToggle(!toggle);
+  };
+
   return (
     <header {...props}>
-      <div className="flex flex-row justify-around items-center w-full mx-auto">
-        <div className="flex w-4/12">
+      <div className="flex flex-row justify-around items-center w-full mx-auto sm:px-4">
+        <div className="flex w-4/12 sm:w-full">
           <Link to="/" className="">
             <Img
-              src="images/img_whatsapp_image_2024_02_13.png"
+              src="images/ILATE_Classes_Final_Logo-02.jpg"
               alt="whatsappimage"
-              className="w-[40%] inline-block"
+              className="w-[40%] sm:w-[50%] inline-block"
             />
           </Link>
         </div>
@@ -104,25 +113,71 @@ export default function Header({ ...props }: Props) {
             </Text>
           </Link> */}
           <Link to="/aboutus">
-            <Text size="lg" as="p" className="!text-gray-900">
+            <Text size="lg" as="p" className="!text-gray-900 sm:hidden">
               About us
             </Text>
           </Link>
           <Link to="/contactus" className="">
-            <Text size="lg" as="p" className="!text-gray-900">
+            <Text size="lg" as="p" className="!text-gray-900 sm:hidden">
               Contact Us
             </Text>
           </Link>
+
+          {/* If user get true  */}
+
           {!user ? (
-            <Link to="/login">
-              <Button
-                variant="outline"
-                shape="square"
-                className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition"
-              >
-                Login
-              </Button>
-            </Link>
+            <>
+              <Link to="/login">
+                <Button
+                  variant="outline"
+                  shape="square"
+                  className="rounded-md font-bold min-w-[138px] sm:hidden hover:text-white-A700 hover:bg-deep_orange-500 transition"
+                >
+                  Login
+                </Button>
+              </Link>
+
+              <div>
+                <Img
+                  src="images/hamburger_icn.png"
+                  alt="whatsappimage"
+                  className="w-[40px] sm:block hidden"
+                  onClick={handleToggle}
+                />
+              </div>
+              {/* {toggle && ( */}
+                <div className={`fixed w-[100%] transform duration-300 transition-all hidden sm:block z-20 top-0 h-[100vh] bg-[#fff] right-0 ${toggle ? "translate-x-0" : "translate-x-full"}`}>
+                  <div className="m-[20px]">
+                    <XIcon className="text-black w-10 h-10" 
+                    onClick={handleToggleClose}/>
+                  </div>
+                  <div className="mt-[100px] flex flex-col justify-center items-center ">
+                    <Link to="/aboutus" className="">
+                      <Text size="lg" as="p" className="!text-gray-900 text mb-[50px] "
+                      onClick={handleToggleClose}>
+                        About us
+                      </Text>
+                    </Link>
+                    <Link to="/contactus" className="">
+                      <Text size="lg" as="p" className="!text-gray-900 mb-[50px] "
+                      onClick={handleToggleClose}>
+                        Contact Us
+                      </Text>
+                    </Link>
+                    <Link to="/login">
+                      <Button
+                        variant="outline"
+                        shape="square"
+                        className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition text-center"
+                        onClick={handleToggleClose}
+                      >
+                        Login
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              {/* )} */}
+            </>
           ) : (
             // <Link to="#" onClick={handleLogOut}>
             //   <Button

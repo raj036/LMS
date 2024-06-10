@@ -8,7 +8,8 @@ import {
   GraduationCap,
   LibraryBig,
   Mail,
-  IndianRupee
+  IndianRupee,
+  BookOpenText
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -73,6 +74,13 @@ const AdminSidebarLayout = () => {
               icon={<IndianRupee size={20} />}
               text="Payment"
               active={location.pathname === "/payment"}
+            />
+          </Link>
+          <Link to={"/courses"}>
+            <SidebarItem
+              icon={<BookOpenText size={20} />}
+              text="Courses"
+              active={location.pathname === "/courses"}
             />
           </Link>
         </Sidebar>

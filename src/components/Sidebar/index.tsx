@@ -29,7 +29,7 @@ export default function Sidebar({ children }: SidebarProps) {
           <div className="p-4 pb-2 flex justify-between items-center">
             <Link to={"/"}>
               <img
-                src="/images/img_whatsapp_image_2024_02_13.png"
+                src="/images/ILATE_Classes_Final_Logo-02.jpg"
                 alt="logo"
                 className={`overflow-hidden my-2 transition-all ${
                   expanded ? "w-32" : "w-0"

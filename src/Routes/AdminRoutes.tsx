@@ -16,7 +16,7 @@ import AdminNotFound from "pages/AdminNotFound";
 import Enquiry from "pages/Enquiries";
 import DemoForm from "pages/DemoForm";
 import Users from "pages/Users";
-import Courses from "pages/Courses";
+import Courses from "pages/AdminCourses";
 import Mail from "pages/Mail";
 import StudentPayment from "pages/StudentPayment";
 

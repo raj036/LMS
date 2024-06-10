@@ -172,7 +172,7 @@ export const columns: ColumnDef<Enquiry>[] = [
               ) : (
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>No Payment Details Found</DialogTitle>
+                    <DialogTitle>No Payment Details Found!</DialogTitle>
                   </DialogHeader>
                 </DialogContent>
               )}

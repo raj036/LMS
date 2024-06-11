@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar, { SidebarItem } from ".";
 import {
   LayoutDashboard,
@@ -12,20 +12,25 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Heading } from "components/Heading";
+import { useAuthContext } from "hooks/useAuthContext";
+import { initFlowbite } from "flowbite";
 
 const UserSidebarLayout = () => {
   const location = useLocation();
+const { user }: any = useAuthContext();
+
+useEffect(() => {
+  initFlowbite();
+}, [user]);
+
 
   return (
     <>
       <div>
         <Sidebar>
           <div>
-            <div className="flex justify-center my-5">
-              <CircleUserIcon className="w-[50px] h-[50px]"/>
-            </div>
-            <h4 className="text-[18px]">
-              Welcome
+            <h4 className="text-[18px] m-4">
+              Welcome {user?.user_name}
             </h4>
           </div>
 

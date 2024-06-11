@@ -166,8 +166,8 @@ export default function HomePage() {
                 </div>
                 <div className="h-[600px] w-full mt-[105px] sm:mt-[55px] relative">
                   <Slider
-                    // autoPlay
-                    // autoPlayInterval={2000}
+                    autoPlay
+                    autoPlayInterval={2000}
                     responsive={{
                       "0": { items: 1 },
                       "550": { items: 1 },

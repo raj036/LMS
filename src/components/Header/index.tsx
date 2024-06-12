@@ -146,36 +146,50 @@ export default function Header({ ...props }: Props) {
                 />
               </div>
               {/* {toggle && ( */}
-                <div className={`fixed w-[100%] transform duration-300 transition-all hidden sm:block z-20 top-0 h-[100vh] bg-[#fff] right-0 ${toggle ? "translate-x-0" : "translate-x-full"}`}>
-                  <div className="m-[20px]">
-                    <XIcon className="text-black w-10 h-10" 
-                    onClick={handleToggleClose}/>
-                  </div>
-                  <div className="mt-[100px] flex flex-col justify-center items-center ">
-                    <Link to="/aboutus" className="">
-                      <Text size="lg" as="p" className="!text-gray-900 text mb-[50px] "
-                      onClick={handleToggleClose}>
-                        About us
-                      </Text>
-                    </Link>
-                    <Link to="/contactus" className="">
-                      <Text size="lg" as="p" className="!text-gray-900 mb-[50px] "
-                      onClick={handleToggleClose}>
-                        Contact Us
-                      </Text>
-                    </Link>
-                    <Link to="/login">
-                      <Button
-                        variant="outline"
-                        shape="square"
-                        className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition text-center"
-                        onClick={handleToggleClose}
-                      >
-                        Login
-                      </Button>
-                    </Link>
-                  </div>
+              <div
+                className={`fixed w-[100%] transform duration-300 transition-all hidden sm:block z-20 top-0 h-[100vh] bg-[#fff] right-0 ${
+                  toggle ? "translate-x-0" : "translate-x-full"
+                }`}
+              >
+                <div className="m-[20px]">
+                  <XIcon
+                    className="text-black w-10 h-10"
+                    onClick={handleToggleClose}
+                  />
                 </div>
+                <div className="mt-[100px] flex flex-col justify-center items-center ">
+                  <Link to="/aboutus" className="">
+                    <Text
+                      size="lg"
+                      as="p"
+                      className="!text-gray-900 text mb-[50px] "
+                      onClick={handleToggleClose}
+                    >
+                      About us
+                    </Text>
+                  </Link>
+                  <Link to="/contactus" className="">
+                    <Text
+                      size="lg"
+                      as="p"
+                      className="!text-gray-900 mb-[50px] "
+                      onClick={handleToggleClose}
+                    >
+                      Contact Us
+                    </Text>
+                  </Link>
+                  <Link to="/login">
+                    <Button
+                      variant="outline"
+                      shape="square"
+                      className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition text-center"
+                      onClick={handleToggleClose}
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                </div>
+              </div>
               {/* )} */}
             </>
           ) : (

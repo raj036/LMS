@@ -9,6 +9,7 @@ import {
   CalendarCheck2,
   LibraryBig,
   CircleUserIcon,
+  UserRound
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Heading } from "components/Heading";
@@ -28,12 +29,14 @@ useEffect(() => {
     <>
       <div>
         <Sidebar>
-          <div>
-            <h4 className="text-[18px] m-4">
-              Welcome {user?.user_name}
-            </h4>
-          </div>
 
+          <Link to={"/dashboard/profile"}>
+            <SidebarItem
+              icon={<UserRound size={20} />}
+              text="Profile"
+              active={location.pathname === "/dashboard/profile"}
+            />
+          </Link>
           <Link to={"/dashboard/user"}>
             <SidebarItem
               icon={<LayoutDashboard size={20} />}

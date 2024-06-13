@@ -213,7 +213,7 @@ export default function LoginPage() {
                 </Link>
               </span>
             </Text>
-            <Text as="p"></Text>
+            <Text as="p" className="text-[blue] text-[12px] cursor-pointer">forget password</Text>
             {error && (
               <>
                 <div className="mt-3 p-2 bg-red-100 text-red-500 rounded border border-red-500 m-y2 mx-0">

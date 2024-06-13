@@ -269,6 +269,13 @@ export default function Header({ ...props }: Props) {
                       >
                         My Dashboard
                       </Link>
+                    ) : myData?.user_type === "teacher" ? (
+                      <Link
+                        to="/dashboard/user"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        My Dashboard
+                      </Link>
                     ) : (
                       <Link
                         to="/"

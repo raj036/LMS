@@ -6,6 +6,8 @@ import { initFlowbite } from "flowbite";
 import { useAuthContext } from "hooks/useAuthContext";
 import UserLayout from "Layout/UserLayout";
 import AdminLayout from "Layout/AdminLayout";
+import TeacherLayout from "Layout/TeacherLayout";
+import TeacherRoutes from "Routes/TeacherRoutes";
 
 function App() {
   const { user }: any = useAuthContext();
@@ -21,6 +23,10 @@ function App() {
           <AdminLayout>
             <AdminRoutes />
           </AdminLayout>
+        ) : user && user.user_type === "teacher" ? (
+          <TeacherLayout>
+            <TeacherRoutes />
+          </TeacherLayout>
         ) : (
           <UserLayout>
             <UserRoutes />

@@ -1,13 +1,47 @@
 import Topbar from "components/Topbar";
-import React from "react";
+import React, { useState } from "react";
+// import { BellIcon } from "@heroicons/react/outline"; // Example icon import, adjust based on your icon library
+import { Bell, EllipsisVertical } from "lucide-react";
 
-const TeacherDashboard = () => {
+const UserDashboard = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
+  const tabs = [
+    { label: "2/8 Watched", subject: "English" },
+    { label: "2/8 Watched", subject: "English" },
+    { label: "2/8 Watched", subject: "Science" },
+  ];
+
   return (
     <>
       <Topbar heading={"Dashboard"} />
-      <div className="container py-5">My Dashboard</div>
+      <div className="flex space-x-4 p-4  sm:flex-col sm:p-7 ">
+        {tabs.map((tab, index) => (
+          <div
+            key={index}
+            className={`flex items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
+              index === activeTab ? "border-2 border-gray-300" : "border"
+            }`}
+            onClick={() => setActiveTab(index)}
+          >
+            <div className="flex items-center">
+              <Bell className="w-10 h-10 text-gray-600 p-2 rounded-[50%] bg-[#BCBCBC]" />
+              <div className="ml-4">
+                <span className="block text-gray-600 text-[15px]">{tab.label}</span>
+                <span className="block font-semibold text-gray-800">
+                  {tab.subject}
+                </span>
+              </div>
+            </div>
+            <div className="text-gray-400">
+        
+              <EllipsisVertical />
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
 
-export default TeacherDashboard;
+export default UserDashboard;

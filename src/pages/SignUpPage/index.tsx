@@ -42,9 +42,9 @@ export default function SignUpPagePage() {
         <title>ILATE Sign Up</title>
       </Helmet>
 
-      <div className="flex flex-row justify-end w-full p-[39px] bg-white-A700">
-        <div className="flex flex-row justify-between items-start w-full my-[75px] mx-auto max-w-[1350px]">
-          <div className="flex flex-col items-center justify-start w-[70%] p-5 border rounded-lg border-teal-900 bg-teal-900/5">
+      <div className="flex flex-row justify-end w-full p-[39px] sm:p-5 sm:mb-8 bg-white-A700">
+        <div className="flex flex-row sm:flex-col-reverse justify-between items-start w-full my-[75px] sm:my-1 mx-auto max-w-[1350px]">
+        <div className="flex flex-col items-center justify-start w-[70%] sm:w-[100%] md:w-[140%] p-5 border rounded-lg border-teal-900 bg-teal-900/5">
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-center justify-start w-full"
@@ -231,7 +231,7 @@ export default function SignUpPagePage() {
               </>
             )}
           </div>
-          <div className="flex flex-col items-end justify-start mt-[21px] gap-[81px]">
+          <div className="flex flex-col items-end justify-start sm:items-center mt-[21px] sm:mt-0 gap-[81px]">
             {/* <Button
               color="teal_900"
               size="sm"
@@ -242,7 +242,7 @@ export default function SignUpPagePage() {
             <Img
               src="images/img_reshot_illustra.png"
               alt="reshotillustra"
-              className="w-[80%] p-10"
+              className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8 md:mt-32"
             />
           </div>
         </div>

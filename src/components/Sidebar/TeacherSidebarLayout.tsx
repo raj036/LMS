@@ -30,13 +30,13 @@ const TeacherSidebarLayout = () => {
               active={location.pathname === "/dashboard/profile"}
             />
           </Link>
-          <Link to={"/dashboard/user"}>
+          {/* <Link to={"/dashboard/user"}>
             <SidebarItem
               icon={<LayoutDashboard size={20} />}
               text="Dashboard"
               active={location.pathname === "/dashboard/user"}
             />
-          </Link>
+          </Link> */}
           <Link to={"/dashboard/mycourses"}>
             <SidebarItem
               icon={<LibraryBig size={20} />}

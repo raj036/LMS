@@ -3,7 +3,7 @@ import axios from "axios";
 export default axios.create({
   // baseURL: "https://il8rigour.com/",
   // baseURL: "http://il8rigour.com:8000/",
-  baseURL: "https://48fc-202-179-93-122.ngrok-free.app/",
+  baseURL: "https://47da-2405-201-37-21d9-3039-834c-7f0-a632.ngrok-free.app/",
   // baseURL: "https://lms-5wr7.onrender.com/",
   headers: {
     "Content-Type": "application/json",

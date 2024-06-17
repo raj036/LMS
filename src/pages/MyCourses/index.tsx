@@ -17,8 +17,8 @@ const MyCourses = () => {
   return (
     <>
       <Topbar heading={"Courses"} />
-      <div className="container py-5 sm:text-left sm:m-[-12px]">My Courses</div>
-      <div className="flex sm:flex-col border-2 border-[black] p-5 mx-10 md:mx-6 md:mt-6 mt-10 gap-5 sm:mb-8 sm:ml-4 sm:gap-0 justify-between rounded-[20px] sm:w-[90%] sm:p-3 sm:mx-5">
+      <div className="container py-5 sm:text-left sm:m-[-12px]">Coming soon...</div>
+      {/* <div className="flex sm:flex-col border-2 border-[black] p-5 mx-10 md:mx-6 md:mt-6 mt-10 gap-5 sm:mb-8 sm:ml-4 sm:gap-0 justify-between rounded-[20px] sm:w-[90%] sm:p-3 sm:mx-5">
         <div className="w-[30%]">
           <div>
             <h1 className="text-start font-semibold mb-3">Courses</h1>
@@ -61,27 +61,8 @@ const MyCourses = () => {
             />
           </div>
         </div>
-      </div>
-
-      {/* <div className=" border-2 border-[black] p-5 mx-10 mb-10 gap-48 rounded-b-[20px]">
-        <Table>
-          <TableCaption className="text-black-900 font-semibold text-xl">Lessons</TableCaption>
-          <TableHeader className="border-2 border-[black] ">
-            <TableRow>
-              <TableHead className="w-[100px] border-r-2 border-[black] text-black-900">No.</TableHead>
-              <TableHead className="border-r-2 w-[100px] border-[black] text-black-900">Status</TableHead>
-              <TableHead className="text-right "></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody className="border-2 border-[black]">
-            <TableRow>
-              <TableCell className="font-medium  border-r-2  border-[black] text-black-900"></TableCell>
-              <TableCell className="border-r-2 border-[black] text-black-900"></TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
       </div> */}
+
     </>
   );
 };

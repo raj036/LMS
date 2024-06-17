@@ -5,7 +5,7 @@ const MyAttendance = () => {
   return (
     <>
       <Topbar heading={"Attendance"} />
-      <div className="container py-5">My Attendance</div>
+      <div className="container py-5">Coming Soon...</div>
     </>
   );
 };

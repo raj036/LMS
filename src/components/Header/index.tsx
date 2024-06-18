@@ -262,14 +262,22 @@ export default function Header({ ...props }: Props) {
                       >
                         Dashboard
                       </Link>
-                    ) : myData?.user_type === "student" && myData?.is_payment_done ? (
+                    ) : myData?.user_type === "student" &&
+                      myData?.is_payment_done ? (
                       <Link
                         to="/dashboard/user"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         My Dashboard
                       </Link>
-                    ) : myData?.user_type === "teacher"  ? (
+                    ) : myData?.user_type === "teacher" ? (
+                      <Link
+                        to="/dashboard/user"
+                        className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        My Dashboard
+                      </Link>
+                    ) : myData?.user_type === "parent" ? (
                       <Link
                         to="/dashboard/user"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"

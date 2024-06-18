@@ -22,7 +22,7 @@ export default function LoginPage() {
   const [loadUpdate, setLoadUpdate] = useState(false);
   const [visible, setVisible] = useState(false);
   const [forgetPass, setForgetPass] = useState(false);
-  const { login, isLoading, error} = useLogin();
+  const { login, isLoading, error } = useLogin();
   const [forgetError, setForgetError] = useState("");
   const navigate = useNavigate();
 
@@ -78,7 +78,7 @@ export default function LoginPage() {
       });
       navigate("/login");
       clearInputFields();
-      setForgetPass(!forgetPass)
+      setForgetPass(!forgetPass);
     } catch (error) {
       setForgetError(error.response.data.detail);
       Swal.fire({
@@ -88,7 +88,7 @@ export default function LoginPage() {
         showConfirmButton: true,
         // timer: 5000,
       });
-      setLoadUpdate(false)
+      setLoadUpdate(false);
     }
   };
 
@@ -216,13 +216,24 @@ export default function LoginPage() {
                   className="flex flex-col gap-2 items-center justify-start w-full"
                 >
                   <div className="flex flex-col gap-2 items-start justify-start w-full h-full">
-                    <Heading
-                      size="7xl"
-                      as="h1"
-                      className="!text-black-900 !font-inter"
-                    >
-                      Login now
-                    </Heading>
+                    <div className="flex justify-between items-center w-full">
+                      <Heading
+                        size="7xl"
+                        as="h1"
+                        className="!text-black-900 !font-inter"
+                      >
+                        Login now
+                      </Heading>
+                      <Link to="/parentlogin">
+                        <Button
+                          variant="outline"
+                          shape="square"
+                          className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition"
+                        >
+                          Parent Login
+                        </Button>
+                      </Link>
+                    </div>
 
                     <Text
                       size="xl"

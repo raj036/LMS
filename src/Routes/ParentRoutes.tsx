@@ -16,6 +16,7 @@ import TeacherProfile from "pages/TeacherPages/Profile";
 import TeacherCourses from "pages/TeacherPages/Courses";
 import TeacherDashboard from "pages/TeacherPages/Dashboard";
 import TeacherAnnouncements from "pages/TeacherPages/Announcement";
+import ParentLoginPage from "pages/ParentLogin";
 
 const ParentRoutes = () => {
   const { user } = useAuthContext();
@@ -75,6 +76,10 @@ const ParentRoutes = () => {
     {
       path: "login",
       element: !user ? <LoginPage /> : <Navigate to={"/"} />,
+    },
+    {
+      path: "parentlogin",
+      element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
     },
     {
       path: "signup",

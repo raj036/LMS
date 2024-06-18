@@ -1,24 +1,68 @@
 import Topbar from "components/Topbar";
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { TextArea } from "components";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import axios from "helper/axios";
+import { useAuthContext } from "hooks/useAuthContext";
+import { BookOpenTextIcon, EllipsisVertical } from "lucide-react";
+import React, { useEffect, useState } from "react";
 
 const MyCourses = () => {
+  const { user }: any = useAuthContext();
+  const [activeTab, setActiveTab] = useState(0);
+  const [courseData, setCourseData] = useState([]);
+
+  const getCourseData = async () => {
+    try {
+      const response = await axios.get("api/courses/unique", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      console.log("resp", response.data.unique_courses);
+      setCourseData(response?.data?.unique_courses);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getCourseData();
+  }, []);
+
   return (
     <>
       <Topbar heading={"Courses"} />
-      <div className="container py-5 sm:text-left sm:m-[-12px]">My Courses</div>
-      <div className="flex sm:flex-col border-2 border-[black] p-5 mx-10 md:mx-6 md:mt-6 mt-10 gap-5 sm:mb-8 sm:ml-4 sm:gap-0 justify-between rounded-[20px] sm:w-[90%] sm:p-3 sm:mx-5">
+      <div className="container py-5 sm:text-left sm:m-[-12px]">Courses</div>
+      <div className="flex space-x-4 p-4  sm:flex-col sm:p-7 ">
+        {courseData.map((tab, index) => (
+          <div
+            key={index}
+            className={`flex items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
+              index === activeTab ? "border-2 border-gray-300" : "border"
+            }`}
+            onClick={() => setActiveTab(index)}
+          >
+            <div className="flex items-center">
+              <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
+              <div className="ml-4">
+                {/* <span className="block text-gray-600 text-[15px]">
+                  {tab}
+                </span> */}
+                <span className="block font-semibold text-gray-800">{tab}</span>
+              </div>
+            </div>
+            <div className="text-gray-400">
+              <EllipsisVertical />
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+};
+
+export default MyCourses;
+
+{
+  /* <div className="flex sm:flex-col border-2 border-[black] p-5 mx-10 md:mx-6 md:mt-6 mt-10 gap-5 sm:mb-8 sm:ml-4 sm:gap-0 justify-between rounded-[20px] sm:w-[90%] sm:p-3 sm:mx-5">
         <div className="w-[30%]">
           <div>
             <h1 className="text-start font-semibold mb-3">Courses</h1>
@@ -61,29 +105,5 @@ const MyCourses = () => {
             />
           </div>
         </div>
-      </div>
-
-      {/* <div className=" border-2 border-[black] p-5 mx-10 mb-10 gap-48 rounded-b-[20px]">
-        <Table>
-          <TableCaption className="text-black-900 font-semibold text-xl">Lessons</TableCaption>
-          <TableHeader className="border-2 border-[black] ">
-            <TableRow>
-              <TableHead className="w-[100px] border-r-2 border-[black] text-black-900">No.</TableHead>
-              <TableHead className="border-r-2 w-[100px] border-[black] text-black-900">Status</TableHead>
-              <TableHead className="text-right "></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody className="border-2 border-[black]">
-            <TableRow>
-              <TableCell className="font-medium  border-r-2  border-[black] text-black-900"></TableCell>
-              <TableCell className="border-r-2 border-[black] text-black-900"></TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div> */}
-    </>
-  );
-};
-
-export default MyCourses;
+      </div> */
+}

@@ -15,6 +15,7 @@ import MyCourses from "pages/MyCourses";
 import Attendance from "pages/Attendance";
 import Payments from "pages/Payments";
 import UserProfile from "pages/UserProfile";
+import ParentLoginPage from "pages/ParentLogin";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -70,6 +71,10 @@ const UserRoutes = () => {
     {
       path: "login",
       element: !user ? <LoginPage /> : <Navigate to={"/"} />,
+    },
+    {
+      path: "parentlogin",
+      element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
     },
     {
       path: "signup",

@@ -2,8 +2,8 @@ import React from "react";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import { useLocation } from "react-router-dom";
-import UserSidebarLayout from "components/Sidebar/UserSidebarLayout";
 import HomeSideBar from "components/HomeSideBar";
+import ParentSidebarLayout from "components/Sidebar/ParentSidebarLayout";
 
 const ParentLayout = ({ children }) => {
   const location = useLocation();
@@ -26,7 +26,7 @@ const ParentLayout = ({ children }) => {
       ) : (
         <>
           <div className="flex">
-            <UserSidebarLayout />
+            <ParentSidebarLayout />
             <div className="flex-1 min-h-screen">{children}</div>
           </div>
         </>

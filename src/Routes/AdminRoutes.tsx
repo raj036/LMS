@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useRoutes, Navigate } from "react-router-dom";
-import NotFound from "pages/NotFound";
-import Aboutus from "pages/Aboutus";
-import ContactUs from "pages/ContactUs";
-import LoginPage from "pages/LoginPage";
-import SignUpPage from "pages/SignUpPage";
-import Home from "pages/Home";
-import GetAdmission from "pages/GetAdmission";
-import RequestDemo from "pages/RequestDemo";
-import OfflineDemo from "pages/OfflineDemo";
 import { useAuthContext } from "hooks/useAuthContext";
 import Enrolled from "pages/Enrolled";
 import Dashboard from "pages/Dashboard";

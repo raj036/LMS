@@ -224,7 +224,7 @@ export default function LoginPage() {
                       >
                         Login now
                       </Heading>
-                      <Link to="/parentlogin">
+                      {/* <Link to="/parentlogin">
                         <Button
                           variant="outline"
                           shape="square"
@@ -232,7 +232,7 @@ export default function LoginPage() {
                         >
                           Parent Login
                         </Button>
-                      </Link>
+                      </Link> */}
                     </div>
 
                     <Text

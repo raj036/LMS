@@ -11,12 +11,11 @@ import RequestDemo from "pages/RequestDemo";
 import OfflineDemo from "pages/OfflineDemo";
 import { useAuthContext } from "hooks/useAuthContext";
 import Payments from "pages/Payments";
-import TeacherAttendance from "pages/TeacherPages/Attendance";
-import TeacherProfile from "pages/TeacherPages/Profile";
-import TeacherCourses from "pages/TeacherPages/Courses";
-import TeacherDashboard from "pages/TeacherPages/Dashboard";
-import TeacherAnnouncements from "pages/TeacherPages/Announcement";
 import ParentLoginPage from "pages/ParentLogin";
+import ParentAttendance from "pages/Parent/attendence";
+import ParentProfile from "pages/Parent/profile";
+import ParentAnnouncements from "pages/Parent/announcements";
+import ParentReports from "pages/Parent/report";
 
 const ParentRoutes = () => {
   const { user } = useAuthContext();
@@ -45,25 +44,25 @@ const ParentRoutes = () => {
       path: "/payments",
       element: user ? <Payments /> : <Navigate to="/login" />,
     },
+    // {
+    //   path: "/dashboard/user",
+    //   element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
+    // },
     {
-      path: "/dashboard/user",
-      element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
+      path: "/dashboard/reports",
+      element: user ? <ParentReports /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/mycourses",
-      element: user ? <TeacherCourses /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/dashboard/myattendance",
-      element: user ? <TeacherAttendance /> : <Navigate to="/login" />,
+      path: "/dashboard/attendance",
+      element: user ? <ParentAttendance /> : <Navigate to="/login" />,
     },
     {
       path: "/dashboard/profile",
-      element: user ? <TeacherProfile /> : <Navigate to="/login" />,
+      element: user ? <ParentProfile /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/myannouncements",
-      element: user ? <TeacherAnnouncements /> : <Navigate to="/login" />,
+      path: "/dashboard/announcements",
+      element: user ? <ParentAnnouncements /> : <Navigate to="/login" />,
     }
   ];
 

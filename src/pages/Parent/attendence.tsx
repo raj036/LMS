@@ -5,7 +5,7 @@ const ParentAttendance = () => {
   return (
     <>
       <Topbar heading={"Attendence"} />
-      <div className="container py-5">Coming Soon...</div>
+      <div className="container py-5">Coming Soon...pareasbah</div>
     </>
   );
 };

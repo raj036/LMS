@@ -4,26 +4,25 @@ import {
   LayoutDashboard,
   CalendarCheck2,
   LibraryBig,
-  UserRound
+  UserRound,
+  MicVocal,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "hooks/useAuthContext";
 import { initFlowbite } from "flowbite";
 
-const UserSidebarLayout = () => {
+const ParentSidebarLayout = () => {
   const location = useLocation();
-const { user }: any = useAuthContext();
+  const { user }: any = useAuthContext();
 
-useEffect(() => {
-  initFlowbite();
-}, [user]);
-
+  useEffect(() => {
+    initFlowbite();
+  }, [user]);
 
   return (
     <>
       <div>
         <Sidebar>
-
           <Link to={"/dashboard/profile"}>
             <SidebarItem
               icon={<UserRound size={20} />}
@@ -38,18 +37,25 @@ useEffect(() => {
               active={location.pathname === "/dashboard/user"}
             />
           </Link>
-          <Link to={"/dashboard/mycourses"}>
+          <Link to={"/dashboard/reports"}>
             <SidebarItem
               icon={<LibraryBig size={20} />}
-              text="Courses"
-              active={location.pathname === "/dashboard/mycourses"}
+              text="Reports"
+              active={location.pathname === "/dashboard/reports"}
             />
           </Link>
-          <Link to={"/dashboard/myattendance"}>
+          <Link to={"/dashboard/attendance"}>
             <SidebarItem
               icon={<CalendarCheck2 size={20} />}
               text="Attendance"
-              active={location.pathname === "/dashboard/myattendance"}
+              active={location.pathname === "/dashboard/attendance"}
+            />
+          </Link>
+          <Link to={"/dashboard/announcements"}>
+            <SidebarItem
+              icon={<MicVocal size={20} />}
+              text="Announcements"
+              active={location.pathname === "/dashboard/announcements"}
             />
           </Link>
         </Sidebar>
@@ -58,4 +64,4 @@ useEffect(() => {
   );
 };
 
-export default UserSidebarLayout;
+export default ParentSidebarLayout;

@@ -4,8 +4,7 @@ import {
   LayoutDashboard,
   CalendarCheck2,
   LibraryBig,
-  UserRound,
-  MicVocal,
+  UserRound
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -13,16 +12,18 @@ import { initFlowbite } from "flowbite";
 
 const ParentSidebarLayout = () => {
   const location = useLocation();
-  const { user }: any = useAuthContext();
+const { user }: any = useAuthContext();
 
-  useEffect(() => {
-    initFlowbite();
-  }, [user]);
+useEffect(() => {
+  initFlowbite();
+}, [user]);
+
 
   return (
     <>
       <div>
         <Sidebar>
+
           <Link to={"/dashboard/profile"}>
             <SidebarItem
               icon={<UserRound size={20} />}
@@ -30,32 +31,25 @@ const ParentSidebarLayout = () => {
               active={location.pathname === "/dashboard/profile"}
             />
           </Link>
-          <Link to={"/dashboard/user"}>
-            <SidebarItem
-              icon={<LayoutDashboard size={20} />}
-              text="Dashboard"
-              active={location.pathname === "/dashboard/user"}
-            />
-          </Link>
           <Link to={"/dashboard/reports"}>
             <SidebarItem
-              icon={<LibraryBig size={20} />}
-              text="Reports"
+              icon={<LayoutDashboard size={20} />}
+              text="reports"
               active={location.pathname === "/dashboard/reports"}
             />
           </Link>
-          <Link to={"/dashboard/attendance"}>
+          <Link to={"/dashboard/mycourses"}>
+            <SidebarItem
+              icon={<LibraryBig size={20} />}
+              text="Courses"
+              active={location.pathname === "/dashboard/mycourses"}
+            />
+          </Link>
+          <Link to={"/dashboard/myattendance"}>
             <SidebarItem
               icon={<CalendarCheck2 size={20} />}
               text="Attendance"
-              active={location.pathname === "/dashboard/attendance"}
-            />
-          </Link>
-          <Link to={"/dashboard/announcements"}>
-            <SidebarItem
-              icon={<MicVocal size={20} />}
-              text="Announcements"
-              active={location.pathname === "/dashboard/announcements"}
+              active={location.pathname === "/dashboard/myattendance"}
             />
           </Link>
         </Sidebar>

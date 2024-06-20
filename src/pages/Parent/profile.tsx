@@ -7,16 +7,18 @@ import { Pencil } from "lucide-react";
 const ParentProfile = () => {
   const { user }: any = useAuthContext();
   const [userData, setUserData] = useState<any>([]);
+  const [parentId, setParentId] = useState<any>([]);
 
   const getMyData = async () => {
     try {
-      const response = await axios.get(`api/teachers/${user.user_id}`, {
+      const response = await axios.get(`api/parent/${user.user_id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
       console.log(response.data, "data");
       setUserData(response?.data);
+      setParentId(response)
     } catch (error) {
       console.error("Error getting Profile", error);
     }
@@ -35,9 +37,9 @@ const ParentProfile = () => {
             Contact Details
           </div>
           <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-            <div className="flex justify-end p-2 cursor-pointer">
+            {/* <div className="flex justify-end p-2 cursor-pointer">
               <Pencil />
-            </div>
+            </div> */}
             <div className="flex justify-between border-b-2 pb-2">
               <span className="font-semibold w-[30%]">Name :</span>
               <span className="w-[60%]">{userData?.name}</span>
@@ -96,9 +98,9 @@ const ParentProfile = () => {
                 Parent Details
               </div>
               <div className=" rounded-[10px] shadow-lg -w-[35%] p-4  text-[14px]">
-                <div className="flex justify-end p-2 cursor-pointer">
+                {/* <div className="flex justify-end p-2 cursor-pointer">
                   <Pencil />
-                </div>
+                </div> */}
                 <div className="flex justify-between border-b-2 pb-2 text-[14px]">
                   <span className="font-semibold w-[30%]">Guardian :</span>
                   <span className="w-[60%]">
@@ -143,9 +145,9 @@ const ParentProfile = () => {
                 Education Details
               </div>
               <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                <div className="flex justify-end p-2 cursor-pointer">
+                {/* <div className="flex justify-end p-2 cursor-pointer">
                   <Pencil />
-                </div>
+                </div> */}
                 <div className="flex justify-between border-b-2 pb-2 text-[14px]">
                   <span className="font-semibold w-[30%]">School Name :</span>
                   <span className="w-[60%]">

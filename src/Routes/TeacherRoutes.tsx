@@ -16,7 +16,6 @@ import TeacherProfile from "pages/TeacherPages/Profile";
 import TeacherCourses from "pages/TeacherPages/Courses";
 import TeacherDashboard from "pages/TeacherPages/Dashboard";
 import TeacherAnnouncements from "pages/TeacherPages/Announcement";
-import ParentLoginPage from "pages/ParentLogin";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -45,10 +44,10 @@ const UserRoutes = () => {
       path: "/payments",
       element: user ? <Payments /> : <Navigate to="/login" />,
     },
-    // {
-    //   path: "/dashboard/user",
-    //   element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
-    // },
+    {
+      path: "/dashboard/profile",
+      element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
+    },
     {
       path: "/dashboard/mycourses",
       element: user ? <TeacherCourses /> : <Navigate to="/login" />,
@@ -77,10 +76,10 @@ const UserRoutes = () => {
       path: "login",
       element: !user ? <LoginPage /> : <Navigate to={"/"} />,
     },
-    {
-      path: "parentlogin",
-      element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
-    },
+    // {
+    //   path: "parentlogin",
+    //   element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
+    // },
     {
       path: "signup",
       element: !user ? <SignUpPage /> : <Navigate to={"/"} />,

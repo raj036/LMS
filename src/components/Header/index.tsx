@@ -33,6 +33,7 @@ export default function Header({ ...props }: Props) {
         },
       });
       setMyData(response?.data?.data);
+      console.log(response?.data?.data.user_type,'parentjhduhas');
     } catch (error) {
       console.error("Error getting Profile", error);
     }

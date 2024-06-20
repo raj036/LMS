@@ -11,11 +11,11 @@ import RequestDemo from "pages/RequestDemo";
 import OfflineDemo from "pages/OfflineDemo";
 import { useAuthContext } from "hooks/useAuthContext";
 import Payments from "pages/Payments";
-import ParentLoginPage from "pages/ParentLogin";
 import ParentAttendance from "pages/Parent/attendence";
 import ParentProfile from "pages/Parent/profile";
 import ParentAnnouncements from "pages/Parent/announcements";
 import ParentReports from "pages/Parent/report";
+import ParentDashboard from "pages/Parent/Dashboard";
 
 const ParentRoutes = () => {
   const { user } = useAuthContext();
@@ -44,16 +44,16 @@ const ParentRoutes = () => {
       path: "/payments",
       element: user ? <Payments /> : <Navigate to="/login" />,
     },
-    // {
-    //   path: "/dashboard/user",
-    //   element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
-    // },
+    {
+      path: "/dashboard/user",
+      element: user ? <ParentDashboard /> : <Navigate to="/login" />,
+    },
     {
       path: "/dashboard/reports",
       element: user ? <ParentReports /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/attendance",
+      path: "/dashboard/myattendance",
       element: user ? <ParentAttendance /> : <Navigate to="/login" />,
     },
     {
@@ -61,7 +61,7 @@ const ParentRoutes = () => {
       element: user ? <ParentProfile /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/announcements",
+      path: "/dashboard/myannouncement",
       element: user ? <ParentAnnouncements /> : <Navigate to="/login" />,
     }
   ];
@@ -75,10 +75,6 @@ const ParentRoutes = () => {
     {
       path: "login",
       element: !user ? <LoginPage /> : <Navigate to={"/"} />,
-    },
-    {
-      path: "parentlogin",
-      element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
     },
     {
       path: "signup",

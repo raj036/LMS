@@ -23,11 +23,11 @@ const TeacherSidebarLayout = () => {
     <>
       <div>
         <Sidebar>
-          <Link to={"/dashboard/profile"}>
+          <Link to={"/dashboard/user"}>
             <SidebarItem
               icon={<UserRound size={20} />}
               text="Profile"
-              active={location.pathname === "/dashboard/profile"}
+              active={location.pathname === "/dashboard/user"}
             />
           </Link>
           {/* <Link to={"/dashboard/user"}>

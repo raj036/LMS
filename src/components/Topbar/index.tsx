@@ -31,8 +31,8 @@ const Topbar = ({ heading }) => {
     });
   };
   return (
-    <div className="flex w-90 mx-auto justify-between items-center p-8 border-b shadow-sm">
-      <h1 className="text-3xl font-bold text-indigo-500">{heading}</h1>
+    <div className="flex sm:w-[200%] overflow-x-scroll mx-auto justify-between items-center p-8 border-b shadow-sm">
+      <h1 className="text-3xl sm:text-[20px] font-bold text-indigo-500">{heading}</h1>
       <div>
         <button
           id="dropdownAvatarNameButton"

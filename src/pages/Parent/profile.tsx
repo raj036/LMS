@@ -32,7 +32,7 @@ const ParentProfile = () => {
     <>
       <Topbar heading={"Profile"} />
       <div className="flex lg:flex-col">
-        <div className="p-5 w-[40%] lg:w-[90%]">
+        <div className="p-5 w-[40%] lg:w-[90%] sm:w-[170%] overflow-x-scroll">
           <div className="font-semibold	text-[16px] mb-4 ml-1">
             Contact Details
           </div>
@@ -92,7 +92,7 @@ const ParentProfile = () => {
         {/* Parents Information */}
 
         {user && user.user_type === "student" && (
-          <div className="w-[40%] lg:w-[90%]">
+          <div className="w-[40%] lg:w-[90%] sm:w-[170%] overflow-x-scroll">
             <div className="p-5 ">
               <div className="font-semibold	text-[16px] mb-4 ml-1">
                 Parent Details

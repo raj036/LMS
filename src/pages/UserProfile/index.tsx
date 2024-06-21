@@ -2,8 +2,6 @@ import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
-import { Pencil } from "lucide-react";
-import { Input } from "components";
 
 const UserProfile = () => {
   const { user }: any = useAuthContext();
@@ -54,7 +52,6 @@ const UserProfile = () => {
   });
   const [parentData, setParentData] = useState<any>();
   const [student_id, setStudentId] = useState<any>();
-  const [parentId, setParentId] = useState<any>();
 
   const handleData = (e: any) => {
     const { name, value } = e.target;
@@ -86,7 +83,6 @@ const UserProfile = () => {
       });
       console.log(response.data, "data");
       setParentData(response?.data);
-      setParentId(response?.data?.parent_id);
     } catch (error) {
       console.error("Error getting Profile", error);
     }
@@ -118,13 +114,15 @@ const UserProfile = () => {
     }
   };
 
+  
+
   return (
     <>
       <Topbar heading={"Profile"} />
-      <form onSubmit={handleUpdate}>
+      <form >
         {user && user.user_type === "student" && (
           <div className="flex lg:flex-col">
-            <div className="p-5 w-[40%] lg:w-[90%] ">
+            <div className="p-5 w-[40%] lg:w-[90%] sm:w-[170%] ">
               <div className="font-semibold	text-[16px] mb-4 ml-1">
                 Contact Details
               </div>
@@ -141,7 +139,7 @@ const UserProfile = () => {
                     type="text"
                     value={userData?.first_name}
                     name="first_name"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -153,7 +151,7 @@ const UserProfile = () => {
                     type="text"
                     value={userData?.contact_info?.primary_email}
                     name="primary_email"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -165,7 +163,7 @@ const UserProfile = () => {
                     value={userData?.contact_info?.secondary_email || "-"}
                     type="text"
                     name="secondary_email"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -177,7 +175,7 @@ const UserProfile = () => {
                     value={userData?.contact_info?.current_address}
                     type="text"
                     name="current_address"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -189,7 +187,7 @@ const UserProfile = () => {
                     value={userData?.contact_info?.primary_no}
                     type="text"
                     name="contact_information.primary_no"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -201,7 +199,7 @@ const UserProfile = () => {
                     value={userData?.contact_info?.secondary_no || "-"}
                     type="text"
                     name="secondary_no"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -213,7 +211,7 @@ const UserProfile = () => {
                     value={userData?.date_of_birth}
                     type="text"
                     name="date_of_birth"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -225,7 +223,7 @@ const UserProfile = () => {
                     value={userData?.nationality}
                     type="text"
                     name="nationality"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
                 <div className="flex justify-between py-2">
@@ -237,7 +235,7 @@ const UserProfile = () => {
                     value={userData?.gender}
                     type="text"
                     name="gender"
-                    onChange={handleData}
+                    // onChange={handleData}
                   />
                 </div>
               </div>
@@ -245,7 +243,7 @@ const UserProfile = () => {
 
             {/* Parents Information */}
 
-            <div className="w-[40%] lg:w-[90%] ">
+            <div className="w-[40%] lg:w-[90%] sm:w-[170%] overflow-x-scroll">
               <div className="p-5 ">
                 <div className="font-semibold	text-[16px] mb-4 ml-1">
                   Parent Details
@@ -263,7 +261,7 @@ const UserProfile = () => {
                       value={userData?.parent_info?.guardian}
                       type="text"
                       name="guardian"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2 text-[14px]">
@@ -275,7 +273,7 @@ const UserProfile = () => {
                       value={userData?.parent_info?.p_first_name}
                       type="text"
                       name="p_first_name"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -287,7 +285,7 @@ const UserProfile = () => {
                       value={userData?.parent_info?.p_last_name}
                       type="text"
                       name="p_last_name"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -299,7 +297,7 @@ const UserProfile = () => {
                       value={userData?.parent_info?.primary_email}
                       type="text"
                       name="primary_email"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between py-2">
@@ -311,7 +309,7 @@ const UserProfile = () => {
                       value={userData?.parent_info?.primary_no}
                       type="text"
                       name="primary_no"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                 </div>
@@ -336,7 +334,7 @@ const UserProfile = () => {
                       value={userData?.pre_education?.school}
                       type="text"
                       name="school"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2 text-[14px]">
@@ -348,7 +346,7 @@ const UserProfile = () => {
                       value={userData?.pre_education?.student_class}
                       type="text"
                       name="student_class"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -360,7 +358,7 @@ const UserProfile = () => {
                       value={userData?.pre_education?.year_of_passing}
                       type="text"
                       name="year_of_passing"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                   <div className="flex justify-between  py-2">
@@ -372,7 +370,7 @@ const UserProfile = () => {
                       value={userData?.pre_education?.percentage}
                       type="text"
                       name="percentage"
-                      onChange={handleData}
+                      // onChange={handleData}
                     />
                   </div>
                 </div>
@@ -386,7 +384,7 @@ const UserProfile = () => {
 
       {user && user.user_type === "parent" && (
         <div className="flex lg:flex-col">
-          <div className="p-5 w-[40%] lg:w-[90%] ">
+          <div className="p-5 w-[40%] lg:w-[90%] sm:w-[170%]">
             <div className="font-semibold	text-[16px] mb-4 ml-1">
               Contact Details
             </div>
@@ -401,7 +399,7 @@ const UserProfile = () => {
                 <input
                   className="w-[60%]"
                   type="text"
-                  value={parentData?.first_name} 
+                  value={parentData?.first_name}
                   name="first_name"
                 />
               </div>
@@ -418,24 +416,13 @@ const UserProfile = () => {
               </div>
               <div className="flex justify-between border-b-2 py-2">
                 <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Secondary Email :
+                  Guardian :
                 </span>
                 <input
                   className="w-[60%]"
-                  value={userData?.contact_info?.secondary_email || "-"}
+                  value={parentData?.guardian || "-"}
                   type="text"
                   name="secondary_email"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Address :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.current_address}
-                  type="text"
-                  name="current_address"
                 />
               </div>
               <div className="flex justify-between border-b-2 py-2">
@@ -447,50 +434,6 @@ const UserProfile = () => {
                   value={parentData?.primary_no}
                   type="text"
                   name="contact_information.primary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Secondary No :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.secondary_no || "-"}
-                  type="text"
-                  name="secondary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Date of birth :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.date_of_birth}
-                  type="text"
-                  name="date_of_birth"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Nationality :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.nationality}
-                  type="text"
-                  name="nationality"
-                />
-              </div>
-              <div className="flex justify-between py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Gender :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.gender}
-                  type="text"
-                  name="gender"
                 />
               </div>
             </div>

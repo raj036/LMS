@@ -44,10 +44,10 @@ const UserRoutes = () => {
       path: "/payments",
       element: user ? <Payments /> : <Navigate to="/login" />,
     },
-    {
-      path: "/dashboard/profile",
-      element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
-    },
+    // {
+    //   path: "/dashboard/profile",
+    //   element: user ? <TeacherDashboard /> : <Navigate to="/login" />,
+    // },
     {
       path: "/dashboard/mycourses",
       element: user ? <TeacherCourses /> : <Navigate to="/login" />,
@@ -57,7 +57,7 @@ const UserRoutes = () => {
       element: user ? <TeacherAttendance /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/profile",
+      path: "/dashboard/user",
       element: user ? <TeacherProfile /> : <Navigate to="/login" />,
     },
     {

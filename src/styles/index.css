@@ -98,6 +98,10 @@ input:focus {
   background-size: cover;
 }
 
+.ruby-disp {
+  display: ruby;
+}
+
 /* .dashboard {
   display: flex;
   position: relative;

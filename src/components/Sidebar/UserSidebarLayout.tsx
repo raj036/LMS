@@ -56,7 +56,7 @@ const UserSidebarLayout = () => {
         </div>
       )}
 
-      {user && user.user_type === "parent" && (
+      {/* {user && user.user_type === "parent" && (
         <div>
           <Sidebar>
             <Link to={"/dashboard/profile"}>
@@ -64,6 +64,13 @@ const UserSidebarLayout = () => {
                 icon={<UserRound size={20} />}
                 text="Profile"
                 active={location.pathname === "/dashboard/profile"}
+              />
+            </Link>
+            <Link to={"/dashboard/user"}>
+              <SidebarItem
+                icon={<UserRound size={20} />}
+                text="Dashboard"
+                active={location.pathname === "/dashboard/user"}
               />
             </Link>
             <Link to={"/dashboard/reports"}>
@@ -89,7 +96,7 @@ const UserSidebarLayout = () => {
             </Link>
           </Sidebar>
         </div>
-      )}
+      )} */}
     </>
   );
 };

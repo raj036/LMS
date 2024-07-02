@@ -6,7 +6,45 @@ import React, { useEffect, useState } from "react";
 
 const TeacherProfile = () => {
   const { user }: any = useAuthContext();
-  const [userData, setUserData] = useState<any>([]);
+  const [teacherId, setTeacherId] = useState("");
+  const [userData, setUserData] = useState<any>({
+    name: "",
+    email: "",
+    contact_info: {
+      primary_number: "",
+      secondary_number: "",
+      primary_email_id: "",
+      secondary_email_id: "",
+      current_address: "",
+      permanent_address: "",
+    },
+    dependent: {
+      dependent_name: "",
+      relation: "",
+      date_of_birth: "",
+    },
+    education: {
+      education_level: "",
+      institution: "",
+      specialization: "",
+      field_of_study: "",
+      year_of_passing: null,
+      percentage: null,
+    },
+    emergency_contact: {
+      emergency_contact_name: "",
+      relation: "",
+      emergency_contact_number: null,
+    },
+    languages_spoken: {
+      languages: "",
+    },
+    skill: {
+      skill: "",
+      certification: "",
+      license: "",
+    },
+  });
   const [show, setShow] = useState(false);
 
   const getMyData = async () => {
@@ -18,6 +56,7 @@ const TeacherProfile = () => {
       });
       console.log(response.data, "data");
       setUserData(response?.data);
+      setTeacherId(response?.data?.Teacher_id);
       setShow(true);
     } catch (error) {
       console.error("Error getting Profile", error);
@@ -28,6 +67,7 @@ const TeacherProfile = () => {
     getMyData();
   }, []);
 
+  // post Data
   const [formData, setFormData] = useState<any>({
     teacher_data: {
       name: "",
@@ -110,196 +150,196 @@ const TeacherProfile = () => {
       });
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+    console.log(name, value);
+  };
+
+  const handleNestedInputChange = (e, section) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [section]: {
+        ...userData[section],
+        [name]: value,
+      },
+    });
+  };
+
+  const handleUpdate = (e: any) => {
+    const updateData = {
+      teacher_update_data: {
+        name: userData.name,
+        email: userData.email,
+      },
+      contact_info: {
+        primary_number: userData.contact_info.primary_number,
+        secondary_number: userData.contact_info.secondary_number,
+        primary_email_id: userData.contact_info.primary_email_id,
+        secondary_email_id: userData.contact_info.secondary_email_id,
+        current_address: userData.contact_info.current_address,
+        permanent_address: userData.contact_info.permanent_address
+      },
+      dependent: {
+        dependent_name: userData.dependent.dependent_name,
+        relation: userData.dependent.relation,
+        date_of_birth: userData.dependent.date_of_birth
+      },
+      education: {
+        education_level: userData.education.education_level,
+        institution: userData.education.institution,
+        specialization: userData.education.specialization,
+        field_of_study: userData.education.field_of_study,
+        year_of_passing: userData.education.year_of_passing,
+        percentage: userData.education.percentage
+      },
+      emergency_contact: {
+        emergency_contact_name: userData.emergency_contact.emergency_contact_name,
+        relation: userData.emergency_contact.relation,
+        emergency_contact_number: userData.emergency_contact.emergency_contact_number
+      },
+      languages_spoken: {
+        languages: userData.languages_spoken.languages
+      },
+      skill: {
+        skill: userData.skill.skill,
+        certification: userData.skill.certification,
+        license: userData.skill.license
+      }
+    }
+    e.preventDefault();
+    axios.put(`/api/teachers/${teacherId}`,updateData , {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response)=> {
+      console.log(response)
+    })
+    .catch((error)=> {
+      console.log(error);
+    })
+  };
+
   return (
     <>
       <Topbar heading={"Profile"} />
 
       {/* form get data  */}
       {show ? (
-        <div className="flex lg:flex-col">
-          <div className="p-5 w-[40%] lg:w-[90%] ">
-            <div className="font-semibold	text-[16px] mb-4 ml-1">
-              Contact Details
-            </div>
-            <div className="h-full rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-              {/* <div className="flex justify-end p-2 cursor-pointer">
-          <Pencil />
-        </div> */}
-              <div className="flex justify-between border-b-2 pb-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Name :
-                </span>
-                <input
-                  className="w-[60%]"
-                  type="text"
-                  value={userData?.name}
-                  name="first_name"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Primary Email :
-                </span>
-                <input
-                  className="w-[60%]"
-                  type="text"
-                  value={userData?.contact_info?.primary_email_id}
-                  name="primary_email"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Secondary Email :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.secondary_email_id || "-"}
-                  type="text"
-                  name="secondary_email"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Address :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.current_address}
-                  type="text"
-                  name="current_address"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Primary No :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.primary_number}
-                  type="text"
-                  name="contact_information.primary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Secondary No :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.contact_info?.secondary_number || "-"}
-                  type="text"
-                  name="secondary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Date of birth :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.dependent?.date_of_birth || "-"}
-                  type="text"
-                  name="secondary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Dependant name :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.dependent?.dependent_name || "-"}
-                  type="text"
-                  name="secondary_no"
-                />
-              </div>
-              <div className="flex justify-between border-b-2 py-2">
-                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                  Language :
-                </span>
-                <input
-                  className="w-[60%]"
-                  value={userData?.languages_spoken?.languages || "-"}
-                  type="text"
-                  name="secondary_no"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Parents Information */}
-
-          <div className="w-[40%] lg:w-[90%] ">
-            <div className="p-5">
+        <form onSubmit={handleUpdate}>
+          <div className="flex lg:flex-col">
+            <div className="p-5 w-[40%] lg:w-[90%] ">
               <div className="font-semibold	text-[16px] mb-4 ml-1">
-                Education Details
+                Contact Details
               </div>
-              <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
+              <div className="h-full rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
                 {/* <div className="flex justify-end p-2 cursor-pointer">
           <Pencil />
         </div> */}
                 <div className="flex justify-between border-b-2 pb-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Education :
+                    Name :
                   </span>
                   <input
                     className="w-[60%]"
                     type="text"
-                    value={userData?.education?.education_level}
-                    name="first_name"
+                    value={userData?.name}
+                    name="name"
+                    onChange={handleInputChange}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Study :
+                    Primary Email :
                   </span>
                   <input
                     className="w-[60%]"
                     type="text"
-                    value={userData?.education?.field_of_study}
-                    name="primary_email"
+                    value={userData?.contact_info?.primary_email_id}
+                    name="primary_email_id"
+                    onChange={(e)=> handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Institution :
+                    Secondary Email :
                   </span>
                   <input
                     className="w-[60%]"
-                    value={userData?.education?.institution || "-"}
+                    value={userData?.contact_info?.secondary_email_id || "-"}
                     type="text"
                     name="secondary_email"
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Specialization :
+                    Address :
                   </span>
                   <input
                     className="w-[60%]"
-                    value={userData?.education?.specialization}
+                    value={userData?.contact_info?.current_address}
                     type="text"
                     name="current_address"
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Percentage :
+                    Primary No :
                   </span>
                   <input
                     className="w-[60%]"
-                    value={userData?.education?.percentage}
+                    value={userData?.contact_info?.primary_number}
                     type="text"
                     name="contact_information.primary_no"
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Passing year :
+                    Secondary No :
                   </span>
                   <input
                     className="w-[60%]"
-                    value={userData?.education?.year_of_passing || "-"}
+                    value={userData?.contact_info?.secondary_number || "-"}
+                    type="text"
+                    name="secondary_no"
+                  />
+                </div>
+                <div className="flex justify-between border-b-2 py-2">
+                  <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                    Date of birth :
+                  </span>
+                  <input
+                    className="w-[60%]"
+                    value={userData?.dependent?.date_of_birth || "-"}
+                    type="text"
+                    name="secondary_no"
+                  />
+                </div>
+                <div className="flex justify-between border-b-2 py-2">
+                  <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                    Dependant name :
+                  </span>
+                  <input
+                    className="w-[60%]"
+                    value={userData?.dependent?.dependent_name || "-"}
+                    type="text"
+                    name="secondary_no"
+                  />
+                </div>
+                <div className="flex justify-between border-b-2 py-2">
+                  <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                    Language :
+                  </span>
+                  <input
+                    className="w-[60%]"
+                    value={userData?.languages_spoken?.languages || "-"}
                     type="text"
                     name="secondary_no"
                   />
@@ -307,41 +347,122 @@ const TeacherProfile = () => {
               </div>
             </div>
 
-            {/* Education Details */}
+            {/* Education Information */}
 
-            <div className="p-5 ">
-              <div className="font-semibold	text-[16px] mb-4 ml-1">Skills</div>
-              <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                {/* <div className="flex justify-end p-2 cursor-pointer">
+            <div className="w-[40%] lg:w-[90%] ">
+              <div className="p-5">
+                <div className="font-semibold	text-[16px] mb-4 ml-1">
+                  Education Details
+                </div>
+                <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
+                  {/* <div className="flex justify-end p-2 cursor-pointer">
+          <Pencil />
+        </div> */}
+                  <div className="flex justify-between border-b-2 pb-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Education :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      type="text"
+                      value={userData?.education?.education_level}
+                      name="first_name"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Study :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      type="text"
+                      value={userData?.education?.field_of_study}
+                      name="primary_email"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Institution :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.education?.institution || "-"}
+                      type="text"
+                      name="secondary_email"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Specialization :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.education?.specialization}
+                      type="text"
+                      name="current_address"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Percentage :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.education?.percentage}
+                      type="text"
+                      name="contact_information.primary_no"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Passing year :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.education?.year_of_passing || "-"}
+                      type="text"
+                      name="secondary_no"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Certification Details */}
+
+              <div className="p-5 ">
+                <div className="font-semibold	text-[16px] mb-4 ml-1">Skills</div>
+                <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
+                  {/* <div className="flex justify-end p-2 cursor-pointer">
               <Pencil />
             </div> */}
-                <div className="flex justify-between border-b-2 pb-2 text-[14px]">
-                  <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Certification :
-                  </span>
-                  <input
-                    className="w-[60%]"
-                    value={userData?.skill?.certification}
-                    type="text"
-                    name="school"
-                  />
-                </div>
-                <div className="flex justify-between border-b-2 py-2 text-[14px]">
-                  <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    License :
-                  </span>
-                  <input
-                    className="w-[60%]"
-                    value={userData?.skill?.license}
-                    type="text"
-                    name="student_class"
-                  />
+                  <div className="flex justify-between border-b-2 pb-2 text-[14px]">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      Certification :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.skill?.certification}
+                      type="text"
+                      name="school"
+                    />
+                  </div>
+                  <div className="flex justify-between border-b-2 py-2 text-[14px]">
+                    <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                      License :
+                    </span>
+                    <input
+                      className="w-[60%]"
+                      value={userData?.skill?.license}
+                      type="text"
+                      name="student_class"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <button type="submit">Update</button>
           </div>
-          {/* <button type="submit">Update</button> */}
-        </div>
+        </form>
       ) : (
         <form onSubmit={handleSubmit} className="p-[20px]">
           {/* Teacher Data */}

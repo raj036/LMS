@@ -16,6 +16,8 @@ import TeacherProfile from "pages/TeacherPages/Profile";
 import TeacherCourses from "pages/TeacherPages/Courses";
 import TeacherDashboard from "pages/TeacherPages/Dashboard";
 import TeacherAnnouncements from "pages/TeacherPages/Announcement";
+import ViewContent from "pages/TeacherPages/ViewContent";
+import CourseUpload from "pages/TeacherPages/CourseUpload";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -63,6 +65,14 @@ const UserRoutes = () => {
     {
       path: "/dashboard/myannouncements",
       element: user ? <TeacherAnnouncements /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/content",
+      element: user ? <ViewContent /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/uploadcontent",
+      element: user ? <CourseUpload /> : <Navigate to="/login" />,
     }
   ];
 

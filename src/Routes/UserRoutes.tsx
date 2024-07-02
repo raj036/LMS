@@ -17,6 +17,8 @@ import Payments from "pages/Payments";
 import UserProfile from "pages/UserProfile";
 import ParentReports from "pages/Parent/report";
 import ParentAnnouncements from "pages/Parent/announcements";
+import ParentDashboard from "pages/Parent/Dashboard";
+import StudentAnnouncements from "pages/UserAnnounceement";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -58,16 +60,12 @@ const UserRoutes = () => {
       element: user ? <Attendance /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/reports",
-      element: user ? <ParentReports /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/dashboard/announcements",
-      element: user ? <ParentAnnouncements /> : <Navigate to="/login" />,
-    },
-    {
       path: "/dashboard/profile",
       element: user ? <UserProfile /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/dashboard/announcement",
+      element: user ? <StudentAnnouncements /> : <Navigate to="/login" />,
     }
   ];
 
@@ -81,10 +79,6 @@ const UserRoutes = () => {
       path: "login",
       element: !user ? <LoginPage /> : <Navigate to={"/"} />,
     },
-    // {
-    //   path: "parentlogin",
-    //   element: !user ? <ParentLoginPage /> : <Navigate to={"/"} />,
-    // },
     {
       path: "signup",
       element: !user ? <SignUpPage /> : <Navigate to={"/"} />,

@@ -4,7 +4,7 @@ import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
 import { format } from "date-fns";
 
-const TeacherAnnouncements = () => {
+const AdminAnnouncements = () => {
   const { user }: any = useAuthContext();
   const [announcementData, setAnnouncementData] = useState([]);
 
@@ -64,4 +64,4 @@ const TeacherAnnouncements = () => {
   );
 };
 
-export default TeacherAnnouncements;
+export default AdminAnnouncements;

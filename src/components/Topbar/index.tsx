@@ -37,7 +37,7 @@ const Topbar = ({ heading }) => {
         <button
           id="dropdownAvatarNameButton"
           data-dropdown-toggle="dropdownAvatarName"
-          data-dropdown-trigger="hover"
+          // data-dropdown-trigger="hover"
           className="flex items-center text-base pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
           type="button"
         >

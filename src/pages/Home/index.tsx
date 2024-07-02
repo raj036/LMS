@@ -140,21 +140,27 @@ export default function HomePage() {
                           <br />
                           AS/A Levels, and the ACT
                         </Heading>
-                        <Link to="/requestdemo">
-                          <Button
-                            size="lg"
-                            className="sm:top-[58%] lg:top-[59%] xs:h-[40px] sm:w-full xs:top-[65%] md:top-[63%] top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
-                          >
-                            Request a Demo
-                          </Button>
-                        </Link>
-                        <Button
-                          size="lg"
-                          className="sm:top-[70%] lg:top-[59%] md:top-[63%] xs:h-[40px] sm:w-full xs:top-[75%] top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
-                          onClick={handleGetAdmissionClick}
-                        >
-                          Get Admission
-                        </Button>
+                        {user && user.user_type === "parent" ? (
+                          ""
+                        ) : (
+                          <>
+                            <Link to="/requestdemo">
+                              <Button
+                                size="lg"
+                                className="sm:top-[58%] lg:top-[59%] xs:h-[40px] sm:w-full xs:top-[65%] md:top-[63%] top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                              >
+                                Request a Demo
+                              </Button>
+                            </Link>
+                            <Button
+                              size="lg"
+                              className="sm:top-[70%] lg:top-[59%] md:top-[63%] xs:h-[40px] sm:w-full xs:top-[75%] top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                              onClick={handleGetAdmissionClick}
+                            >
+                              Get Admission
+                            </Button>
+                          </>
+                        )}
                       </div>
                     </div>
                     <Img

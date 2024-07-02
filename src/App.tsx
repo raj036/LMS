@@ -8,6 +8,8 @@ import UserLayout from "Layout/UserLayout";
 import AdminLayout from "Layout/AdminLayout";
 import TeacherLayout from "Layout/TeacherLayout";
 import TeacherRoutes from "Routes/TeacherRoutes";
+import ParentLayout from "Layout/ParentLayout";
+import ParentRoutes from "Routes/ParentRoutes";
 
 function App() {
   const { user }: any = useAuthContext();
@@ -27,6 +29,10 @@ function App() {
           <TeacherLayout>
             <TeacherRoutes />
           </TeacherLayout>
+        ) : user && user.user_type === "parent" ? (
+          <ParentLayout>
+            <ParentRoutes />
+          </ParentLayout>
         ) : (
           <UserLayout>
             <UserRoutes />

@@ -10,6 +10,7 @@ import Users from "pages/Users";
 import Courses from "pages/AdminCourses";
 import Mail from "pages/Mail";
 import StudentPayment from "pages/StudentPayment";
+import AdminAnnouncements from "pages/AdminAnnouncement";
 
 const AdminRoutes = () => {
   const { user }: any = useAuthContext();
@@ -50,6 +51,10 @@ const AdminRoutes = () => {
     {
       path: "payment",
       element: <StudentPayment />,
+    },
+    {
+      path: "announcement",
+      element: <AdminAnnouncements />,
     },
   ];
 

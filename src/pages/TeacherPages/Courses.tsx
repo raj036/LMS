@@ -3,6 +3,7 @@ import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import { BookOpenTextIcon, EllipsisVertical } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyCourses = () => {
   const { user }: any = useAuthContext();
@@ -30,8 +31,7 @@ const MyCourses = () => {
   return (
     <>
       <Topbar heading={"Courses"} />
-      <div className="container py-5 sm:text-left sm:m-[-12px]">Courses</div>
-      <div className="flex space-x-4 p-4  sm:flex-col sm:p-7 ">
+      {/* <div className="flex space-x-4 p-4  sm:flex-col sm:p-7 ">
         {courseData.map((tab, index) => (
           <div
             key={index}
@@ -43,9 +43,9 @@ const MyCourses = () => {
             <div className="flex items-center">
               <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
               <div className="ml-4">
-                {/* <span className="block text-gray-600 text-[15px]">
+                <span className="block text-gray-600 text-[15px]">
                   {tab}
-                </span> */}
+                </span>
                 <span className="block font-semibold text-gray-800">{tab}</span>
               </div>
             </div>
@@ -54,6 +54,82 @@ const MyCourses = () => {
             </div>
           </div>
         ))}
+      </div> */}
+
+      <div className="ruby-disp">
+      {courseData.map((tab, index) => (
+        <div className=" rounded-lg  shadow-lg w-56 m-4 " key={tab.id}>
+          <div className="flex items-center mb-2 bg-gray-100 p-3">
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+            </div>
+            <span className="text-gray-700 font-semibold  ">{tab}</span>
+            {/* <div className="ml-auto">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                />
+              </svg>
+            </div> */}
+          </div>
+          <ul className="">
+            <li className="m-0" >
+              <Link
+               to="/uploadcontent"
+                className="block text-gray-600 bg-[#FFFFFF] hover:bg-gray-200 rounded pl-[15px] py-[15px] border-b-[1px]"
+              >
+                Create content
+              </Link>
+            </li>
+            <li className="m-0">
+              <Link
+                to="/content"
+                className="block text-gray-600 bg-[#FFFFFF] hover:bg-gray-200 rounded pl-[15px] py-[15px] border-b-[1px]"
+              >
+                View content
+              </Link>
+            </li>
+            {/* <li className="m-0">
+              <Link
+                to=""
+                className="block text-gray-600 bg-[#FFFFFF] hover:bg-gray-200 rounded pl-[15px] py-[15px] border-b-[1px]"
+              >
+                Create test
+              </Link>
+            </li>
+            <li className="m-0">
+              <Link
+                to=""
+                className="block text-gray-600 bg-[#FFFFFF] hover:bg-gray-200 rounded pl-[15px] py-[15px] border-b-[1px]"
+              >
+                View test
+              </Link>
+            </li> */}
+          </ul>
+        </div>
+      ))}
       </div>
     </>
   );

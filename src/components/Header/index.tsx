@@ -26,6 +26,8 @@ export default function Header({ ...props }: Props) {
   }, [user]);
 
   const getMyData = async () => {
+
+
     try {
       const response = await axios.get(`api/get_my_profile`, {
         headers: {
@@ -207,7 +209,7 @@ export default function Header({ ...props }: Props) {
               <button
                 id="dropdownAvatarNameButton"
                 data-dropdown-toggle="dropdownAvatarName"
-                data-dropdown-trigger="hover"
+                // data-dropdown-trigger="hover"
                 className="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
                 type="button"
               >
@@ -280,7 +282,7 @@ export default function Header({ ...props }: Props) {
                       </Link>
                     ) : myData?.user_type === "parent" ? (
                       <Link
-                        to="/dashboard/reports"
+                        to="/dashboard/profile"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                       >
                         My Dashboard

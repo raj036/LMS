@@ -3,13 +3,22 @@ import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const ParentProfile = () => {
   const { user }: any = useAuthContext();
-  const [userData, setUserData] = useState<any>([]);
-  const [parentId, setParentId] = useState<any>([]);
+  const [parentData, setParentData] = useState<any>({
+    p_first_name: "",
+    p_last_name: "",
+    guardian: "",
+    secondary_no: "",
+    secondary_email: "",
+    p_middle_name: "",
+    primary_no: "",
+    primary_email: "",
+  });
 
-  const getMyData = async () => {
+  const getParentData = async () => {
     try {
       const response = await axios.get(`api/parent/${user.user_id}`, {
         headers: {
@@ -17,168 +26,132 @@ const ParentProfile = () => {
         },
       });
       console.log(response.data, "data");
-      setUserData(response?.data);
-      setParentId(response)
+      setParentData(response?.data);
     } catch (error) {
       console.error("Error getting Profile", error);
     }
   };
-  
+
+  const handleChange = (fieldName: string, value: any) => {
+    console.log(fieldName, value);
+    setParentData((prevParentData) => ({
+      ...prevParentData,
+      [fieldName]: value,
+    }));
+  };
+
+  // const handleChange = (fieldName: string, value: any) => {
+  //   setParentData((prevParentData) => {
+  //     const updatedData = {
+  //       ...prevParentData,
+  //       [fieldName]: value,
+  //     };
+  //     console.log('Updated parent data:', updatedData);
+  //     return updatedData;
+  //   });
+  // };
+
+  const UpdateParentData = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `/api/parent/${user.user_id}`,
+        parentData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            // "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.location.reload();
+      console.log(response, "respupdate");
+    } catch (error) {
+      console.error("error", error);
+    }
+  };
+
   useEffect(() => {
-    getMyData();
+    getParentData();
   }, []);
 
   return (
     <>
       <Topbar heading={"Profile"} />
-      <div className="flex lg:flex-col">
-        <div className="p-5 w-[40%] lg:w-[90%] sm:w-[170%] overflow-x-scroll">
-          <div className="font-semibold	text-[16px] mb-4 ml-1">
-            Contact Details
-          </div>
-          <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-            {/* <div className="flex justify-end p-2 cursor-pointer">
-              <Pencil />
-            </div> */}
-            <div className="flex justify-between border-b-2 pb-2">
-              <span className="font-semibold w-[30%]">Name :</span>
-              <span className="w-[60%]">{userData?.name}</span>
+      <form onSubmit={UpdateParentData}>
+        <div className="flex lg:flex-col">
+          <div className="p-5 w-[40%] lg:w-[90%] sm:w-[170%]">
+            <div className="font-semibold	text-[16px] mb-4 ml-1">
+              Contact Details
             </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Primary Email :</span>
-              <span className="w-[60%]">
-                {/* {userData?.contact_information[0].primary_email_id} */}
-              </span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Secondary Email :</span>
-              <span className="w-[60%]">
-                {userData?.contact_info?.secondary_email || "-"}
-              </span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Address :</span>
-              <span className="w-[60%]">
-                {userData?.contact_info?.current_address}
-              </span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Primary No :</span>
-              <span className="w-[60%]">
-                {userData?.contact_info?.primary_no}
-              </span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Secondary No :</span>
-              <span className="w-[60%]">
-                {userData?.contact_info?.secondary_no || "-"}
-              </span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Date of birth :</span>
-              <span className="w-[60%]">{userData?.date_of_birth}</span>
-            </div>
-            <div className="flex justify-between border-b-2 py-2">
-              <span className="font-semibold w-[30%]">Nationality :</span>
-              <span className="w-[60%]">{userData?.nationality}</span>
-            </div>
-            <div className="flex justify-between py-2">
-              <span className="font-semibold w-[30%]">Gender :</span>
-              <span className="w-[60%]">{userData?.gender}</span>
+            <div className="h-full rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
+              {/* <div className="flex justify-end p-2 cursor-pointer">
+                <Pencil />
+              </div> */}
+              <div className="flex justify-between border-b-2 pb-2">
+                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                  Name :
+                </span>
+                <input
+                  className="w-[60%]"
+                  type="text"
+                  value={parentData?.p_first_name}
+                  name="p_first_name"
+                  onChange={(e) => handleChange("p_first_name", e.target.value)}
+                />
+              </div>
+              <div className="flex justify-between border-b-2 py-2">
+                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                  Primary Email :
+                </span>
+                <input
+                  className="w-[60%]"
+                  type="text"
+                  value={parentData?.primary_email}
+                  name="primary_email"
+                  onChange={(e) =>
+                    handleChange("primary_email", e.target.value)
+                  }
+                />
+              </div>
+              <div className="flex justify-between border-b-2 py-2">
+                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                  Guardian :
+                </span>
+                <input
+                  className="w-[60%]"
+                  value={parentData?.guardian || "-"}
+                  type="text"
+                  name="guardian"
+                  onChange={(e) => handleChange("guardian", e.target.value)}
+                />
+              </div>
+              <div className="flex justify-between border-b-2 py-2">
+                <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
+                  Primary No :
+                </span>
+                <input
+                  className="w-[60%]"
+                  value={parentData?.primary_no}
+                  type="text"
+                  name="primary_no"
+                  onChange={(e) => handleChange("primary_no", e.target.value)}
+                />
+              </div>
+              <div className="mt-[30px] text-center">
+                <Button
+                  size="lg"
+                  type="submit"
+                  className="  font-bold max-w-[250px]   z-10 transition hover:bg-white-A700 border bg-deep_orange-500 hover:text-deep_orange-500 border-deep_orange-500"
+                >
+                  Update
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Parents Information */}
-
-        {user && user.user_type === "student" && (
-          <div className="w-[40%] lg:w-[90%] sm:w-[170%] overflow-x-scroll">
-            <div className="p-5 ">
-              <div className="font-semibold	text-[16px] mb-4 ml-1">
-                Parent Details
-              </div>
-              <div className=" rounded-[10px] shadow-lg -w-[35%] p-4  text-[14px]">
-                {/* <div className="flex justify-end p-2 cursor-pointer">
-                  <Pencil />
-                </div> */}
-                <div className="flex justify-between border-b-2 pb-2 text-[14px]">
-                  <span className="font-semibold w-[30%]">Guardian :</span>
-                  <span className="w-[60%]">
-                    {userData?.parent_info?.guardian}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b-2 py-2 text-[14px]">
-                  <span className="font-semibold w-[30%]">
-                    Parent first name :
-                  </span>
-                  <span className="w-[60%]">
-                    {userData?.parent_info?.p_first_name}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b-2 py-2">
-                  <span className="font-semibold w-[30%]">
-                    Parent last name :
-                  </span>
-                  <span className="w-[60%]">
-                    {userData?.parent_info?.p_last_name}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b-2 py-2">
-                  <span className="font-semibold w-[30%]">Parent Email :</span>
-                  <span className="w-[60%]">
-                    {userData?.parent_info?.primary_email}
-                  </span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="font-semibold w-[30%]">Primary No :</span>
-                  <span className="w-[60%]">
-                    {userData?.parent_info?.primary_no}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Education Details */}
-
-            <div className="p-5 ">
-              <div className="font-semibold	text-[16px] mb-4 ml-1">
-                Education Details
-              </div>
-              <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                {/* <div className="flex justify-end p-2 cursor-pointer">
-                  <Pencil />
-                </div> */}
-                <div className="flex justify-between border-b-2 pb-2 text-[14px]">
-                  <span className="font-semibold w-[30%]">School Name :</span>
-                  <span className="w-[60%]">
-                    {userData?.pre_education?.school}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b-2 py-2 text-[14px]">
-                  <span className="font-semibold w-[30%]">Standard :</span>
-                  <span className="w-[60%]">
-                    {userData?.pre_education?.student_class}
-                  </span>
-                </div>
-                <div className="flex justify-between border-b-2 py-2">
-                  <span className="font-semibold w-[30%]">
-                    Year of passing :
-                  </span>
-                  <span className="w-[60%]">
-                    {userData?.pre_education?.year_of_passing}
-                  </span>
-                </div>
-                <div className="flex justify-between  py-2">
-                  <span className="font-semibold w-[30%]">Percentage :</span>
-                  <span className="w-[60%]">
-                    {userData?.pre_education?.percentage}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      </form>
     </>
   );
 };

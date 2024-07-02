@@ -28,26 +28,22 @@ const ParentRoutes = () => {
   }, []);
 
   const protectedRoutes = [
-    {
-      path: "/getadmission",
-      element: user ? <GetAdmission /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/requestdemo",
-      element: user ? <RequestDemo /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/offlinedemo",
-      element: user ? <OfflineDemo /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/payments",
-      element: user ? <Payments /> : <Navigate to="/login" />,
-    },
-    {
-      path: "/dashboard/user",
-      element: user ? <ParentDashboard /> : <Navigate to="/login" />,
-    },
+    // {
+    //   path: "/getadmission",
+    //   element: user ? <GetAdmission /> : <Navigate to="/login" />,
+    // },
+    // {
+    //   path: "/requestdemo",
+    //   element: user ? <RequestDemo /> : <Navigate to="/login" />,
+    // },
+    // {
+    //   path: "/offlinedemo",
+    //   element: user ? <OfflineDemo /> : <Navigate to="/login" />,
+    // },
+    // {
+    //   path: "/payments",
+    //   element: user ? <Payments /> : <Navigate to="/login" />,
+    // },bmn b bjgm  nbb hg  hb bvjhbv jbhvb hjvjhywenzx ue   cxmjhmwhgbddnbbgdjbuhgdbzjhxgbdm
     {
       path: "/dashboard/reports",
       element: user ? <ParentReports /> : <Navigate to="/login" />,
@@ -61,7 +57,7 @@ const ParentRoutes = () => {
       element: user ? <ParentProfile /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/myannouncement",
+      path: "/dashboard/announcements",
       element: user ? <ParentAnnouncements /> : <Navigate to="/login" />,
     }
   ];

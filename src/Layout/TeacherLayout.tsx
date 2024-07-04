@@ -11,11 +11,17 @@ const TeacherLayout = ({ children }) => {
 
   const isDashroutes = location?.pathname?.includes("dashboard");
 
+  const isContentRoutes =
+    location.pathname === "/content" || location.pathname === "/uploadcontent";
+  if (isContentRoutes) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       {!isDashroutes ? (
         <>
-        <HomeSideBar/>
+          <HomeSideBar />
           <div className="flex flex-col items-center justify-between w-full pt-[25px] bg-white-A700">
             <div className="flex flex-col items-end justify-start w-full max-w-[1500px]">
               <Header className="flex flex-row justify-between items-center w-full" />

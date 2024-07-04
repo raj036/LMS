@@ -310,7 +310,7 @@ const UserProfile = () => {
           </div>
 
           {/* Parents Information */}
-          <div className="w-[40%] lg:w-[90%] sm:w-[170%]  overflow-x-scroll">
+          <div className="w-[40%] lg:w-[90%] sm:w-[180%]  overflow-x-scroll">
             <div className="p-5 ">
               <div className="font-semibold	text-[16px] mb-4 ml-1">
                 Parent Details
@@ -455,7 +455,9 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
-          <div className="mt-[50px] text-center">
+        
+        </div>
+        <div className="my-[50px] text-center">
             <Button
               size="lg"
               type="submit"
@@ -464,7 +466,6 @@ const UserProfile = () => {
               Update
             </Button>
           </div>
-        </div>
       </form>
     </>
   );

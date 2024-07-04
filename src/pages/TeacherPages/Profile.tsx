@@ -1,8 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "components";
 import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const TeacherProfile = () => {
   const { user }: any = useAuthContext();
@@ -152,7 +154,7 @@ const TeacherProfile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    
+
     setUserData({
       ...userData,
       [name]: value,
@@ -183,12 +185,12 @@ const TeacherProfile = () => {
         primary_email_id: userData.contact_info.primary_email_id,
         secondary_email_id: userData.contact_info.secondary_email_id,
         current_address: userData.contact_info.current_address,
-        permanent_address: userData.contact_info.permanent_address
+        permanent_address: userData.contact_info.permanent_address,
       },
       dependent: {
         dependent_name: userData.dependent.dependent_name,
         relation: userData.dependent.relation,
-        date_of_birth: userData.dependent.date_of_birth
+        date_of_birth: userData.dependent.date_of_birth,
       },
       education: {
         education_level: userData.education.education_level,
@@ -196,35 +198,48 @@ const TeacherProfile = () => {
         specialization: userData.education.specialization,
         field_of_study: userData.education.field_of_study,
         year_of_passing: userData.education.year_of_passing,
-        percentage: userData.education.percentage
+        percentage: userData.education.percentage,
       },
       emergency_contact: {
-        emergency_contact_name: userData.emergency_contact.emergency_contact_name,
+        emergency_contact_name:
+          userData.emergency_contact.emergency_contact_name,
         relation: userData.emergency_contact.relation,
-        emergency_contact_number: userData.emergency_contact.emergency_contact_number
+        emergency_contact_number:
+          userData.emergency_contact.emergency_contact_number,
       },
       languages_spoken: {
-        languages: userData.languages_spoken.languages
+        languages: userData.languages_spoken.languages,
       },
       skill: {
         skill: userData.skill.skill,
         certification: userData.skill.certification,
-        license: userData.skill.license
-      }
-    }
-    e.preventDefault();
-    axios.put(`/api/teachers/${teacherId}`,updateData , {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
+        license: userData.skill.license,
       },
-    })
-    .then((response)=> {
-      console.log(response)
-    })
-    .catch((error)=> {
-      console.log(error);
-    })
+    };
+    e.preventDefault();
+    axios
+      .put(`/api/teachers/${teacherId}`, updateData, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          icon: "success",
+          title: `Profile updated successfully`,
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          title: "Data was not updated successfully",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   return (
@@ -235,7 +250,7 @@ const TeacherProfile = () => {
       {show ? (
         <form onSubmit={handleUpdate}>
           <div className="flex lg:flex-col">
-            <div className="p-5 w-[40%] lg:w-[90%] ">
+            <div className="p-5 w-[40%] lg:w-[90%] sm:w-[180%] sm:overflow-x-scroll ">
               <div className="font-semibold	text-[16px] mb-4 ml-1">
                 Contact Details
               </div>
@@ -264,7 +279,7 @@ const TeacherProfile = () => {
                     type="text"
                     value={userData?.contact_info?.primary_email_id}
                     name="primary_email_id"
-                    onChange={(e)=> handleNestedInputChange(e, "contact_info")}
+                    onChange={(e) => handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -275,7 +290,8 @@ const TeacherProfile = () => {
                     className="w-[60%]"
                     value={userData?.contact_info?.secondary_email_id || "-"}
                     type="text"
-                    name="secondary_email"
+                    name="secondary_email_id"
+                    onChange={(e) => handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -287,6 +303,7 @@ const TeacherProfile = () => {
                     value={userData?.contact_info?.current_address}
                     type="text"
                     name="current_address"
+                    onChange={(e) => handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -296,8 +313,9 @@ const TeacherProfile = () => {
                   <input
                     className="w-[60%]"
                     value={userData?.contact_info?.primary_number}
-                    type="text"
-                    name="contact_information.primary_no"
+                    type="number"
+                    name="primary_number"
+                    onChange={(e) => handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -307,8 +325,9 @@ const TeacherProfile = () => {
                   <input
                     className="w-[60%]"
                     value={userData?.contact_info?.secondary_number || "-"}
-                    type="text"
-                    name="secondary_no"
+                    type="number"
+                    name="secondary_number"
+                    onChange={(e) => handleNestedInputChange(e, "contact_info")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -318,8 +337,9 @@ const TeacherProfile = () => {
                   <input
                     className="w-[60%]"
                     value={userData?.dependent?.date_of_birth || "-"}
-                    type="text"
-                    name="secondary_no"
+                    type="date"
+                    name="date_of_birth"
+                    onChange={(e) => handleNestedInputChange(e, "dependent")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -330,7 +350,8 @@ const TeacherProfile = () => {
                     className="w-[60%]"
                     value={userData?.dependent?.dependent_name || "-"}
                     type="text"
-                    name="secondary_no"
+                    name="dependent_name"
+                    onChange={(e) => handleNestedInputChange(e, "dependent")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -341,7 +362,10 @@ const TeacherProfile = () => {
                     className="w-[60%]"
                     value={userData?.languages_spoken?.languages || "-"}
                     type="text"
-                    name="secondary_no"
+                    name="languages"
+                    onChange={(e) =>
+                      handleNestedInputChange(e, "languages_spoken")
+                    }
                   />
                 </div>
               </div>
@@ -349,15 +373,12 @@ const TeacherProfile = () => {
 
             {/* Education Information */}
 
-            <div className="w-[40%] lg:w-[90%] ">
+            <div className="w-[40%] lg:w-[90%] sm:w-[170%] sm:overflow-x-scroll">
               <div className="p-5">
                 <div className="font-semibold	text-[16px] mb-4 ml-1">
                   Education Details
                 </div>
                 <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                  {/* <div className="flex justify-end p-2 cursor-pointer">
-          <Pencil />
-        </div> */}
                   <div className="flex justify-between border-b-2 pb-2">
                     <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
                       Education :
@@ -366,7 +387,8 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       type="text"
                       value={userData?.education?.education_level}
-                      name="first_name"
+                      name="education_level"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -377,7 +399,8 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       type="text"
                       value={userData?.education?.field_of_study}
-                      name="primary_email"
+                      name="field_of_study"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -388,7 +411,8 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       value={userData?.education?.institution || "-"}
                       type="text"
-                      name="secondary_email"
+                      name="institution"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -399,7 +423,8 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       value={userData?.education?.specialization}
                       type="text"
-                      name="current_address"
+                      name="specialization"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -409,8 +434,9 @@ const TeacherProfile = () => {
                     <input
                       className="w-[60%]"
                       value={userData?.education?.percentage}
-                      type="text"
-                      name="contact_information.primary_no"
+                      type="number"
+                      name="percentage"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2">
@@ -420,8 +446,9 @@ const TeacherProfile = () => {
                     <input
                       className="w-[60%]"
                       value={userData?.education?.year_of_passing || "-"}
-                      type="text"
-                      name="secondary_no"
+                      type="number"
+                      name="year_of_passing"
+                      onChange={(e) => handleNestedInputChange(e, "education")}
                     />
                   </div>
                 </div>
@@ -443,7 +470,8 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       value={userData?.skill?.certification}
                       type="text"
-                      name="school"
+                      name="certification"
+                      onChange={(e) => handleNestedInputChange(e, "skill")}
                     />
                   </div>
                   <div className="flex justify-between border-b-2 py-2 text-[14px]">
@@ -454,13 +482,22 @@ const TeacherProfile = () => {
                       className="w-[60%]"
                       value={userData?.skill?.license}
                       type="text"
-                      name="student_class"
+                      name="license"
+                      onChange={(e) => handleNestedInputChange(e, "skill")}
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <button type="submit">Update</button>
+          </div>
+          <div className="my-[50px] text-center">
+            <Button
+              size="lg"
+              type="submit"
+              className="  font-bold max-w-[250px]   z-10 transition hover:bg-white-A700 border bg-deep_orange-500 hover:text-deep_orange-500 border-deep_orange-500"
+            >
+              Update
+            </Button>
           </div>
         </form>
       ) : (

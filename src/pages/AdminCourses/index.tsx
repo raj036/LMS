@@ -21,12 +21,23 @@ const Courses = () => {
   const [courseData, setCourseData] = useState([]);
 
   const [formData, setFormData] = useState({
-    user_name: "",
-    user_email: "",
-    phone_no: "",
-    user_type: "",
-    user_password: "",
-    repassword: "",
+    course_name: "",
+    description: "",
+    standards: [
+      {
+        standard_name: "",
+        subjects: [
+          {
+            subject_name: "",
+            modules: [
+              {
+                module_name: "",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   });
 
   const handleInputChange = (fieldName: any, value: any) => {
@@ -36,39 +47,62 @@ const Courses = () => {
     }));
   };
 
+  const handleStandardChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      standards: [{ ...prevData.standards[0], standard_name: value }],
+    }));
+  };
+  
+  const handleSubjectChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      standards: [{
+        ...prevData.standards[0],
+        subjects: [{ ...prevData.standards[0].subjects[0], subject_name: value }],
+      }],
+    }));
+  };
+  
+  const handleModuleChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      standards: [{
+        ...prevData.standards[0],
+        subjects: [{
+          ...prevData.standards[0].subjects[0],
+          modules: [{ ...prevData.standards[0].subjects[0].modules[0], module_name: value }],
+        }],
+      }],
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.user_password === formData.repassword) {
-      try {
-        const response = await axios.post("api/insert/lms_user", formData);
-        if (response.data.status_code === 500) {
-          throw new Error("Email Already in Use");
-        }
-        if (response.data.status_code === 400) {
-          throw new Error(response.data.detail);
-        }
-        Swal.fire({
-          icon: "success",
-          title: `User Created Successfully`,
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => window.location.reload());
-      } catch (error) {
-        console.error("Error Creating User", error);
-        Swal.fire({
-          icon: "error",
-          title: "Error creating user.",
-          text:
-            error?.message ||
-            "Please check your internet connection or try again later.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    } else {
+
+    try {
+      const response = await axios.post("/api/courses_create/", formData , {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+
+      Swal.fire({
+        icon: "success",
+        title: `Course Created Successfully`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(response);
+      // Optionally, reset form or fetch updated course data
+      getCourseData();
+    } catch (error) {
+      console.error("Error Creating User", error);
       Swal.fire({
         icon: "error",
-        title: "Passwords do not match!",
+        title: "Error creating course.",
+        text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -117,56 +151,51 @@ const Courses = () => {
                   name="user_name"
                   type="text"
                   className="col-span-3"
-                  value={formData.user_name}
+                  value={formData.course_name}
                   onChange={(e) =>
-                    handleInputChange("user_name", e.target.value)
+                    handleInputChange("course_name", e.target.value)
                   }
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="user_email" className="text-right">
+                <Label htmlFor="standard_name" className="text-right">
                   Standard
                 </Label>
                 <Input
-                  id="user_email"
-                  type="email"
-                  name="user_email"
+                  id="standard_name"
+                  name="standard_name"
+                  type="text"
                   className="col-span-3"
-                  value={formData.user_email}
-                  onChange={(e) =>
-                    handleInputChange("user_email", e.target.value)
-                  }
+                  value={formData.standards[0].standard_name}
+                  onChange={(e) => handleStandardChange(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="phone_no" className="text-right">
+                <Label htmlFor="subject_name" className="text-right">
                   Subject
                 </Label>
                 <Input
-                  id="phone_no"
+                  id="subject_name"
+                  name="subject_name"
                   type="text"
-                  name="phone_no"
                   className="col-span-3"
-                  value={formData.phone_no}
-                  onChange={(e) =>
-                    handleInputChange("phone_no", e.target.value)
-                  }
+                  value={formData.standards[0].subjects[0].subject_name}
+                  onChange={(e) => handleSubjectChange(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="user_password" className="text-right">
+                <Label htmlFor="module_name" className="text-right">
                   Module
                 </Label>
                 <Input
-                  id="user_password"
+                  id="module_name"
+                  name="module_name"
                   type="text"
-                  name="text"
                   className="col-span-3"
-                  autoComplete="on"
-                  value={formData.user_password}
-                  onChange={(e) =>
-                    handleInputChange("user_password", e.target.value)
+                  value={
+                    formData.standards[0].subjects[0].modules[0].module_name
                   }
+                  onChange={(e) => handleModuleChange(e.target.value)}
                 />
               </div>
               <DialogFooter>
@@ -175,23 +204,20 @@ const Courses = () => {
             </form>
           </DialogContent>
         </Dialog>
-        <h1 className="text-2xl font-bold">Courses</h1>
+        {/* <h1 className="text-2xl font-bold">Courses</h1> */}
       </div>
-      <div className="flex space-x-4 p-4  sm:flex-col sm:p-7 ">
+      <div className="ruby-disp space-x-4 p-4  sm:flex-col sm:p-7 ">
         {courseData.map((tab, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
+            className={`flex m-5 items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
               index === activeTab ? "border-2 border-gray-300" : "border"
             }`}
             onClick={() => setActiveTab(index)}
           >
             <div className="flex items-center">
               <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
-              <div className="ml-4">
-                {/* <span className="block text-gray-600 text-[15px]">
-                  {tab}
-                </span> */}
+              <div className="m-5">
                 <span className="block font-semibold text-gray-800">{tab}</span>
               </div>
             </div>

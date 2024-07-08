@@ -21,6 +21,8 @@ export default function LoginPage() {
   });
   const [loadUpdate, setLoadUpdate] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [forgetVisible, setForgetVisible] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const [forgetPass, setForgetPass] = useState(false);
   const { login, isLoading, error } = useLogin();
   const [forgetError, setForgetError] = useState("");
@@ -143,19 +145,29 @@ export default function LoginPage() {
                 >
                   New Password
                 </Heading>
+                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
                 <Input
                   color="teal_900"
                   size="xs"
                   variant="fill"
-                  type="new_password"
+                  type={forgetVisible ? "text" : "password"}
                   name="new_password"
                   required
                   onChange={(value: any) =>
                     handleForgetChange("new_password", value)
                   }
                   placeholder="Enter your new password"
-                  className="w-full mt-[18px] font-inter rounded-[5px]"
+                  className="w-full -[35px] font-inter rounded-[5px]"
                 />
+                <span
+                    onClick={() => {
+                      setForgetVisible(!forgetVisible);
+                    }}
+                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  >
+                    {forgetVisible ? <EyeIcon /> : <EyeOffIcon />}
+                  </span>
+                </div>
                 <Heading
                   size="lg"
                   as="h3"
@@ -163,19 +175,29 @@ export default function LoginPage() {
                 >
                   Confirm New Password
                 </Heading>
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type="confirm_new_password"
-                  name="confirm_new_password"
-                  required
-                  onChange={(value: any) =>
-                    handleForgetChange("confirm_new_password", value)
-                  }
-                  placeholder="Enter your confirm password"
-                  className="w-full mt-[18px] font-inter rounded-[5px]"
-                />
+                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                  <Input
+                    color="teal_900"
+                    size="xs"
+                    variant="fill"
+                    type={confirmVisible ? "text" : "password"}
+                    name="confirm_new_password"
+                    required
+                    onChange={(value: any) =>
+                      handleForgetChange("confirm_new_password", value)
+                    }
+                    placeholder="Enter your confirm password"
+                    className="w-full -[35px] font-inter rounded-[5px]"
+                  />
+                  <span
+                    onClick={() => {
+                      setConfirmVisible(!confirmVisible);
+                    }}
+                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  >
+                    {confirmVisible ? <EyeIcon /> : <EyeOffIcon />}
+                  </span>
+                </div>
                 <Button
                   color="teal_900"
                   disabled={isLoading}

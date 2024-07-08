@@ -16,7 +16,6 @@ const ParentDashboard = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log("resp", response.data.unique_courses);
       setCourseData(response?.data?.unique_courses)
     } catch (error) {
       console.error(error);

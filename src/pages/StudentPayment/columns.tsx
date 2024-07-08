@@ -105,7 +105,6 @@ export const columns: ColumnDef<Enquiry>[] = [
             })),
           };
           setInfo(formattedData);
-          console.log("history", response.data.payment_history);
           setError(false);
         } catch (error) {
           console.error("Error Fetching Profile", error);

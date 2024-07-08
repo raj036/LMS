@@ -4,6 +4,7 @@ import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
 
 const ParentProfile = () => {
   const { user }: any = useAuthContext();
@@ -25,7 +26,6 @@ const ParentProfile = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data, "data");
       setParentData(response?.data);
     } catch (error) {
       console.error("Error getting Profile", error);
@@ -33,23 +33,11 @@ const ParentProfile = () => {
   };
 
   const handleChange = (fieldName: string, value: any) => {
-    console.log(fieldName, value);
     setParentData((prevParentData) => ({
       ...prevParentData,
       [fieldName]: value,
     }));
   };
-
-  // const handleChange = (fieldName: string, value: any) => {
-  //   setParentData((prevParentData) => {
-  //     const updatedData = {
-  //       ...prevParentData,
-  //       [fieldName]: value,
-  //     };
-  //     console.log('Updated parent data:', updatedData);
-  //     return updatedData;
-  //   });
-  // };
 
   const UpdateParentData = async (e) => {
     e.preventDefault();
@@ -65,10 +53,18 @@ const ParentProfile = () => {
           },
         }
       );
-      window.location.reload();
-      console.log(response, "respupdate");
+      Swal.fire({
+        text: "Form updated Success Fully",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     } catch (error) {
       console.error("error", error);
+      Swal.fire({
+        text: "Form not updated due to some issue",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
@@ -86,9 +82,6 @@ const ParentProfile = () => {
               Contact Details
             </div>
             <div className="h-full rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-              {/* <div className="flex justify-end p-2 cursor-pointer">
-                <Pencil />
-              </div> */}
               <div className="flex justify-between border-b-2 pb-2">
                 <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
                   Name :

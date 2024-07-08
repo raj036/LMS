@@ -64,7 +64,7 @@ const UserRoutes = () => {
       element: user ? <UserProfile /> : <Navigate to="/login" />,
     },
     {
-      path: "/dashboard/announcement",
+      path: "/dashboard/myannouncement",
       element: user ? <StudentAnnouncements /> : <Navigate to="/login" />,
     }
   ];

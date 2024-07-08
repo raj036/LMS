@@ -110,10 +110,6 @@ const index = () => {
       }
     }
 
-    // for (const [key, value] of formDataToSend.entries()) {
-    //   console.log(`${key}:`, value);
-    // }
-
     try {
       setLoading(true);
       const response = await axios.post("api/admission/", formDataToSend, {

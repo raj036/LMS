@@ -38,18 +38,25 @@ const UserSidebarLayout = () => {
                 active={location.pathname === "/dashboard/user"}
               />
             </Link>
-            <Link to={"/dashboard/mycourses"}>
+            {/* <Link to={"/dashboard/mycourses"}>
               <SidebarItem
                 icon={<LibraryBig size={20} />}
                 text="Courses"
                 active={location.pathname === "/dashboard/mycourses"}
               />
-            </Link>
+            </Link> */}
             <Link to={"/dashboard/myattendance"}>
               <SidebarItem
                 icon={<CalendarCheck2 size={20} />}
                 text="Attendance"
                 active={location.pathname === "/dashboard/myattendance"}
+              />
+            </Link>
+            <Link to={"/dashboard/myannouncement"}>
+              <SidebarItem
+                icon={<CalendarCheck2 size={20} />}
+                text="Announcement"
+                active={location.pathname === "/dashboard/myannouncement"}
               />
             </Link>
           </Sidebar>

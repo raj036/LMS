@@ -15,7 +15,6 @@ const AdminAnnouncements = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data, "data");
       setAnnouncementData(response.data);
     } catch (error) {
       console.log(error);

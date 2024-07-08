@@ -56,7 +56,6 @@ const TeacherProfile = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data, "data");
       setUserData(response?.data);
       setTeacherId(response?.data?.Teacher_id);
       setShow(true);
@@ -125,7 +124,6 @@ const TeacherProfile = () => {
   });
 
   const handleChange = (section, field, value) => {
-    console.log(field, value, section);
     setFormData((prevFormData) => ({
       ...prevFormData,
       [section]: {
@@ -145,7 +143,6 @@ const TeacherProfile = () => {
         },
       })
       .then((response) => {
-        console.log("Data submitted successfully:", response.data);
       })
       .catch((error) => {
         console.error("Error submitting data:", error);
@@ -159,7 +156,6 @@ const TeacherProfile = () => {
       ...userData,
       [name]: value,
     });
-    console.log(name, value);
   };
 
   const handleNestedInputChange = (e, section) => {
@@ -225,7 +221,6 @@ const TeacherProfile = () => {
         },
       })
       .then((response) => {
-        console.log(response);
         Swal.fire({
           icon: "success",
           title: `Profile updated successfully`,
@@ -255,9 +250,6 @@ const TeacherProfile = () => {
                 Contact Details
               </div>
               <div className="h-full rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                {/* <div className="flex justify-end p-2 cursor-pointer">
-          <Pencil />
-        </div> */}
                 <div className="flex justify-between border-b-2 pb-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
                     Name :
@@ -459,9 +451,6 @@ const TeacherProfile = () => {
               <div className="p-5 ">
                 <div className="font-semibold	text-[16px] mb-4 ml-1">Skills</div>
                 <div className=" rounded-[10px] shadow-lg -w-[35%] p-4 text-[14px]">
-                  {/* <div className="flex justify-end p-2 cursor-pointer">
-              <Pencil />
-            </div> */}
                   <div className="flex justify-between border-b-2 pb-2 text-[14px]">
                     <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
                       Certification :

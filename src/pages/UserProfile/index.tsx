@@ -59,7 +59,6 @@ const UserProfile = () => {
       }) // Replace with your GET endpoint
       .then((response) => {
         setStudentData(response.data);
-        // console.log(response.data.student_id);
         setStudentId(response.data.student_id);
       })
       .catch((error) => {

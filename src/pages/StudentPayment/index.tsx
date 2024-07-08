@@ -27,8 +27,6 @@ const StudentPayment = () => {
         },
       });
       const data = await response.data;
-      console.log(response.data);
-      
       setData(data);
       setLoading(false);
     } catch (error) {

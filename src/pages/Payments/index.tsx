@@ -134,7 +134,6 @@ const Payments = () => {
           subject: subjectResponse.data.name,
           module: moduleResponse.data.name,
         });
-      console.log('course det',standardResponse)
       } catch (error) {
         console.error("An error occurred", error);
       }

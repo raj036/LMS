@@ -3,10 +3,13 @@ import { Helmet } from "react-helmet";
 import { Img, Button, Text, Heading, Input } from "../../components";
 import { Link } from "react-router-dom";
 import { useSignup } from "hooks/useSignUp";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function SignUpPagePage() {
   const { signup, error, setError, isLoading } = useSignup();
-
+  console.log(error);
+  const [forgetVisible, setForgetVisible] = useState(false);
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const [formData, setFormData] = useState({
     user_name: "",
     user_email: "",
@@ -44,7 +47,7 @@ export default function SignUpPagePage() {
 
       <div className="flex flex-row justify-end w-full p-[39px] sm:p-5 sm:mb-8 bg-white-A700">
         <div className="flex flex-row sm:flex-col-reverse justify-between items-start w-full my-[75px] sm:my-1 mx-auto max-w-[1350px]">
-        <div className="flex flex-col items-center justify-start w-[70%] sm:w-[100%] md:w-[140%] p-5 border rounded-lg border-teal-900 bg-teal-900/5">
+          <div className="flex flex-col items-center justify-start w-[70%] sm:w-[100%] md:w-[140%] p-5 border rounded-lg border-teal-900 bg-teal-900/5">
             <form
               onSubmit={handleSubmit}
               className="flex flex-col items-center justify-start w-full"
@@ -137,21 +140,31 @@ export default function SignUpPagePage() {
                 >
                   Password
                 </Heading>
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type="password"
-                  name="user_password"
-                  value={formData.user_password}
-                  onChange={(value: any) =>
-                    handleInputChange("user_password", value)
-                  }
-                  autoComplete="on"
-                  placeholder="Enter your password"
-                  className="w-full mt-3.5 gap-[35px] font-inter rounded-[5px]"
-                  required
-                />
+                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                  <Input
+                    color="teal_900"
+                    size="xs"
+                    variant="fill"
+                    type={forgetVisible ? "text" : "password"}
+                    name="user_password"
+                    value={formData.user_password}
+                    onChange={(value: any) =>
+                      handleInputChange("user_password", value)
+                    }
+                    autoComplete="on"
+                    placeholder="Enter your password"
+                    className="w-full -[35px] font-inter rounded-[5px]"
+                    required
+                  />
+                  <span
+                    onClick={() => {
+                      setForgetVisible(!forgetVisible);
+                    }}
+                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  >
+                    {forgetVisible ? <EyeIcon /> : <EyeOffIcon />}
+                  </span>
+                </div>
                 <Heading
                   size="lg"
                   as="h3"
@@ -159,21 +172,31 @@ export default function SignUpPagePage() {
                 >
                   Confirm Password
                 </Heading>
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type="password"
-                  autoComplete="on"
-                  value={formData.repassword}
-                  onChange={(value: any) =>
-                    handleInputChange("repassword", value)
-                  }
-                  name="repassword"
-                  placeholder="Enter password again"
-                  className="w-full mt-3.5 gap-[35px] font-inter rounded-[5px]"
-                  required
-                />
+                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                  <Input
+                    color="teal_900"
+                    size="xs"
+                    variant="fill"
+                    type={confirmVisible ? "text" : "password"}
+                    autoComplete="on"
+                    value={formData.repassword}
+                    onChange={(value: any) =>
+                      handleInputChange("repassword", value)
+                    }
+                    name="repassword"
+                    placeholder="Enter password again"
+                    className="w-full -[35px] font-inter rounded-[5px]"
+                    required
+                  />
+                  <span
+                    onClick={() => {
+                      setConfirmVisible(!confirmVisible);
+                    }}
+                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  >
+                    {confirmVisible ? <EyeIcon /> : <EyeOffIcon />}
+                  </span>
+                </div>
               </div>
               <Button
                 type="submit"
@@ -226,7 +249,7 @@ export default function SignUpPagePage() {
             {error && (
               <>
                 <div className="mt-3 p-2 bg-red-100 text-red-500 rounded border border-red-500 m-y2 mx-0">
-                  {error}
+                  {error.toString()}
                 </div>
               </>
             )}

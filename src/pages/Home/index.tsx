@@ -119,7 +119,7 @@ export default function HomePage() {
                         <Text
                           size="lg"
                           as="p"
-                          className=" sm:w-[75%] w-[35%] sm:top-[32%] xs:text-[14px] lg:top-[42%] xs:w-[75%] xs:top-[34%] top-[32%] right-0 left-0 m-auto text-center leading-[22px] absolute"
+                          className=" sm:w-[75%] w-[35%] sm:top-[32%] xs:text-[14px] lg:top-[42%] xs:w-[75%] xs:top-[34%] 3xl:top-[26%] top-[32%] right-0 left-0 m-auto text-center leading-[22px] absolute"
                         >
                           {/* Unlock your academic potential with our tailored
                           programs and experienced educators, guiding you
@@ -130,7 +130,7 @@ export default function HomePage() {
                         </Text>
                         <Heading
                           as="h1"
-                          className="w-[65%] sm:w-[75%] sm:text-[22px] top-[18%] xs:text-[18px] sm:top-[6%] right-0 left-0 m-auto text-center absolute"
+                          className="w-[65%] sm:w-[75%] sm:text-[22px] top-[18%] 3xl:top-[6%] xs:text-[18px] sm:top-[6%] right-0 left-0 m-auto text-center absolute"
                         >
                           {/* ILATE Learning Centre
                           <br />
@@ -147,14 +147,14 @@ export default function HomePage() {
                             <Link to="/requestdemo">
                               <Button
                                 size="lg"
-                                className="sm:top-[58%] lg:top-[59%] xs:h-[40px] sm:w-full xs:top-[65%] md:top-[63%] top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                                className="sm:top-[58%] lg:top-[59%] xs:h-[40px] sm:w-full xs:top-[65%] md:top-[63%] 3xl:top-[37%] 2xl:top-[45%]  lg:right-[52%] right-[52%] sm:right-[50%] sm:translate-x-[50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
                               >
                                 Request a Demo
                               </Button>
                             </Link>
                             <Button
                               size="lg"
-                              className="sm:top-[70%] lg:top-[59%] md:top-[63%] xs:h-[40px] sm:w-full xs:top-[75%] top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
+                              className="sm:top-[70%] lg:top-[59%] md:top-[63%] xs:h-[40px] sm:w-full xs:top-[75%] 3xl:top-[37%] 2xl:top-[45%] lg:left-[52%] left-[52%] sm:left-[50%] sm:translate-x-[-50%] font-bold max-w-[250px] absolute z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
                               onClick={handleGetAdmissionClick}
                             >
                               Get Admission
@@ -166,7 +166,7 @@ export default function HomePage() {
                     <Img
                       src="images/img_mask_group.png"
                       alt="image_one"
-                      className="w-4/5 xs:w-[90%] mt-[-210px] sm:mt-[-57px] md:mt-[-117px] lg:mt-[-147px] 3xl:mt-[-217px] z-[11] object-cover"
+                      className="2xl:w-4/5 3xl:w-[50%] xs:w-[90%] mt-[-210px] sm:mt-[-57px] md:mt-[-117px] lg:mt-[-147px] 3xl:mt-[-297px] z-[11] object-cover"
                     />
                   </div>
                 </div>
@@ -684,7 +684,7 @@ export default function HomePage() {
                         </Heading>
                       </div>
                     </div>
-                    <div className="h-[50vh] sm:h-[120vh] w-full mt-[-64px] relative">
+                    <div className="h-[50vh] sm:h-[124vh] xs:h-[120vh] 2xl:h-[500px] w-full mt-[-64px] relative">
                       {/* <Img
                         src="images/education.jpg"
                         alt="image_two"
@@ -1290,7 +1290,7 @@ export default function HomePage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-row justify-end items-start h-[900px] lg:h-[120vh] w-full p-[47px] bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
+                  <div className="flex flex-row justify-end items-start h-[900px] lg:h-[120vh] 3xl:mt-[-10%] 2xl:mt-0 3xl:z-20 2xl:z-0 w-full p-[47px] bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
                     <div className="flex flex-row justify-end w-[99%] mb-[73px]">
                       <div className="flex flex-col items-start justify-start w-full gap-[84px]">
                         <div className="flex flex-col items-start justify-start ml-[92px] md:ml-[42px] sm:ml-[22px] pt-0.5">

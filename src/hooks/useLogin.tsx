@@ -4,7 +4,7 @@ import axios from "../helper/axios";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export const useLogin = () => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
   const location = useLocation();

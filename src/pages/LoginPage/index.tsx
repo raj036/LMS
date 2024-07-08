@@ -44,8 +44,21 @@ export default function LoginPage() {
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    await login(loginData.email, loginData.user_password);
+    try {
+      await login(loginData.email, loginData.user_password);
+    } catch (error) {
+      // The error is already set in the useLogin hook, so we don't need to do anything here
+    }
+    clearLoginFields();
   };
+
+
+  const clearLoginFields = () => {
+    setLoginData({
+      email: "",
+      user_password: "",
+    })
+  }
 
   const clearInputFields = () => {
     setForgetData({
@@ -360,12 +373,13 @@ export default function LoginPage() {
                       <span>Log In</span>
                     )}
                   </Button>
-                  {error && (
+                 
+                </form>
+                {error && (
                     <p className="text-[red] mt-4">
-                      Email or password was not correct
+                      {error.message || "An error occurred during login"}
                     </p>
                   )}
-                </form>
               </>
             )}
 
@@ -405,3 +419,4 @@ export default function LoginPage() {
     </>
   );
 }
+

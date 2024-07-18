@@ -40,6 +40,7 @@ const index = () => {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       } else {
@@ -165,6 +166,7 @@ const index = () => {
         <div className="flex items-center justify-start gap-4 my-4">
           <div>
             <img
+            loading="lazy"
               src={profileImg}
               className="w-28 h-28 rounded-full border"
               alt="Profile"

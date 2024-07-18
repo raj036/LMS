@@ -257,6 +257,7 @@ const Payments = () => {
             <div className="flex items-center justify-start gap-4 my-4">
               <div>
                 <img
+                loading="lazy"
                   src={profileImg}
                   className="w-28 h-28 rounded-full border"
                   alt="Profile"
@@ -494,7 +495,9 @@ const Payments = () => {
                         Scan QR Code To Pay
                       </p>
                     </div>
-                    <img src={qrcode} alt="qr_code" />
+                    <img 
+                    loading="lazy"
+                    src={qrcode} alt="qr_code" />
                   </div>
                 </div>
                 <div className="flex max-w-6xl justify-start items-center my-5">

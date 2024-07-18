@@ -25,11 +25,16 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [myData, setMyData] = useState<any>([]);
   const [sliderState, setSliderState] = useState(0);
+  const [reviewData, setReviewData] = useState([]);
   const sliderRef = React.useRef<AliceCarousel>(null);
 
   useEffect(() => {
     if (user) getMyData();
   }, [user]);
+
+  useEffect(() => {
+    getApiReview();
+  }, []);
 
   const getMyData = async () => {
     try {
@@ -45,6 +50,15 @@ export default function HomePage() {
     }
   };
 
+  const getApiReview = async () => {
+    try {
+      const response = await axios.get(`/api/reviews/`);
+      setReviewData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleGetAdmissionClick = () => {
     if (myData.is_formsubmited) {
       if (myData.is_payment_done) {
@@ -52,6 +66,7 @@ export default function HomePage() {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       } else {
@@ -64,6 +79,17 @@ export default function HomePage() {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [isReviewSwiper, setIsReviewSwiper] = useState(window.innerWidth < 769);
+  const [showMoreStates, setShowMoreStates] = useState(
+    reviewData.map(() => false)
+  );
+
+  const toggleShowMore = (index: any) => {
+    setShowMoreStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index] = !newStates[index];
+      return newStates;
+    });
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -106,12 +132,14 @@ export default function HomePage() {
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="h-[675px] sm:h-[500px] w-full relative">
                       <Img
+                      loading="lazy"
                         src="images/img_rectangle_93.png"
                         alt="image"
                         className="justify-center h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                       />
                       <div className="justify-center h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto absolute">
                         <Img
+                        loading="lazy"
                           src="images/img_image_39.png"
                           alt="imagethirtynine"
                           className="justify-center z-5 h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
@@ -164,7 +192,8 @@ export default function HomePage() {
                       </div>
                     </div>
                     <Img
-                      src="images/img_mask_group.png"
+                    loading="lazy"
+                      src="images/img_mask_group(1).webp"
                       alt="image_one"
                       className="2xl:w-4/5 3xl:w-[50%] xs:w-[90%] mt-[-210px] sm:mt-[-57px] md:mt-[-117px] lg:mt-[-147px] 3xl:mt-[-297px] z-[11] object-cover"
                     />
@@ -259,7 +288,8 @@ export default function HomePage() {
 
                 <div className="flex sm:block flex-row justify-start items-center w-full xs:mt-[230px] sm:mt-[300px] mt-[132px] md:mt-[100px] gap-[35px] max-w-[1400px]">
                   <Img
-                    src="images/img_placeholder_image.png"
+                  loading="lazy"
+                    src="images/img_placeholder_image(1).png"
                     alt="placeholder_one"
                     className="w-[51%] sm:w-[90%] my-0 mx-auto object-cover rounded-[20px]"
                   />
@@ -337,7 +367,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img src="images/IBDP.svg" />
+                            <Img
+                            loading="lazy"
+                            src="images/IBDP.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -365,7 +397,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img src="images/IGCSE.svg" />
+                            <Img 
+                            loading="lazy"
+                            src="images/IGCSE.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -392,7 +426,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img src="images/MYP.svg" />
+                            <Img 
+                            loading="lazy"
+                            src="images/MYP.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -420,7 +456,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img src="images/Alevels.svg" />
+                            <Img 
+                            loading="lazy"
+                            src="images/Alevels.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -448,7 +486,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img src="images/SAT.svg" />
+                            <Img 
+                            loading="lazy"
+                            src="images/SAT.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -476,7 +516,9 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] mt-[23px] ml-[26px] sm:mt-0 sm:ml-0"
                           >
-                            <Img src="images/AI.svg" />
+                            <Img 
+                            loading="lazy"
+                            src="images/AI.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -498,7 +540,7 @@ export default function HomePage() {
                     </Swiper>
                   </div>
                 ) : (
-                  <div className="justify-center w-full mt-[33px] px-3 gap-[13px] grid-cols-3 grid min-h-[auto] max-w-[1157px]">
+                  <div className="justify-center w-full mt-[33px] px-3 py-3 gap-[13px] grid-cols-3 grid min-h-[auto] max-w-[1157px]">
                     <SwiperSlide>
                       <div className="flex flex-col items-start justify-start w-full gap-[19px] p-[35px] bg-teal-900 shadow-sm rounded-[10px]">
                         <Button
@@ -670,7 +712,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-center w-full mt-[141px] sm:mt-[86px] attch-img">
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="h-[227px] w-full z-[1] relative max-w-[1424px]">
-                      <div className="justify-center items-center h-[226px] xs:h-[170px] xs:top-[-50%] w-full left-0 bottom-0 right-0 top-[-20%] m-auto bg-teal-900 absolute rounded-[25px]">
+                    <div className="justify-center items-center h-[226px] xs:h-[170px] xs:top-[-50%] w-full left-0 bottom-0 right-0 top-[-100%] m-auto bg-teal-900 absolute rounded-[25px]">
                         <Heading
                           size="3xl"
                           as="h4"
@@ -684,7 +726,7 @@ export default function HomePage() {
                         </Heading>
                       </div>
                     </div>
-                    <div className="h-[50vh] sm:h-[124vh] xs:h-[120vh] 2xl:h-[500px] w-full mt-[-64px] relative">
+                    <div className="h-[50vh] sm:h-[1080px]  xs:h-[1080px] 2xl:h-[500px] w-full mt-[-64px] relative">
                       {/* <Img
                         src="images/education.jpg"
                         alt="image_two"
@@ -710,7 +752,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[66%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[70%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"
@@ -740,7 +782,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[31%] xs:bottom-[29%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[35%] xs:bottom-[35%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"
@@ -770,7 +812,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[-9%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[0%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"
@@ -803,7 +845,7 @@ export default function HomePage() {
                                 />
                               </div>
                             </div>
-                            <div className="absolute sm:bottom-[-42%] xs:bottom-[-47%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
+                            <div className="absolute sm:bottom-[-35%] xs:bottom-[-35%] sm:text-center sm:w-full -bottom-14 lg:bottom-6">
                               <Heading
                                 size="xl"
                                 as="h4"
@@ -895,22 +937,22 @@ export default function HomePage() {
                         worldwide.
                       </Text>
                     </div>
-                    <div className="h-[944px] sm:h-[424px] w-[65%] sm:mt-[10%] sm:w-full relative">
+                    <div className="h-[800px] sm:h-[424px] w-[65%] sm:mt-[10%] sm:w-full relative">
                       <Img
                         src="images/img_rectangle_8.png"
                         alt="image_three"
-                        className="h-[944px] sm:h-[474px] w-[66%] right-0 bottom-0 top-0 sm:top-[-90px] sm:m-0 m-auto object-cover absolute"
+                          className="h-[800px] sm:h-[474px] w-[66%] right-0 bottom-0 top-0 sm:top-[-90px] sm:m-0 m-auto object-cover absolute"
                       />
-                      <div className="h-[801px] sm:h-[444px] w-full top-0 sm:top-[-27%] right-0 left-0 m-auto absolute">
+                       <div className="h-[700px] sm:h-[444px] w-full top-0 sm:top-[-27%] right-0 left-0 m-auto absolute">
                         <Img
                           src="images/img_group_72.png"
                           alt="image_four"
-                          className="justify-center h-[801px] sm:h-[444px] w-full left-0 bottom-0 right-0 -sm:top-[-25%] top-0 m-auto object-cover absolute"
+                           className="justify-center h-[700px] sm:h-[444px] w-full left-0 bottom-0 right-0 -sm:top-[-25%] top-0 m-auto object-cover absolute"
                         />
                         <Img
                           src="images/img_rectangle_7.png"
                           alt="image_five"
-                          className="h-[682px] w-[63%] sm:h-[350px] bottom-0 left-[15%] m-auto object-cover absolute rounded-[20px]"
+                             className="h-[600px] w-[60%] sm:h-[350px] bottom-0 left-[15%] m-auto object-cover absolute rounded-[20px]"
                         />
                       </div>
                     </div>
@@ -932,7 +974,7 @@ export default function HomePage() {
                   Relevant Blog posts regarding Student development,
                   International curricula, Parent Involvement, etc
                 </Heading>
-                <div className="3xl:h-[800px] 3xl:mt-[8%] 2xl:h-[664px] h-[664px] sm:h-[200vh] xs:h-[210vh] md:h-[545px] md:mt-[20%] w-full 2xl:mt-[20%]  relative card-img-atch">
+                <div className="3xl:h-[800px] 3xl:mt-[8%] 2xl:h-[664px] h-[664px] sm:h-[1640px] xs:h-[1800px] md:h-[545px] md:mt-[20%] w-full 2xl:mt-[20%]  relative card-img-atch">
                   {/* <Img
                     src="images/img_rectangle_42.png"
                     alt="image_six"
@@ -1046,606 +1088,139 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {isReviewSwiper ? (
-                  <div className="flex flex-row justify-end items-start h-[800px] md:h-[100vh] w-full p-[47px] sm:p-0 bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
-                    <div className="flex flex-row justify-end w-[99%] mb-[73px]">
-                      <div className="flex flex-col items-start justify-start w-full gap-[84px]">
-                        <div className="flex flex-col items-start justify-start ml-[92px] md:ml-[42px] sm:ml-[22px] p-3 pt-0.5">
-                          {/* <Heading
-                          size="xs"
-                          as="p"
-                          className="tracking-[0.20px] !font-montserrat"
+                <div className="flex flex-row justify-end items-start h-[1000px] 3xl:h-[900px] sm:h-[800px] md:h-[850px] w-full p-[47px] sm:p-0 bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
+                  <div className="flex flex-row justify-end w-[99%] mb-[73px]">
+                    <div className="flex flex-col items-start justify-start w-full gap-[84px]">
+                      <div className="flex flex-col items-start justify-start ml-[92px] md:ml-[42px] sm:ml-[22px] p-3 pt-0.5">
+                        <Heading
+                          size="4xl"
+                          as="h1"
+                          className="mt-[18px] tracking-[0.20px] !font-montserrat"
                         >
-                          Practice Advice
-                        </Heading> */}
-                          <Heading
-                            size="4xl"
-                            as="h1"
-                            className="mt-[18px] tracking-[0.20px] !font-montserrat"
-                          >
-                            Every Student Matters
-                          </Heading>
-                          <Text
-                            as="p"
-                            className="w-[95%] mt-2.5 tracking-[0.20px] !font-montserrat !font-normal !leading-5"
-                          >
-                            Problems trying to resolve the conflict between{" "}
-                            <br />
-                            the two major realms of Classical physics: Newtonian
-                            mechanics{" "}
-                          </Text>
-                        </div>
-                        <div className="flex flex-row justify-center items-center w-full gap-[45px]">
-                          <div className=" justify-center items-center w-[85%] gap-40">
-                            <div className="flex flex-row justify-between gap-10">
-                              <Swiper
-                                // autoplay
-                                spaceBetween={10}
-                                slidesPerView={1}
-                                breakpoints={{
-                                  768: {
-                                    slidesPerView: 2,
-                                    spaceBetween: 20,
-                                  },
-                                }}
-                                autoplay={{
-                                  delay: 2000,
-                                  disableOnInteraction: false,
-                                }}
-                                modules={[Autoplay]}
-                              >
-                                <SwiperSlide className="h-auto rounded-[10px]">
-                                  <div className="flex flex-col items-center justify-between w-[100%] p-[25px] rounded-lg bg-white-A700">
-                                    <div className="flex flex-col items-center justify-end w-full gap-5 p-1.5">
-                                      <RatingBar
-                                        value={5}
-                                        isEditable={false}
-                                        size={22}
-                                        className="flex justify-between w-[130px] mt-6"
-                                      />
-                                      <Text
-                                        as="p"
-                                        className="w-[94%] mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
+                          Every Student Matters
+                        </Heading>
+                        <Text
+                          as="p"
+                          className="w-[95%] mt-2.5 tracking-[0.20px] !font-montserrat !font-normal !leading-5"
+                        >
+                          Problems trying to resolve the conflict between <br />
+                          the two major realms of Classical physics: Newtonian
+                          mechanics{" "}
+                        </Text>
+                      </div>
+                      <div className="flex flex-row justify-center items-center w-full gap-[45px]">
+                        <div className=" justify-center items-center w-[85%] gap-40">
+                          <div className="flex flex-row justify-between gap-10">
+                            <Swiper
+                              // autoplay
+                              spaceBetween={10}
+                              slidesPerView={1}
+                              breakpoints={{
+                                2500: {
+                                  slidesPerView: 4,
+                                  spaceBetween: 20,
+                                },
+                                1400: {
+                                  slidesPerView: 3,
+                                  spaceBetween: 20,
+                                },
+                                1024: {
+                                  slidesPerView: 2,
+                                  spaceBetween: 20,
+                                },
+                                600: {
+                                  slidesPerView: 2,
+                                  spaceBetween: 20,
+                                },
+                              }}
+                              // autoplay={{
+                              //   delay: 2000,
+                              //   disableOnInteraction: false,
+                              // }}
+                              // modules={[Autoplay]}
+                            >
+                              {reviewData.map((ele, index) => {
+                                if (!ele.text) return null; // Skip if there's no text
+
+                                const isLongText = ele.text.length > 400;
+                                const displayText =
+                                  isLongText && !showMoreStates[index]
+                                    ? `${ele.text.substring(0, 400)}...`
+                                    : ele.text;
+                                return (
+                                  <div key={index}>
+                                    {ele.text ? (
+                                      <SwiperSlide
+                                        className="h-[650px] sm:h-[450px] 2xl:h-[500px] 3xl:h-[480px] md:h-[500px] rounded-[10px]"
+                                        key={index}
                                       >
-                                        Personally, the teachers are immaculate,
-                                        I am amazed and fascinated by their
-                                        incredible methods of teaching topics. I
-                                        have been learning physics with Mr.Ajit
-                                        and overs these years my grades have
-                                        only gone up. I am thankful to all the
-                                        teachers at Ilate.
-                                      </Text>
-                                    </div>
-                                    <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
-                                      <Img
-                                        src="images/img_testimonial_user_cover_167.png"
-                                        alt="circleimage"
-                                        className="h-[50px] w-[50px] rounded-[50%]"
-                                      />
-                                      <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
-                                        <Heading
-                                          size="xs"
-                                          as="p"
-                                          className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                        >
-                                          Yug Jain
-                                        </Heading>
-                                        <Text
-                                          size="xs"
-                                          as="p"
-                                          className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                        >
-                                          Student
-                                        </Text>
-                                      </div>
-                                    </div>
+                                        <div className="flex flex-col items-center justify-between w-[100%] p-[25px] rounded-lg bg-white-A700 overflow-y-scroll">
+                                          <div className="flex flex-col items-center justify-end w-full gap-5 p-1.5">
+                                            <RatingBar
+                                              value={ele.stars}
+                                              isEditable={false}
+                                              size={22}
+                                              className="flex justify-between w-[130px] mt-6"
+                                            />
+                                            <Text
+                                              as="p"
+                                              className="w-[94%] mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
+                                            >
+                                              {displayText}
+                                              {isLongText && (
+                                                <span
+                                                  onClick={() =>
+                                                    toggleShowMore(index)
+                                                  }
+                                                  className="font-bold ml-4 cursor-pointer"
+                                                >
+                                                  {showMoreStates[index]
+                                                    ? "show less"
+                                                    : "show more"}
+                                                </span>
+                                              )}
+                                            </Text>
+                                          </div>
+                                          <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
+                                            {/* <Img
+                                                src="images/img_testimonial_user_cover_167.png"
+                                                alt="circleimage"
+                                                className="h-[50px] w-[50px] rounded-[50%]"
+                                              /> */}
+                                            <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
+                                              <Heading
+                                                size="xs"
+                                                as="p"
+                                                className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
+                                              >
+                                                {ele.name}
+                                              </Heading>
+                                              {/* <Text
+                                                   size="xs"
+                                                   as="p"
+                                                   className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
+                                                 >
+                                                   Student
+                                                 </Text> */}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </SwiperSlide>
+                                    ) : (
+                                      ""
+                                    )}
                                   </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="h-auto rounded-[10px]">
-                                  <div className="flex flex-col items-center justify-between w-[100%] p-[25px] rounded-lg bg-white-A700">
-                                    <div className="flex flex-col items-center justify-start w-full gap-5 p-[22px]">
-                                      <RatingBar
-                                        value={5}
-                                        isEditable={false}
-                                        size={22}
-                                        className="flex justify-between w-[130px] mt-2"
-                                      />
-                                      <Text
-                                        as="p"
-                                        className="mb-[22px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                      >
-                                        ILATE was an absolutely amazing
-                                        institute to learn from. By far the best
-                                        math tutoring I’ve ever had! also has a
-                                        great environment to learn in and
-                                        practice in, you can sit for hours and
-                                        get your work done. I would absolutely
-                                        recommend ILATE to anyone seeking
-                                        assistance and aid in math.
-                                      </Text>
-                                    </div>
-                                    <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
-                                      <Img
-                                        src="images/img_testimonial_user_cover_169.png"
-                                        alt="regina_miles"
-                                        className="h-[50px] w-[50px] rounded-[50%]"
-                                      />
-                                      <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                        <Heading
-                                          size="xs"
-                                          as="p"
-                                          className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                        >
-                                          Chelsea Lewis
-                                        </Heading>
-                                        <Text
-                                          size="xs"
-                                          as="p"
-                                          className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                        >
-                                          Student
-                                        </Text>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="h-auto rounded-[10px]">
-                                  <div className="flex flex-col items-center justify-between w-[100%] p-[25px] rounded-lg bg-white-A700">
-                                    <div className="flex flex-col items-center justify-end w-full gap-5 p-1.5">
-                                      <RatingBar
-                                        value={5}
-                                        isEditable={false}
-                                        size={22}
-                                        className="flex justify-between w-[130px] mt-6"
-                                      />
-                                      <Text
-                                        as="p"
-                                        className="w-[94%] mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                      >
-                                        Amit sir is an amazing teacher! he
-                                        always makes time before tests and exams
-                                        for one on one lessons. He also explains
-                                        concepts in a simple manner and is
-                                        extremely patient. He helped me pass IB
-                                        math and get good scores for college. I
-                                        would highly recommend his centre!!
-                                      </Text>
-                                    </div>
-                                    <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
-                                      <Img
-                                        src="images/img_testimonial_user_cover_169.png"
-                                        alt="circleimage"
-                                        className="h-[50px] w-[50px] rounded-[50%]"
-                                      />
-                                      <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
-                                        <Heading
-                                          size="xs"
-                                          as="p"
-                                          className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                        >
-                                          Rysa Pandey
-                                        </Heading>
-                                        <Text
-                                          size="xs"
-                                          as="p"
-                                          className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                        >
-                                          Student
-                                        </Text>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="h-auto rounded-[10px]">
-                                  <div className="flex flex-col items-center justify-between w-[100%] p-[25px] rounded-lg bg-white-A700">
-                                    <div className="flex flex-col items-center justify-start w-full gap-5 p-[22px]">
-                                      <RatingBar
-                                        value={5}
-                                        isEditable={false}
-                                        size={22}
-                                        className="flex justify-between w-[130px] mt-2"
-                                      />
-                                      <Text
-                                        as="p"
-                                        className="mb-[22px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                      >
-                                        Amit sir is an exceptional teacher
-                                        helping me brush up on the topics iv
-                                        covered in school and teaching me the
-                                        portion. He's really helped me improve
-                                        my IBDP scores and has allowed me to
-                                        enjoy and understand math.
-                                      </Text>
-                                    </div>
-                                    <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
-                                      <Img
-                                        src="images/img_testimonial_user_cover_167.png"
-                                        alt="regina_miles"
-                                        className="h-[50px] w-[50px] rounded-[50%]"
-                                      />
-                                      <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                        <Heading
-                                          size="xs"
-                                          as="p"
-                                          className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                        >
-                                          Ayaan Girdhar
-                                        </Heading>
-                                        <Text
-                                          size="xs"
-                                          as="p"
-                                          className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                        >
-                                          Student
-                                        </Text>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </SwiperSlide>
-                              </Swiper>
-                            </div>
+                                );
+                              })}
+                            </Swiper>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                ) : (
-                  <div className="flex flex-row justify-end items-start h-[900px] lg:h-[120vh] 3xl:mt-[-10%] 2xl:mt-0 3xl:z-20 2xl:z-0 w-full p-[47px] bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
-                    <div className="flex flex-row justify-end w-[99%] mb-[73px]">
-                      <div className="flex flex-col items-start justify-start w-full gap-[84px]">
-                        <div className="flex flex-col items-start justify-start ml-[92px] md:ml-[42px] sm:ml-[22px] pt-0.5">
-                          {/* <Heading
-                          size="xs"
-                          as="p"
-                          className="tracking-[0.20px] !font-montserrat"
-                        >
-                          Practice Advice
-                        </Heading> */}
-                          <Heading
-                            size="5xl"
-                            as="h1"
-                            className="md:text-[30px] mt-[18px] tracking-[0.20px] !font-montserrat"
-                          >
-                            Every Student Matters
-                          </Heading>
-                          <Text
-                            as="p"
-                            className="w-[95%] mt-2.5 tracking-[0.20px] !font-montserrat !font-normal !leading-5"
-                          >
-                            Problems trying to resolve the conflict between{" "}
-                            <br />
-                            the two major realms of Classical physics: Newtonian
-                            mechanics{" "}
-                          </Text>
-                        </div>
-                        <div className="flex flex-row justify-center items-center w-full gap-[45px]">
-                          {/* <Img
-                          src="images/img_vector_gray_50.svg"
-                          alt="vector_one"
-                          className="h-[62px]"
-                        /> */}
-                          <div className="flex flex-row justify-center items-center w-[85%] gap-40">
-                            <div className="flex flex-row justify-between gap-10">
-                              <div className="flex flex-col items-center justify-between w-[30%] p-[25px] rounded-lg bg-white-A700">
-                                <div className="flex flex-col items-center justify-end w-full gap-5 p-1.5 rounded-[10px]">
-                                  <RatingBar
-                                    value={5}
-                                    isEditable={false}
-                                    size={22}
-                                    className="flex justify-between w-[130px] mt-6"
-                                  />
-                                  <Text
-                                    as="p"
-                                    className="w-[94%] mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                  >
-                                    Personally, the teachers are immaculate, I
-                                    am amazed and fascinated by their incredible
-                                    methods of teaching topics. I have been
-                                    learning physics with Mr.Ajit and overs
-                                    these years my grades have only gone up. I
-                                    am thankful to all the teachers at Ilate.
-                                  </Text>
-                                </div>
-                                <div className="flex flex-row justify-around items-center w-[60%]">
-                                  <Img
-                                    src="images/img_testimonial_user_cover_167.png"
-                                    alt="circleimage"
-                                    className="h-[50px] w-[50px] rounded-[50%]"
-                                  />
-                                  <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
-                                    <Heading
-                                      size="xs"
-                                      as="p"
-                                      className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                    >
-                                      Yug Jain
-                                    </Heading>
-                                    <Text
-                                      size="xs"
-                                      as="p"
-                                      className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                    >
-                                      Student
-                                    </Text>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex flex-col items-center justify-between w-[30%] p-[25px] rounded-lg bg-white-A700">
-                                <div className="flex flex-col items-center justify-start w-full gap-5 p-[22px]">
-                                  <RatingBar
-                                    value={5}
-                                    isEditable={false}
-                                    size={22}
-                                    className="flex justify-between w-[130px] mt-2"
-                                  />
-                                  <Text
-                                    as="p"
-                                    className="mb-[22px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                  >
-                                    ILATE was an absolutely amazing institute to
-                                    learn from. By far the best math tutoring
-                                    I’ve ever had! also has a great environment
-                                    to learn in and practice in, you can sit for
-                                    hours and get your work done. I would
-                                    absolutely recommend ILATE to anyone seeking
-                                    assistance and aid in math.
-                                  </Text>
-                                </div>
-                                <div className="flex flex-row justify-around items-center w-[60%]">
-                                  <Img
-                                    src="images/img_testimonial_user_cover_169.png"
-                                    alt="regina_miles"
-                                    className="h-[50px] w-[50px] rounded-[50%]"
-                                  />
-                                  <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                    <Heading
-                                      size="xs"
-                                      as="p"
-                                      className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                    >
-                                      Chelsea Lewis
-                                    </Heading>
-                                    <Text
-                                      size="xs"
-                                      as="p"
-                                      className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                    >
-                                      Student
-                                    </Text>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex flex-col items-center justify-between w-[30%] p-[25px] rounded-lg bg-white-A700">
-                                <div className="flex flex-col items-center justify-end w-full gap-5 p-1.5">
-                                  <RatingBar
-                                    value={5}
-                                    isEditable={false}
-                                    size={22}
-                                    className="flex justify-between w-[130px] mt-6"
-                                  />
-                                  <Text
-                                    as="p"
-                                    className="w-[94%] mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                  >
-                                    Amit sir is an amazing teacher! he always
-                                    makes time before tests and exams for one on
-                                    one lessons. He also explains concepts in a
-                                    simple manner and is extremely patient. He
-                                    helped me pass IB math and get good scores
-                                    for college. I would highly recommend his
-                                    centre!!
-                                  </Text>
-                                </div>
-                                <div className="flex flex-row justify-around items-center w-[60%]">
-                                  <Img
-                                    src="images/img_testimonial_user_cover_169.png"
-                                    alt="circleimage"
-                                    className="h-[50px] w-[50px] rounded-[50%]"
-                                  />
-                                  <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
-                                    <Heading
-                                      size="xs"
-                                      as="p"
-                                      className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                    >
-                                      Rysa Pandey
-                                    </Heading>
-                                    <Text
-                                      size="xs"
-                                      as="p"
-                                      className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                    >
-                                      Student
-                                    </Text>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex flex-col items-center justify-between w-[30%] p-[25px] rounded-lg bg-white-A700">
-                                <div className="flex flex-col items-center justify-start w-full gap-5 p-[22px]">
-                                  <RatingBar
-                                    value={5}
-                                    isEditable={false}
-                                    size={22}
-                                    className="flex justify-between w-[130px] mt-2"
-                                  />
-                                  <Text
-                                    as="p"
-                                    className="mb-[22px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                  >
-                                    Amit sir is an exceptional teacher helping
-                                    me brush up on the topics iv covered in
-                                    school and teaching me the portion. He's
-                                    really helped me improve my IBDP scores and
-                                    has allowed me to enjoy and understand math.
-                                  </Text>
-                                </div>
-                                <div className="flex flex-row justify-around items-center w-[60%]">
-                                  <Img
-                                    src="images/img_testimonial_user_cover_167.png"
-                                    alt="regina_miles"
-                                    className="h-[50px] w-[50px] rounded-[50%]"
-                                  />
-                                  <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                    <Heading
-                                      size="xs"
-                                      as="p"
-                                      className="!text-yellow-400 tracking-[0.20px] !font-montserrat"
-                                    >
-                                      Ayaan Girdhar
-                                    </Heading>
-                                    <Text
-                                      size="xs"
-                                      as="p"
-                                      className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                    >
-                                      Student
-                                    </Text>
-                                  </div>
-                                </div>
-                              </div>
-                              {/* <div className="flex flex-col items-center justify-start w-[30%] p-[25px] bg-white-A700">
-                              <div className="flex flex-col items-center justify-start w-full gap-5 p-1.5">
-                                <RatingBar
-                                  value={3.5}
-                                  isEditable={false}
-                                  size={22}
-                                  className="flex justify-between w-[130px] mt-[23px]"
-                                />
-                                <Text
-                                  as="p"
-                                  className="mb-[37px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                >
-                                  I believe that ILATE is a learning center that
-                                  has helped me a lot. Since the beginning all
-                                  the teachers especially Amit sir has always
-                                  been compassionate and caring for all of his
-                                  students growth.
-                                </Text>
-                              </div>
-                              <div className="flex flex-row justify-start items-center w-[54%] gap-[15px]">
-                                <Img
-                                  src="images/img_testimonial_user_cover_124.png"
-                                  alt="regina_miles"
-                                  className="h-[50px] w-[50px] rounded-[50%]"
-                                />
-                                <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                  <Heading
-                                    size="xs"
-                                    as="p"
-                                    className="!text-green-300 tracking-[0.20px] !font-montserrat"
-                                  >
-                                    Regina Miles
-                                  </Heading>
-                                  <Text
-                                    size="xs"
-                                    as="p"
-                                    className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                  >
-                                    Designer
-                                  </Text>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex flex-col items-center justify-start w-[30%] p-[25px] bg-white-A700">
-                              <div className="flex flex-col items-center justify-start w-full gap-5 p-1.5">
-                                <RatingBar
-                                  value={3}
-                                  isEditable={false}
-                                  size={22}
-                                  className="flex justify-between w-[130px] mt-[23px]"
-                                />
-                                <Text
-                                  as="p"
-                                  className="mb-[37px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                                >
-                                  Amit sir is the best! Ilate is the best center
-                                  for learning. The classrooms have interactive
-                                  and learning friendly design. Students can
-                                  spend hours here as I have
-                                  doneaksdhfbasjhfbdkjh fgfg gffg
-                                </Text>
-                              </div>
-                              <div className="flex flex-row justify-start items-center w-[54%] gap-[15px]">
-                                <Img
-                                  src="images/img_testimonial_user_cover_167.png"
-                                  alt="testimonial_one"
-                                  className="h-[50px] w-[50px] rounded-[50%]"
-                                />
-                                <div className="flex flex-col items-start justify-start w-[59%] pt-1 gap-[3px]">
-                                  <Heading
-                                    size="xs"
-                                    as="p"
-                                    className="!text-green-300 tracking-[0.20px] !font-montserrat"
-                                  >
-                                    Regina Miles
-                                  </Heading>
-                                  <Text
-                                    size="xs"
-                                    as="p"
-                                    className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                  >
-                                    Designer
-                                  </Text>
-                                </div>
-                              </div>
-                            </div> */}
-                            </div>
-                            {/* <div className="flex flex-col items-center justify-start w-[22%] p-[25px] bg-white-A700">
-                            <div className="flex flex-col items-center justify-start w-full gap-5 p-[26px]">
-                              <RatingBar
-                                value={3}
-                                isEditable={false}
-                                size={22}
-                                className="flex justify-between w-[130px] mt-1"
-                              />
-                              <Text
-                                as="p"
-                                className="mb-[18px] !text-black-900 tracking-[0.20px] text-center !font-normal !leading-5"
-                              >
-                                Amit sir is the best! Ilate is the best center
-                                for learning. The classrooms have interactive
-                                and learning friendly design. Students can spend
-                                hours here as I have done.
-                              </Text>
-                            </div>
-                            <div className="flex flex-row justify-start items-center w-[55%] gap-[15px]">
-                              <Img
-                                src="images/img_testimonial_user_cover_167.png"
-                                alt="testimonial_one"
-                                className="h-[50px] w-[50px] rounded-[50%]"
-                              />
-                              <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
-                                <Heading
-                                  size="xs"
-                                  as="p"
-                                  className="!text-green-300 tracking-[0.20px] !font-montserrat"
-                                >
-                                  Regina Miles
-                                </Heading>
-                                <Text
-                                  size="xs"
-                                  as="p"
-                                  className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                >
-                                  Designer
-                                </Text>
-                              </div>
-                            </div>
-                          </div> */}
-                          </div>
-                          {/* <Img
-                          src="images/img_vector_gray_50_62x47.svg"
-                          alt="vector_three"
-                          className="h-[62px]"
-                        /> */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
-            {/* <Footer className="flex justify-center items-center w-full p-[43px] bg-black-900" /> */}
           </div>
         </div>
       </div>

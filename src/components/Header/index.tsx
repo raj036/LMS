@@ -26,8 +26,6 @@ export default function Header({ ...props }: Props) {
   }, [user]);
 
   const getMyData = async () => {
-
-
     try {
       const response = await axios.get(`api/get_my_profile`, {
         headers: {
@@ -47,6 +45,7 @@ export default function Header({ ...props }: Props) {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       } else {
@@ -87,6 +86,7 @@ export default function Header({ ...props }: Props) {
           <Link to="/" className="">
             <Img
               src="images/ILATE_Classes_Final_Logo-02.jpg"
+              loading="lazy"
               alt="whatsappimage"
               className="w-[40%] sm:w-[50%] inline-block"
             />
@@ -142,6 +142,7 @@ export default function Header({ ...props }: Props) {
               <div>
                 <Img
                   src="images/hamburger_icn.png"
+                  loading="lazy"
                   alt="whatsappimage"
                   className="w-[40px] sm:block hidden"
                   onClick={handleToggle}
@@ -214,6 +215,7 @@ export default function Header({ ...props }: Props) {
               >
                 {/* <span className="sr-only">Open user menu</span> */}
                 <img
+                  loading="lazy"
                   className="w-8 h-8 mr-1 rounded-full"
                   src={userImg}
                   alt="user photo"

@@ -54,7 +54,7 @@ const UserSidebarLayout = () => {
             </Link>
             <Link to={"/dashboard/myannouncement"}>
               <SidebarItem
-                icon={<CalendarCheck2 size={20} />}
+                icon={<Mic2Icon size={20} />}
                 text="Announcement"
                 active={location.pathname === "/dashboard/myannouncement"}
               />

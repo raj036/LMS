@@ -48,6 +48,7 @@ const StudentAnnouncements = () => {
                   </div>
                   <div className="   w-56 justify-items-end md:w-96 md:ml-[10px]">
                     <img
+                    loading="lazy"
                       src={ele.announcement_images}
                       alt=""
                       className="w-full h-auto"

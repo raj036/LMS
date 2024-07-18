@@ -69,6 +69,7 @@ export default function Footer({ ...props }: Props) {
               <Img
                 src="images/img_whatsapp_image_2024_02_13_338x379.png"
                 alt="whatsappimage"
+                loading="lazy"
                 className="w-[75%] object-cover"
               />
               {/* <Text size="s" as="p" className="">

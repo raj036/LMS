@@ -56,6 +56,7 @@ const ParentProfile = () => {
       Swal.fire({
         text: "Form updated Success Fully",
         icon: "success",
+        confirmButtonColor: "#7066E0",
         confirmButtonText: "OK",
       });
     } catch (error) {
@@ -63,6 +64,7 @@ const ParentProfile = () => {
       Swal.fire({
         text: "Form not updated due to some issue",
         icon: "error",
+        confirmButtonColor: "#7066E0",
         confirmButtonText: "OK",
       });
     }

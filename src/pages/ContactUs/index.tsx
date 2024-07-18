@@ -67,6 +67,7 @@ export default function ContactUsPage() {
             <div className="flex flex-col items-center justify-start w-full gap-[85px] sm:gap-6">
               <div className="h-[455px] sm:h-[200px] w-full relative">
                 <Img
+                loading="lazy"
                   src="images/img_image_56.png"
                   alt="imagefiftysix"
                   className="justify-center h-[500px] sm:h-[200px] w-full xs:w-100 left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
@@ -186,6 +187,7 @@ export default function ContactUsPage() {
                   </Text>
                   <div className="flex flex-row justify-start items-center mt-[23px] gap-4">
                     <Img
+                    loading="lazy"
                       src="images/img_vector_black_900.svg"
                       alt="vector_one"
                       className="h-[34px]"
@@ -208,6 +210,7 @@ export default function ContactUsPage() {
                   </div>
                   <div className="flex flex-row justify-start mt-5 gap-4">
                     <Img
+                    loading="lazy"
                       src="images/img_vector_black_900_26x29.svg"
                       alt="vector_three"
                       className="h-[26px]"
@@ -226,6 +229,7 @@ export default function ContactUsPage() {
                     <div className="flex flex-col items-start justify-start w-full gap-4">
                       <div className="flex flex-row justify-start items-center gap-4">
                         <Img
+                        loading="lazy"
                           src="images/img_vector_black_900_24x32.svg"
                           alt="vector_five"
                           className="h-6"
@@ -249,6 +253,7 @@ export default function ContactUsPage() {
                   <div className="flex flex-row justify-between items-center gap-2 w-[20%] mt-[11px]">
                     <Link to="#">
                       <Img
+                      loading="lazy"
                         src="images/img_vector_black_900_32x19.svg"
                         alt="vector_seven"
                         className="h-8"
@@ -256,6 +261,7 @@ export default function ContactUsPage() {
                     </Link>
                     <Link to="#">
                       <Img
+                      loading="lazy"
                         src="images/img_vector_black_900_30x32.svg"
                         alt="vector_nine"
                         className="h-8"
@@ -263,6 +269,7 @@ export default function ContactUsPage() {
                     </Link>
                     <Link to="#">
                       <Img
+                      loading="lazy"
                         src="images/img_vector_black_900_20x31.svg"
                         alt="vector_eleven"
                         className="h-6"

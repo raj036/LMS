@@ -263,6 +263,7 @@ export default function SignUpPagePage() {
               Sign Up
             </Button> */}
             <Img
+            loading="lazy"
               src="images/img_reshot_illustra.png"
               alt="reshotillustra"
               className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8 md:mt-32"

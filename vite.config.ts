@@ -8,6 +8,7 @@ export default defineConfig({
   // comment this out if that isn't relevant for your project
   build: {
     outDir: "build",
+    chunkSizeWarningLimit: 2000 // Increase the limit to 1000kB
   },
   plugins: [tsconfigPaths(), react()],
   server: {

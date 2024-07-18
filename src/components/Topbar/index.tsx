@@ -44,6 +44,7 @@ const Topbar = ({ heading }) => {
           <img
             className="w-8 h-8 mr-1 rounded-full"
             src={userImg}
+            loading="lazy"
             alt="user photo"
           />
           {user?.user_name}

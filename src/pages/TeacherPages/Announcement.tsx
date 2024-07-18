@@ -34,7 +34,7 @@ const TeacherAnnouncements = () => {
             <>
               <div className="flex flex-row p-6 ">
                 <div className="text-lg pl-[5px]">
-                  <h1>{format(ele.created_on,"mm/dd/yy")}</h1>
+                  <h1>{format(ele.created_on,"yyyy-MM-dd")}</h1>
                 </div>
                 <div className="border-solid border-[#FF7008] border-2 mx-4"></div>
                 <div className="flex justify-between w-[80%] gap-2">
@@ -48,6 +48,7 @@ const TeacherAnnouncements = () => {
                   </div>
                   <div className="   w-56 justify-items-end md:w-96 md:ml-[10px]">
                     <img
+                    loading="lazy"
                       src={ele.announcement_images}
                       alt=""
                       className="w-full h-auto"

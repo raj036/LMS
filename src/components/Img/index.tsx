@@ -11,6 +11,7 @@ const Img: React.FC<React.PropsWithChildren<ImgProps>> = ({
   className,
   src = "defaultNoData.png",
   alt = "testImg",
+  loading="lazy",
   ...restProps
 }) => {
   return <img className={className} src={src} alt={alt} {...restProps} loading={"lazy"} />;

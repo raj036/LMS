@@ -10,7 +10,8 @@ import {
   Mail,
   IndianRupee,
   BookOpenText,
-  Mic2Icon
+  Mic2Icon,
+  BookMarked
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -47,6 +48,13 @@ const AdminSidebarLayout = () => {
               icon={<GraduationCap size={20} />}
               text="Enrolled"
               active={location.pathname === "/enrolled"}
+            />
+          </Link>
+          <Link to={"/tutor"}>
+            <SidebarItem
+              icon={<BookMarked size={20} />}
+              text="Tutor"
+              active={location.pathname === "/tutor"}
             />
           </Link>
           <Link to={"/demoform"}>

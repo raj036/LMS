@@ -143,8 +143,20 @@ const TeacherProfile = () => {
         },
       })
       .then((response) => {
+        Swal.fire({
+          icon: "success",
+          title: `Profile data was submitted successfully`,
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "OK",
+        });
       })
       .catch((error) => {
+        Swal.fire({
+          title: "Due to some error the data was not submitted",
+          icon: "error",
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "OK",
+        });
         console.error("Error submitting data:", error);
       });
   };
@@ -224,14 +236,16 @@ const TeacherProfile = () => {
         Swal.fire({
           icon: "success",
           title: `Profile updated successfully`,
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       })
       .catch((error) => {
         console.log(error);
         Swal.fire({
-          title: "Data was not updated successfully",
+          title: "Data was not updated due to some technical issue",
           icon: "error",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       });

@@ -136,7 +136,7 @@ const Dashboard = () => {
                 </Link>
               </Card>
               <Card className="w-full">
-                <Link to={"#"}>
+                <Link to={"/tutor"}>
                   <div className="flex justify-between p-6 pb-2 font-semibold">
                     <p>Teachers</p>
                     <BookMarked className="w-5 h-5" />

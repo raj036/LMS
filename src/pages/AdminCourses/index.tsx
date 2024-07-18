@@ -19,6 +19,7 @@ const Courses = () => {
   const { user }: any = useAuthContext();
   const [activeTab, setActiveTab] = useState(0);
   const [courseData, setCourseData] = useState([]);
+  const [isDialogue, setIsDialogue] = useState(false);
 
   const [formData, setFormData] = useState({
     course_name: "",
@@ -96,6 +97,7 @@ const Courses = () => {
       });
       // Optionally, reset form or fetch updated course data
       getCourseData();
+      setIsDialogue(false);
     } catch (error) {
       console.error("Error Creating User", error);
       Swal.fire({
@@ -129,7 +131,7 @@ const Courses = () => {
     <>
       <Topbar heading={"Courses"} />
       <div className="container py-5">
-        <Dialog>
+        <Dialog open={isDialogue} onOpenChange={setIsDialogue}>
           <div className="flex justify-end">
             <DialogTrigger asChild>
               <Button className="bg-teal-900 hover:!bg-blue-900">
@@ -153,6 +155,7 @@ const Courses = () => {
                   onChange={(e) =>
                     handleInputChange("course_name", e.target.value)
                   }
+                  required
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -166,6 +169,7 @@ const Courses = () => {
                   className="col-span-3"
                   value={formData.standards[0].standard_name}
                   onChange={(e) => handleStandardChange(e.target.value)}
+                  required
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -179,6 +183,7 @@ const Courses = () => {
                   className="col-span-3"
                   value={formData.standards[0].subjects[0].subject_name}
                   onChange={(e) => handleSubjectChange(e.target.value)}
+                  required
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -194,6 +199,7 @@ const Courses = () => {
                     formData.standards[0].subjects[0].modules[0].module_name
                   }
                   onChange={(e) => handleModuleChange(e.target.value)}
+                  required
                 />
               </div>
               <DialogFooter>

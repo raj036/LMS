@@ -11,6 +11,7 @@ import Courses from "pages/AdminCourses";
 import Mail from "pages/Mail";
 import StudentPayment from "pages/StudentPayment";
 import AdminAnnouncements from "pages/AdminAnnouncement";
+import Teachers from "pages/AdminTeacherPage";
 
 const AdminRoutes = () => {
   const { user }: any = useAuthContext();
@@ -55,6 +56,10 @@ const AdminRoutes = () => {
     {
       path: "announcement",
       element: <AdminAnnouncements />,
+    },
+    {
+      path: "tutor",
+      element: <Teachers />,
     },
   ];
 

@@ -23,6 +23,7 @@ export default function AboutusPage() {
               <div className="h-[500px] sm:h-[200px] w-full relative">
                 <Img
                   src="images/img_image_41.png"
+                  loading="lazy"
                   alt="imagefortyone"
                   className="justify-center h-[500px] sm:h-[200px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                 />
@@ -69,6 +70,7 @@ export default function AboutusPage() {
                       <div className="flex flex-row justify-start items-center mt-[17px] gap-4">
                         <Img
                           src="images/img_vector.svg"
+                          loading="lazy"
                           alt="vector_one"
                           className="h-[15px] mt-1.5"
                         />
@@ -85,6 +87,7 @@ export default function AboutusPage() {
                       <div className="flex flex-row justify-start items-center mt-[9px] gap-4 ">
                         <Img
                           src="images/img_vector.svg"
+                          loading="lazy"
                           alt="vector_three"
                           className="h-[15px] mt-1.5"
                         />
@@ -100,6 +103,7 @@ export default function AboutusPage() {
                       </div>
                       <div className="flex flex-row justify-start items-center mt-1.5 gap-4 ">
                         <Img
+                        loading="lazy"
                           src="images/img_vector.svg"
                           alt="vector_five"
                           className="h-[15px]"
@@ -117,6 +121,7 @@ export default function AboutusPage() {
                       </div>
                       <div className="flex flex-row justify-start items-center mt-[9px] gap-4">
                         <Img
+                        loading="lazy"
                           src="images/img_vector.svg"
                           alt="vector_seven"
                           className="h-[15px]"
@@ -144,6 +149,7 @@ export default function AboutusPage() {
                   </div>
                   <div className="h-[690px]  w-[34%] sm:w-[100%]  relative sm:mt-14">
                     <Img
+                    loading="lazy"
                       src="images/Group_798.png"
                       alt="imagefortytwo"
                       className="h-[447px] sm:h-[430px] w-[84%] sm:px-4 lg:w-full sm:w-[100%] right-0 top-0 m-auto object-cover absolute rounded-[20px] "

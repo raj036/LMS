@@ -136,6 +136,7 @@ const UserProfile = () => {
         Swal.fire({
           text: "Form updated Success Fully",
           icon: "success",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
         fetchStudentData(); // Fetch updated data after successful update
@@ -145,6 +146,7 @@ const UserProfile = () => {
         Swal.fire({
           text: "Form not updated due to some issue",
           icon: "error",
+          confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
       });

@@ -31,6 +31,7 @@ export default function Sidebar({ children }: SidebarProps) {
               <img
                 src="/images/ILATE_Classes_Final_Logo-02.jpg"
                 alt="logo"
+                loading="lazy"
                 className={`overflow-hidden my-2 transition-all ${
                   expanded ? "w-32" : "w-0"
                 }`}

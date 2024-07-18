@@ -32,6 +32,7 @@ export const useSignup = () => {
       Swal.fire({
         title: "Account Created!",
         text: "Kindly Login to Continue.",
+        confirmButtonColor: "#7066E0",
         icon: "success",
       }).then((result: { isConfirmed: any }) => {
         if (result.isConfirmed) {

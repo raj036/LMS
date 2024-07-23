@@ -51,6 +51,7 @@ const Dashboard = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
+      console.log(response.data);
       setDashboard(response.data);
       setLoading(false);
     } catch (error) {

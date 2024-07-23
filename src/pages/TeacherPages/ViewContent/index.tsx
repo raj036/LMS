@@ -94,9 +94,7 @@ const ViewContent = () => {
                   <TableBody>
                     {courseData.lessons.map((lesson) => (
                       <TableRow key={lesson.lesson_id}>
-                        <TableCell className="">
-                          {lesson.title}
-                        </TableCell>
+                        <TableCell className="">{lesson.title}</TableCell>
                         <TableCell className="text-center">
                           {lesson.content_info.map((content) => (
                             <div key={content.id}>{content.description}</div>
@@ -106,14 +104,19 @@ const ViewContent = () => {
                           {lesson.content_info.map((content) => (
                             <div key={content.id}>
                               {content.content_path.map((path, index) => (
-                                <a
-                                  key={index}
-                                  href={path}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Content {index + 1}
-                                </a>
+                                <div key={index} className="flex justify-end">
+                                  <a
+                                    href={path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mr-2"
+                                  >
+                                    View {index + 1}
+                                  </a>
+                                  <a href={path} download className="ml-2">
+                                    Download {index + 1}
+                                  </a>
+                                </div>
                               ))}
                             </div>
                           ))}

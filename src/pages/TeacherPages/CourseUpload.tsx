@@ -22,6 +22,7 @@ const CourseUpload = () => {
   const [courseDetailsUpload, setCourseDetailsUpload] = useState<any>("");
   const [courseDataSend, setCourseDataSend] = useState({
     lesson_title: "",
+    course_content_id: "",
     content_descriptions: "",
     files: "",
   });
@@ -32,7 +33,13 @@ const CourseUpload = () => {
     const detailId = queryParams.get("detailId");
     const selectedCourseId = queryParams.get("selectedCourseId");
 
-    if (detailId) setDetailId(detailId);
+    if (detailId) {
+      setDetailId(detailId);
+      setCourseDataSend(prevData => ({
+        ...prevData,
+        course_content_id: detailId
+      }));
+    }
     if (selectedCourseId) setSelectedCourseId(selectedCourseId);
 
     // Fetch data when the component mounts or when the query parameters change
@@ -67,14 +74,19 @@ const CourseUpload = () => {
     try {
       const formData = new FormData();
       formData.append("lesson_title", courseDataSend.lesson_title);
+      formData.append("course_content_id", courseDataSend.course_content_id);
       formData.append(
         "content_descriptions",
         courseDataSend.content_descriptions
       );
+      console.log("courseDataSend.files:", courseDataSend.files);
       if (courseDataSend.files) {
         formData.append("files", courseDataSend.files);
       }
 
+      formData.forEach((value, key) => {
+        console.log(key, value);
+      });
       const response = await axios.post(`/api/content/with_lesson`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -94,13 +106,16 @@ const CourseUpload = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex sm:flex-col gap-5  sm:gap-0  justify-between  ">
             <div className="w-[30%]">
-              {/* <div>
-              <h1 className="text-start font-semibold mb-3">Courses</h1>
-              <input
-                type="text"
-                className="flex mb-12 sm:mb-4 h-12 !bg-[#002D51] sm:w-[330%]  text-white-A700 !rounded-md border !border-slate-200 bg-white !px-3 !py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
-              />
-            </div> */}
+              <div>
+                <h1 className="text-start font-semibold mb-3">Course ID</h1>
+                <input
+                  type="text"
+                  name="course_content_id"
+                  className="flex mb-12 sm:mb-4 h-12 !bg-[#002D51] sm:w-[330%] text-white-A700 !rounded-md border !border-slate-200 bg-white !px-3 !py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
+                  value={courseDataSend.course_content_id}
+                  readOnly
+                />
+              </div>
 
               <div>
                 <h1 className="text-start font-semibold mb-3">Standard</h1>

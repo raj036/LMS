@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
+import Swal from "sweetalert2";
 
 const CourseUpload = () => {
   const [detailId, setDetailId] = useState(null);
@@ -93,8 +94,20 @@ const CourseUpload = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
+      Swal.fire({
+        title: "Data uploaded successfully!",
+        confirmButtonColor: "#7066E0",
+        icon: "success",
+      })
       console.log(response);
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Data was not uploaded due to some server issue.",
+        text: "Please try again later.",
+        showConfirmButton: false,
+        timer: 3000,
+      });
       console.log(error);
     }
   };
@@ -106,7 +119,7 @@ const CourseUpload = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex sm:flex-col gap-5  sm:gap-0  justify-between  ">
             <div className="w-[30%]">
-              <div>
+              <div className="hidden">
                 <h1 className="text-start font-semibold mb-3">Course ID</h1>
                 <input
                   type="text"

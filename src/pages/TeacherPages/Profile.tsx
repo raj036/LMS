@@ -123,7 +123,7 @@ const TeacherProfile = () => {
     },
   });
 
-  const handleChange = (section, field, value) => {
+  const handleChange = (section: any, field: any, value: any) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       [section]: {
@@ -161,7 +161,7 @@ const TeacherProfile = () => {
       });
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
 
     setUserData({
@@ -269,8 +269,9 @@ const TeacherProfile = () => {
                     Name :
                   </span>
                   <input
-                    className="w-[60%]"
+                    className="w-[60%] text-[black]"
                     type="text"
+                    id="autofillfoc"
                     value={userData?.name}
                     name="name"
                     onChange={handleInputChange}
@@ -282,6 +283,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     type="text"
                     value={userData?.contact_info?.primary_email_id}
                     name="primary_email_id"
@@ -294,6 +296,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.contact_info?.secondary_email_id || "-"}
                     type="text"
                     name="secondary_email_id"
@@ -306,6 +309,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.contact_info?.current_address}
                     type="text"
                     name="current_address"
@@ -318,6 +322,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.contact_info?.primary_number}
                     type="number"
                     name="primary_number"
@@ -330,6 +335,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.contact_info?.secondary_number || "-"}
                     type="number"
                     name="secondary_number"
@@ -342,6 +348,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.dependent?.date_of_birth || "-"}
                     type="date"
                     name="date_of_birth"
@@ -354,6 +361,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.dependent?.dependent_name || "-"}
                     type="text"
                     name="dependent_name"
@@ -366,6 +374,7 @@ const TeacherProfile = () => {
                   </span>
                   <input
                     className="w-[60%]"
+                    id="autofillfoc"
                     value={userData?.languages_spoken?.languages || "-"}
                     type="text"
                     name="languages"
@@ -391,6 +400,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       type="text"
                       value={userData?.education?.education_level}
                       name="education_level"
@@ -403,6 +413,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       type="text"
                       value={userData?.education?.field_of_study}
                       name="field_of_study"
@@ -415,6 +426,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.education?.institution || "-"}
                       type="text"
                       name="institution"
@@ -427,6 +439,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.education?.specialization}
                       type="text"
                       name="specialization"
@@ -439,6 +452,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.education?.percentage}
                       type="number"
                       name="percentage"
@@ -451,6 +465,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.education?.year_of_passing || "-"}
                       type="number"
                       name="year_of_passing"
@@ -471,6 +486,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.skill?.certification}
                       type="text"
                       name="certification"
@@ -483,6 +499,7 @@ const TeacherProfile = () => {
                     </span>
                     <input
                       className="w-[60%]"
+                      id="autofillfoc"
                       value={userData?.skill?.license}
                       type="text"
                       name="license"

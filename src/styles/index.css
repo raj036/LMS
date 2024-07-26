@@ -53,6 +53,10 @@ input:focus {
   z-index: 20000 !important;
 }
 
+#autofillfoc:-webkit-autofill:focus {
+  -webkit-text-fill-color: black;
+}
+
 /* swiper part */
 
 .swiper {

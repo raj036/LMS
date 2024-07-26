@@ -13,6 +13,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Download, EyeIcon, View } from "lucide-react";
+import DownloadIcon from "/images/download.png";
+import EyeIcn from "/images/eye.png";
+import DelIcon from "/images/delete.png";
 
 const ViewContent = () => {
   const [loading, setLoading] = useState(false);
@@ -46,6 +50,45 @@ const ViewContent = () => {
     }
   };
 
+  const deleteContent = async (id: any) => {
+    try {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      });
+
+      if(result.isConfirmed){
+        const response = await axios.delete(`/api/content_lesson/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        console.log(response, "delete id");
+
+        if(response.status === 200){
+          Swal.fire(
+            'Deleted!',
+            'Your content has been deleted.',
+            'success'
+          );
+          // Refresh the course details after deletion
+          getCourseDetails(detailId);
+        }else {
+          throw new Error('Failed to delete Content')
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -57,22 +100,41 @@ const ViewContent = () => {
               <h3>Course Details</h3>
             </div>
             {courseData && (
-              <div className="mb-7">
-                <div></div>
-                <div className="flex justify-center">
-                  <h3 className="p-[20px] border-2">
-                    {courseData.course_name}
-                  </h3>
-                  <h3 className="p-[20px] border-2">
-                    {courseData.subject_name}
-                  </h3>
-                  <h3 className="p-[20px] border-2">
-                    {courseData.standard_name}
-                  </h3>
-                  <h3 className="p-[20px] border-2">
-                    {courseData.module_name}
-                  </h3>
-                </div>
+              <div className="mb-7 flex justify-center">
+                <table className="w-[50%] border-collapse border border-gray-200">
+                  <thead>
+                    <tr>
+                      <th className="p-[20px] border border-gray-200">
+                        Course Name
+                      </th>
+                      <th className="p-[20px] border border-gray-200">
+                        Subject Name
+                      </th>
+                      <th className="p-[20px] border border-gray-200">
+                        Standard Name
+                      </th>
+                      <th className="p-[20px] border border-gray-200">
+                        Module Name
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-[20px] border border-gray-200">
+                        {courseData.course_name}
+                      </td>
+                      <td className="p-[20px] border border-gray-200">
+                        {courseData.subject_name}
+                      </td>
+                      <td className="p-[20px] border border-gray-200">
+                        {courseData.standard_name}
+                      </td>
+                      <td className="p-[20px] border border-gray-200">
+                        {courseData.module_name}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             )}
             <div className="px-[200px]">
@@ -86,9 +148,7 @@ const ViewContent = () => {
                       <TableHead className="text-center bg-teal-900 text-white-A700">
                         Descripton
                       </TableHead>
-                      <TableHead className="text-right bg-teal-900 text-white-A700">
-                        Download
-                      </TableHead>
+                      <TableHead className="text-right bg-teal-900 text-white-A700"></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -101,25 +161,84 @@ const ViewContent = () => {
                           ))}
                         </TableCell>
                         <TableCell className="text-right">
-                          {lesson.content_info.map((content) => (
-                            <div key={content.id}>
-                              {content.content_path.map((path, index) => (
-                                <div key={index} className="flex justify-end">
-                                  <a
-                                    href={path}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mr-2"
-                                  >
-                                    View {index + 1}
-                                  </a>
-                                  <a href={path} download className="ml-2">
-                                    Download {index + 1}
-                                  </a>
-                                </div>
-                              ))}
-                            </div>
-                          ))}
+                          {lesson.content_info.map(
+                            (content: any, contentIndex: any) => (
+                              <div key={content.id}>
+                                {content.content_path.map(
+                                  (path: any, pathIndex: any) => (
+                                    <div
+                                      key={pathIndex}
+                                      className="flex justify-end"
+                                    >
+                                      <a
+                                        href={encodeURI(path)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mr-2"
+                                      >
+                                        <img
+                                          src={EyeIcn}
+                                          alt="eyeimg"
+                                          className="w-[24px] h-[24px] m-1"
+                                        />
+                                      </a>
+                                      <div
+                                        key={pathIndex}
+                                        className="flex justify-end relative"
+                                      >
+                                        <a
+                                          href={encodeURI(path)}
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            fetch(encodeURI(path))
+                                              .then((response) =>
+                                                response.blob()
+                                              )
+                                              .then((blob) => {
+                                                const url =
+                                                  window.URL.createObjectURL(
+                                                    blob
+                                                  );
+                                                const a =
+                                                  document.createElement("a");
+                                                a.style.display = "none";
+                                                a.href = url;
+                                                a.download = `file_${
+                                                  contentIndex + 1
+                                                }`;
+                                                document.body.appendChild(a);
+                                                a.click();
+                                                window.URL.revokeObjectURL(url);
+                                              });
+                                          }}
+                                          className="ml-2 relative"
+                                        >
+                                          <img
+                                            src={DownloadIcon}
+                                            role="button"
+                                            tabIndex={-3}
+                                            alt="downloadIcon"
+                                            className="w-[24px] h-[24px] m-1"
+                                          />
+                                        </a>
+                                        <button
+                                          onClick={() =>
+                                            deleteContent(lesson.lesson_id)
+                                          }
+                                        >
+                                          <img
+                                            src={DelIcon}
+                                            alt="deleteIcon"
+                                            className="w-[24px] h-[24px] m-1 ml-5 cursor-pointer"
+                                          />
+                                        </button>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            )
+                          )}
                         </TableCell>
                       </TableRow>
                     ))}

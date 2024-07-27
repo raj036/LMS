@@ -18,6 +18,7 @@ import TeacherDashboard from "pages/TeacherPages/Dashboard";
 import TeacherAnnouncements from "pages/TeacherPages/Announcement";
 import ViewContent from "pages/TeacherPages/ViewContent";
 import CourseUpload from "pages/TeacherPages/CourseUpload";
+import AllowAttendance from "pages/TeacherPages/AllowAttendance";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -73,6 +74,10 @@ const UserRoutes = () => {
     {
       path: "/uploadcontent",
       element: user ? <CourseUpload /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/takeattendance",
+      element: user ? <AllowAttendance /> : <Navigate to="/login" />,
     }
   ];
 

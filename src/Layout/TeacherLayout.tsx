@@ -12,7 +12,7 @@ const TeacherLayout = ({ children }) => {
   const isDashroutes = location?.pathname?.includes("dashboard");
 
   const isContentRoutes =
-    location.pathname === "/content" || location.pathname === "/uploadcontent";
+    location.pathname === "/content" || location.pathname === "/uploadcontent" || location.pathname === "/takeattendance";
   if (isContentRoutes) {
     return <>{children}</>;
   }

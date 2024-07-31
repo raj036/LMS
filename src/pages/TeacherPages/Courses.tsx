@@ -187,12 +187,12 @@ const MyCourses = () => {
                     {ele.module_name}
                   </TableCell>
                   <TableCell className="text-right">
-                    <button onClick={() => handleCreateContentLink(ele.id)}>
+                    <button onClick={() => handleCreateContentLink(ele.id)} className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500">
                       Create Content
                     </button>
                   </TableCell>
                   <TableCell className="text-right">
-                    <button onClick={() => handleViewContentLink(ele.id)}>
+                    <button onClick={() => handleViewContentLink(ele.id)} className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500">
                       View Content
                     </button>
                   </TableCell>

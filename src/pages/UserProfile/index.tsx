@@ -56,7 +56,7 @@ const UserProfile = () => {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
-      }) // Replace with your GET endpoint
+      })
       .then((response) => {
         setStudentData(response.data);
         setStudentId(response.data.student_id);
@@ -66,7 +66,7 @@ const UserProfile = () => {
       });
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setStudentData({
       ...studentData,
@@ -74,7 +74,7 @@ const UserProfile = () => {
     });
   };
 
-  const handleNestedInputChange = (e, section) => {
+  const handleNestedInputChange = (e: any, section: any) => {
     const { name, value } = e.target;
     setStudentData({
       ...studentData,
@@ -85,7 +85,7 @@ const UserProfile = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     // Prepare data structure for PUT request
@@ -131,7 +131,7 @@ const UserProfile = () => {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
-      }) 
+      })
       .then((response) => {
         Swal.fire({
           text: "Form updated Success Fully",
@@ -456,17 +456,16 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
-        
         </div>
         <div className="my-[50px] text-center">
-            <Button
-              size="lg"
-              type="submit"
-              className="  font-bold max-w-[250px]   z-10 transition hover:bg-white-A700 border bg-deep_orange-500 hover:text-deep_orange-500 border-deep_orange-500"
-            >
-              Update
-            </Button>
-          </div>
+          <Button
+            size="lg"
+            type="submit"
+            className="  font-bold max-w-[250px]   z-10 transition hover:bg-white-A700 border bg-deep_orange-500 hover:text-deep_orange-500 border-deep_orange-500"
+          >
+            Update
+          </Button>
+        </div>
       </form>
     </>
   );

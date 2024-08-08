@@ -1,4 +1,3 @@
-import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -13,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Download, EyeIcon, View } from "lucide-react";
 import DownloadIcon from "/images/download.png";
 import EyeIcn from "/images/eye.png";
 import DelIcon from "/images/delete.png";
@@ -43,26 +41,25 @@ const ViewContent = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
       setCourseData(response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const deleteContent = async (id: any) => {
     try {
       const result = await Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       });
 
-      if(result.isConfirmed){
+      if (result.isConfirmed) {
         const response = await axios.delete(`/api/content_lesson/${id}`, {
           headers: {
             "Content-Type": "application/json",
@@ -70,66 +67,63 @@ const ViewContent = () => {
           },
         });
 
-        console.log(response, "delete id");
-
-        if(response.status === 200){
-          Swal.fire(
-            'Deleted!',
-            'Your content has been deleted.',
-            'success'
-          );
+        if (response.status === 200) {
+          Swal.fire("Deleted!", "Your content has been deleted.", "success");
           // Refresh the course details after deletion
           getCourseDetails(detailId);
-        }else {
-          throw new Error('Failed to delete Content')
+        } else {
+          throw new Error("Failed to delete Content");
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   return (
     <>
+      <Helmet>
+        <title>View Content</title>
+      </Helmet>
       {loading ? (
         <Loader />
       ) : (
         <>
           <div className="container my-10">
-            <div className="my-9 text-center text-[25px]">
+            <div className="my-9 text-center text-[30px]">
               <h3>Course Details</h3>
             </div>
             {courseData && (
-              <div className="mb-7 flex justify-center">
-                <table className="w-[50%] border-collapse border border-gray-200">
+              <div className="mb-16 flex justify-center">
+                <table className="w-[50%]   shadow-md rounded-lg">
                   <thead>
-                    <tr>
-                      <th className="p-[20px] border border-gray-200">
+                    <tr className=" text-white">
+                      <th className="p-4 bg-gradient-to-r from-[#fa9960] to-[#f6753b] ">
                         Course Name
                       </th>
-                      <th className="p-[20px] border border-gray-200">
+                      <th className="p-4 bg-gradient-to-r from-[#fa9960] to-[#f6753b] ">
                         Subject Name
                       </th>
-                      <th className="p-[20px] border border-gray-200">
+                      <th className="p-4 bg-gradient-to-r from-[#fa9960] to-[#f6753b] ">
                         Standard Name
                       </th>
-                      <th className="p-[20px] border border-gray-200">
+                      <th className="p-4 bg-gradient-to-r from-[#fa9960] to-[#f6753b] ">
                         Module Name
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="p-[20px] border border-gray-200">
+                    <tr className="bg-gradient-to-r from-gray-300 to-gray-500 text-gray-700">
+                      <td className="p-4 bg-gradient-to-r from-gray-400 to-gray-500">
                         {courseData.course_name}
                       </td>
-                      <td className="p-[20px] border border-gray-200">
+                      <td className="p-4 bg-gradient-to-r from-gray-400 to-gray-500">
                         {courseData.subject_name}
                       </td>
-                      <td className="p-[20px] border border-gray-200">
+                      <td className="p-4 bg-gradient-to-r from-gray-400 to-gray-500">
                         {courseData.standard_name}
                       </td>
-                      <td className="p-[20px] border border-gray-200">
+                      <td className="p-4 bg-gradient-to-r from-gray-400 to-gray-500">
                         {courseData.module_name}
                       </td>
                     </tr>
@@ -139,16 +133,16 @@ const ViewContent = () => {
             )}
             <div className="px-[200px]">
               {courseData && (
-                <Table className="border-[1px] px-[100px]">
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className=" bg-teal-900 text-white-A700">
+                <Table className="border-[1px] px-[100px] ">
+                  <TableHeader className="">
+                    <TableRow className=" bg-[#f6753b] hover:bg-[#f6753b] text-black-900 font-bold">
+                      <TableHead className="text-black-900 font-bold ">
                         Lesson
                       </TableHead>
-                      <TableHead className="text-center bg-teal-900 text-white-A700">
+                      <TableHead className="text-center text-black-900 font-bold">
                         Descripton
                       </TableHead>
-                      <TableHead className="text-right bg-teal-900 text-white-A700"></TableHead>
+                      <TableHead className="text-right text-black-900 font-bold"></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>

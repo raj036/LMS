@@ -24,7 +24,6 @@ const AllowAttendance = () => {
   const getStudentData = async () => {
     try {
       const response = await axios.get(`/api/attendance_students/`);
-      console.log(response.data);
       setStudentRecords(response.data);
 
       // Initialize all statuses to 'present'
@@ -37,7 +36,7 @@ const AllowAttendance = () => {
       );
       setAttendanceStatuses(initialStatuses);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -78,7 +77,6 @@ const AllowAttendance = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      console.log("Submission response:", response);
       Swal.fire({
         icon: "success",
         title: `Attendance Updated`,
@@ -86,7 +84,7 @@ const AllowAttendance = () => {
         timer: 2500,
       });
     } catch (error) {
-      console.error("Submission error:", error);
+      // console.error("Submission error:", error);
       Swal.fire({
         icon: "error",
         title: "Error updating attendance.",

@@ -2,7 +2,6 @@ import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
-import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 
@@ -28,7 +27,7 @@ const ParentProfile = () => {
       });
       setParentData(response?.data);
     } catch (error) {
-      console.error("Error getting Profile", error);
+      // console.error("Error getting Profile", error);
     }
   };
 
@@ -39,7 +38,7 @@ const ParentProfile = () => {
     }));
   };
 
-  const UpdateParentData = async (e) => {
+  const UpdateParentData = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -48,7 +47,6 @@ const ParentProfile = () => {
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
-            // "Content-Type": "multipart/form-data",
             "Content-Type": "application/json",
           },
         }
@@ -60,7 +58,7 @@ const ParentProfile = () => {
         confirmButtonText: "OK",
       });
     } catch (error) {
-      console.error("error", error);
+      // console.error("error", error);
       Swal.fire({
         text: "Form not updated due to some issue",
         icon: "error",

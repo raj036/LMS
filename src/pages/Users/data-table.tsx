@@ -7,7 +7,6 @@ import {
   ColumnFiltersState,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -32,7 +31,6 @@ import {
 } from "@/components/ui/table";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -67,12 +65,9 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   setPageNum,
-  setPageSize,
   pageNum,
   pageSize,
   total,
-  userId,
-  setUserId,
   userType,
   setUserType,
 }: DataTableProps<TData, TValue>) {
@@ -137,7 +132,7 @@ export function DataTable<TData, TValue>({
           timer: 1500,
         }).then(() => window.location.reload());
       } catch (error) {
-        console.error("Error Creating User", error);
+        // console.error("Error Creating User", error);
         Swal.fire({
           icon: "error",
           title: "Error creating user.",

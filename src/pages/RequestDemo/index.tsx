@@ -29,7 +29,7 @@ const index = () => {
       });
       setMyData(response?.data?.data);
     } catch (error) {
-      console.error("Error getting Profile", error);
+      // console.error("Error getting Profile", error);
     }
   };
 
@@ -88,7 +88,7 @@ const index = () => {
     },
   ];
 
-  const { courses, standards, subjects, isLoading, error } = useCourseData();
+  const { courses, standards, subjects, isLoading} = useCourseData();
 
   const [demo, setDemo] = useState({
     course: "",
@@ -124,7 +124,7 @@ const index = () => {
         setVideoLinks(response.data);
       }, 100);
     } catch (error) {
-      console.error("Error Getting Video Links", error);
+      // console.error("Error Getting Video Links", error);
       setVideoErr(true);
     }
 

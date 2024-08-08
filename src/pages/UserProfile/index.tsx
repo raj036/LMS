@@ -62,7 +62,7 @@ const UserProfile = () => {
         setStudentId(response.data.student_id);
       })
       .catch((error) => {
-        console.error("There was an error fetching the data!", error);
+        // console.error("There was an error fetching the data!", error);
       });
   };
 
@@ -142,7 +142,7 @@ const UserProfile = () => {
         fetchStudentData(); // Fetch updated data after successful update
       })
       .catch((error) => {
-        console.error("There was an error updating the data!", error);
+        // console.error("There was an error updating the data!", error);
         Swal.fire({
           text: "Form not updated due to some issue",
           icon: "error",

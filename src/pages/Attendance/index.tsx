@@ -44,9 +44,8 @@ const MyAttendance = () => {
       setStudentData(response.data);
       
       setStudentId(response.data.student_id);
-      console.log(response.data.student_id)
     } catch (error) {
-      console.error("Error fetching student data:", error);
+      // console.error("Error fetching student data:", error);
     }
   };
 
@@ -65,11 +64,11 @@ const MyAttendance = () => {
       }));
       setEvents(attendanceEvents);
     } catch (error) {
-      console.error("Error fetching attendance:", error);
+      // console.error("Error fetching attendance:", error);
     }
   };
 
-  const handleDateClick = (arg) => {
+  const handleDateClick = (arg:any) => {
     setNewEvent({ ...newEvent, date: arg.dateStr });
     setModalIsOpen(true);
   };

@@ -53,7 +53,7 @@ const Enrolled = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching Enrolled Data", error);
+      // console.error("Error fetching Enrolled Data", error);
       Swal.fire({
         icon: "error",
         title: "Error",

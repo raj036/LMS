@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { initFlowbite } from "flowbite";
 import userImg from "../../assets/profile.jpg";
 import axios from "helper/axios";
-import { XIcon, SidebarCloseIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 
 interface Props {
   className?: string;
@@ -34,7 +34,7 @@ export default function Header({ ...props }: Props) {
       });
       setMyData(response?.data?.data);
     } catch (error) {
-      console.error("Error getting Profile", error);
+      // console.error("Error getting Profile", error);
     }
   };
 

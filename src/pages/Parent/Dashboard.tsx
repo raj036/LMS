@@ -1,6 +1,6 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { Bell, EllipsisVertical , BookOpenTextIcon} from "lucide-react";
+import { EllipsisVertical , BookOpenTextIcon} from "lucide-react";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 
@@ -18,7 +18,7 @@ const ParentDashboard = () => {
       });
       setCourseData(response?.data?.unique_courses)
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

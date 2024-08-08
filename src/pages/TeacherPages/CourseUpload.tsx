@@ -1,17 +1,4 @@
-import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { TextArea } from "components";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -20,12 +7,16 @@ import Swal from "sweetalert2";
 const CourseUpload = () => {
   const [detailId, setDetailId] = useState(null);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
-  const [courseDetailsUpload, setCourseDetailsUpload] = useState<any>("");
+  const [courseDetailsUpload, setCourseDetailsUpload] = useState({
+    standard_name: "",
+    subject_name: "",
+    module_name: "",
+  });
   const [courseDataSend, setCourseDataSend] = useState({
     lesson_title: "",
     course_content_id: "",
     content_descriptions: "",
-    files: "",
+    files: null,
   });
   const { user }: any = useAuthContext();
 
@@ -36,9 +27,9 @@ const CourseUpload = () => {
 
     if (detailId) {
       setDetailId(detailId);
-      setCourseDataSend(prevData => ({
+      setCourseDataSend((prevData) => ({
         ...prevData,
-        course_content_id: detailId
+        course_content_id: detailId,
       }));
     }
     if (selectedCourseId) setSelectedCourseId(selectedCourseId);
@@ -54,10 +45,9 @@ const CourseUpload = () => {
       const response = await axios.get(
         `/api/course/${selectedCourseId}/content/${detailId}`
       );
-      console.log(response.data, "details");
       setCourseDetailsUpload(response?.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -80,14 +70,10 @@ const CourseUpload = () => {
         "content_descriptions",
         courseDataSend.content_descriptions
       );
-      console.log("courseDataSend.files:", courseDataSend.files);
       if (courseDataSend.files) {
         formData.append("files", courseDataSend.files);
       }
 
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
       const response = await axios.post(`/api/content/with_lesson`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -98,8 +84,7 @@ const CourseUpload = () => {
         title: "Data uploaded successfully!",
         confirmButtonColor: "#7066E0",
         icon: "success",
-      })
-      console.log(response);
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -108,13 +93,12 @@ const CourseUpload = () => {
         showConfirmButton: false,
         timer: 3000,
       });
-      console.log(error);
+      // console.log(error);
     }
   };
 
   return (
     <>
-      {/* <div className="container py-5 sm:text-left sm:m-[-12px]">My Courses</div> */}
       <div className="mx-10 md:mx-6 md:mt-6 xs:mr-6 mt-10 sm:mb-8 sm:ml-4 my-56 mr-6 border-2 border-[black] p-5 rounded-[20px] md:w-[170%] xs:w-[125%] sm:w-[90%] sm:p-3 sm:mx-5">
         <form onSubmit={handleSubmit}>
           <div className="flex sm:flex-col gap-5  sm:gap-0  justify-between  ">
@@ -136,6 +120,7 @@ const CourseUpload = () => {
                   type="text"
                   className="flex h-12 mb-12 sm:mb-4 !bg-[#002D51] sm:w-[330%] text-white-A700 !rounded-md border !border-slate-200 bg-white !px-3 !py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
                   value={courseDetailsUpload.standard_name}
+                  readOnly
                 />
               </div>
               <div>
@@ -144,6 +129,7 @@ const CourseUpload = () => {
                   type="text"
                   className="flex mb-12 h-12 sm:mb-4 !bg-[#002D51] sm:w-[330%]  text-white-A700 !rounded-md border !border-slate-200 bg-white !px-3 !py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
                   value={courseDetailsUpload.subject_name}
+                  readOnly
                 />
               </div>
               <div>
@@ -163,6 +149,7 @@ const CourseUpload = () => {
                   type="text"
                   className="flex h-12 mb-12 sm:mb-4 !bg-[#002D51] sm:w-[330%]  text-white-A700 !rounded-md border !border-slate-200 bg-white !px-3 !py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
                   value={courseDetailsUpload.module_name}
+                  readOnly
                 />
               </div>
               <div>

@@ -54,27 +54,40 @@ const Courses = () => {
       standards: [{ ...prevData.standards[0], standard_name: value }],
     }));
   };
-  
+
   const handleSubjectChange = (value) => {
     setFormData((prevData) => ({
       ...prevData,
-      standards: [{
-        ...prevData.standards[0],
-        subjects: [{ ...prevData.standards[0].subjects[0], subject_name: value }],
-      }],
+      standards: [
+        {
+          ...prevData.standards[0],
+          subjects: [
+            { ...prevData.standards[0].subjects[0], subject_name: value },
+          ],
+        },
+      ],
     }));
   };
-  
+
   const handleModuleChange = (value) => {
     setFormData((prevData) => ({
       ...prevData,
-      standards: [{
-        ...prevData.standards[0],
-        subjects: [{
-          ...prevData.standards[0].subjects[0],
-          modules: [{ ...prevData.standards[0].subjects[0].modules[0], module_name: value }],
-        }],
-      }],
+      standards: [
+        {
+          ...prevData.standards[0],
+          subjects: [
+            {
+              ...prevData.standards[0].subjects[0],
+              modules: [
+                {
+                  ...prevData.standards[0].subjects[0].modules[0],
+                  module_name: value,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     }));
   };
 
@@ -82,7 +95,7 @@ const Courses = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/api/courses_create/", formData , {
+      const response = await axios.post("/api/courses_create/", formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -99,7 +112,7 @@ const Courses = () => {
       getCourseData();
       setIsDialogue(false);
     } catch (error) {
-      console.error("Error Creating User", error);
+      // console.error("Error Creating User", error);
       Swal.fire({
         icon: "error",
         title: "Error creating course.",
@@ -119,7 +132,7 @@ const Courses = () => {
       });
       setCourseData(response?.data?.unique_courses);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -210,11 +223,11 @@ const Courses = () => {
         </Dialog>
         {/* <h1 className="text-2xl font-bold">Courses</h1> */}
       </div>
-      <div className="ruby-disp space-x-4 p-4  sm:flex-col sm:p-7 ">
+      <div className="ruby-disp p-4  sm:flex-col sm:p-7 ">
         {courseData.map((tab, index) => (
           <div
             key={index}
-            className={`flex m-5 items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
+            className={`flex items-center justify-between md:h-20 m-4 p-4 w-[300px] sm:w-full bg-white rounded-lg shadow-md cursor-pointer ${
               index === activeTab ? "border-2 border-gray-300" : "border"
             }`}
             onClick={() => setActiveTab(index)}
@@ -222,6 +235,9 @@ const Courses = () => {
             <div className="flex items-center">
               <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
               <div className="m-5">
+                {/* <span className="block text-gray-600 text-[15px]">
+                  {tab}
+                </span> */}
                 <span className="block font-semibold text-gray-800">{tab}</span>
               </div>
             </div>

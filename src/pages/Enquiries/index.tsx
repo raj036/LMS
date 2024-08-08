@@ -30,7 +30,7 @@ const Enquiry = () => {
       setData(data);
       setLoading(false);
     } catch (error) {
-      console.error(error, "Error fetching Users Data");
+      // console.error(error, "Error fetching Users Data");
       Swal.fire({
         icon: "error",
         title: "Error",

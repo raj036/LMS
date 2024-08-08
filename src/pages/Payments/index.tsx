@@ -48,9 +48,6 @@ const Payments = () => {
     getBatches();
   }, [user]);
 
-  // useEffect(() => {
-  //   getFees();
-  // }, [batchSize !== 0, reqData]);
 
   const getBatches = async () => {
     try {
@@ -64,7 +61,7 @@ const Payments = () => {
       setBatchData(await response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching batches", error);
+      // console.error("Error fetching batches", error);
       setLoading(false);
     }
   };
@@ -85,7 +82,7 @@ const Payments = () => {
       setFeesAmoutCh(true);
       setLoading(false);
     } catch (error) {
-      console.error("Error Fetching Fees Data", error);
+      // console.error("Error Fetching Fees Data", error);
       setLoading(false);
       setFeesAmoutCh(false);
       Swal.fire({
@@ -108,7 +105,7 @@ const Payments = () => {
       setReqData(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error Fetching ReqData", error);
+      // console.error("Error Fetching ReqData", error);
       setLoading(false);
     }
   };
@@ -135,7 +132,7 @@ const Payments = () => {
           module: moduleResponse.data.name,
         });
       } catch (error) {
-        console.error("An error occurred", error);
+        // console.error("An error occurred", error);
       }
     };
     fetchData();
@@ -186,7 +183,7 @@ const Payments = () => {
         }
       });
     } catch (error) {
-      console.error("Error in Payment", error);
+      // console.error("Error in Payment", error);
       setLoading(false);
       Swal.fire({
         icon: "error",

@@ -46,7 +46,7 @@ export default function HomePage() {
 
       setMyData(response?.data?.data);
     } catch (error) {
-      console.error("Error getting Profile", error);
+      // console.error("Error getting Profile", error);
     }
   };
 
@@ -55,7 +55,7 @@ export default function HomePage() {
       const response = await axios.get(`/api/reviews/`);
       setReviewData(response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -1088,7 +1088,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex flex-row justify-end items-start h-[1000px] 3xl:h-[900px] sm:h-[800px] md:h-[850px] w-full p-[47px] sm:p-0 bg-black-900_33 bg-[url(/public/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
+                <div className="flex flex-row justify-end items-start h-[1000px] 3xl:h-[900px] sm:h-[800px] md:h-[850px] w-full p-[47px] sm:p-0 bg-black-900_33 bg-[url(/images/matters.jpg)] bg-blend-overlay bg-cover bg-no-repeat">
                   <div className="flex flex-row justify-end w-[99%] mb-[73px]">
                     <div className="flex flex-col items-start justify-start w-full gap-[84px]">
                       <div className="flex flex-col items-start justify-start ml-[92px] md:ml-[42px] sm:ml-[22px] p-3 pt-0.5">

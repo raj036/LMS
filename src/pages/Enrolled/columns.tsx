@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   Info,
-  Edit,
   Trash2,
   SquareArrowOutUpRight,
   CircleCheck,
   CircleX,
 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,8 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -254,7 +250,7 @@ export const columns: ColumnDef<User>[] = [
           setInfo(response.data);
           setError(false);
         } catch (error) {
-          console.error("Error Fetching Profile", error);
+          // console.error("Error Fetching Profile", error);
           setError(true);
         }
       };
@@ -308,7 +304,7 @@ export const columns: ColumnDef<User>[] = [
             }
           });
         } catch (error) {
-          console.error("Error Updating Admission Details", error);
+          // console.error("Error Updating Admission Details", error);
           Swal.fire({
             title: "Error Updating Admission Details!",
             icon: "error",
@@ -340,7 +336,7 @@ export const columns: ColumnDef<User>[] = [
             });
           }
         } catch (error) {
-          console.error("Error Deleting Admission Details", error);
+          // console.error("Error Deleting Admission Details", error);
           Swal.fire({
             title: "Error Deleting Admission Details!",
             showConfirmButton: false,
@@ -374,7 +370,7 @@ export const columns: ColumnDef<User>[] = [
               });
             }
           } catch (error) {
-            console.error("Error Verifying Payment Details", error);
+            // console.error("Error Verifying Payment Details", error);
           }
         }
       };

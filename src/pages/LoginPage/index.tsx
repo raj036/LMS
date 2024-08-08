@@ -3,8 +3,6 @@ import { Helmet } from "react-helmet";
 import { Img, Button, Text, Heading, Input } from "../../components";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLogin } from "hooks/useLogin";
-import Header from "components/Header";
-import Footer from "components/Footer";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import axios from "helper/axios";
 import Swal from "sweetalert2";

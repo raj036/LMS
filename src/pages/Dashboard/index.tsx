@@ -11,9 +11,7 @@ import {
 } from "recharts";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -24,8 +22,6 @@ import {
   BadgeInfo,
   Presentation,
   BookMarked,
-  EyeIcon,
-  EyeOffIcon
 } from "lucide-react";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -51,11 +47,10 @@ const Dashboard = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
       setDashboard(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error Fetching Dashboard Count", error);
+      // console.error("Error Fetching Dashboard Count", error);
       Swal.fire({
         icon: "error",
         title: "Error",

@@ -132,7 +132,7 @@ const index = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.error("Error Submitting Admission Form", error);
+      // console.error("Error Submitting Admission Form", error);
       if (error || error.response.status === 400) {
         Swal.fire({
           title: "Error Submitting Admission Form!",

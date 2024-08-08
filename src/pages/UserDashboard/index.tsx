@@ -1,6 +1,6 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { Bell, BookOpenTextIcon, EllipsisVertical } from "lucide-react";
+import { BookOpenTextIcon, EllipsisVertical } from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
 
@@ -18,7 +18,7 @@ const UserDashboard = () => {
       });
       setCourseData(response?.data?.unique_courses);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -29,11 +29,11 @@ const UserDashboard = () => {
   return (
     <>
       <Topbar heading={"Dashboard"} />
-      <div className="ruby-disp space-x-4 p-4  sm:flex-col sm:p-7">
+      <div className="ruby-disp p-4  sm:flex-col sm:p-7">
         {courseData.map((tab, index) => (
           <div
             key={index}
-            className={`flex m-5 items-center justify-between md:h-20 sm:ml-4 p-4 w-1/3 sm:w-full sm:mb-5 bg-white rounded-lg shadow-md cursor-pointer ${
+            className={`flex items-center justify-between md:h-20 m-4 p-4 w-[300px] sm:w-full bg-white rounded-lg shadow-md cursor-pointer ${
               index === activeTab ? "border-2 border-gray-300" : "border"
             }`}
             onClick={() => setActiveTab(index)}

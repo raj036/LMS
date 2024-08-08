@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, Edit, Trash2 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import Swal from "sweetalert2";
@@ -35,27 +25,6 @@ export type User = {
 };
 
 export const columns: ColumnDef<User>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() || table.getIsSomePageRowsSelected()
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: true,
-  //   enableHiding: true,
-  // },
   {
     id: "user_id",
     accessorKey: "user_id",
@@ -65,17 +34,6 @@ export const columns: ColumnDef<User>[] = [
     id: "User Name",
     accessorKey: "user_name",
     header: "User Name",
-    // header: ({ column }) => {
-    //   return (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       User Name
-    //       <ArrowUpDown className="ml-2 h-4 w-4" />
-    //     </Button>
-    //   );
-    // },
   },
   {
     id: "User Email",
@@ -86,15 +44,6 @@ export const columns: ColumnDef<User>[] = [
     id: "Phone",
     accessorKey: "phone_no",
     header: "Phone",
-    // cell: ({ row }) => {
-    //   const amount = parseFloat(row.getValue("amount"));
-    //   const formatted = new Intl.NumberFormat("en-US", {
-    //     style: "currency",
-    //     currency: "INR",
-    //   }).format(amount);
-
-    //   return <div className="text-left font-medium">{formatted}</div>;
-    // },
   },
   {
     id: "created_on",
@@ -164,7 +113,7 @@ export const columns: ColumnDef<User>[] = [
           setInfo(response?.data?.data[0]?.user_details);
           setError(false);
         } catch (error) {
-          console.error("Error Fetching Profile", error);
+          // console.error("Error Fetching Profile", error);
           setError(true);
         }
       };
@@ -175,60 +124,6 @@ export const columns: ColumnDef<User>[] = [
           [fieldName]: value,
         }));
       };
-
-      // const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      //   e.preventDefault();
-      //   if (formData.new_password === formData.repassword) {
-      //     console.log("formData", formData);
-      //     try {
-      //       Swal.fire({
-      //         title: "Updating User Information...",
-      //         text: "Are You Sure You Want to Update User Data?",
-      //         icon: "warning",
-      //         backdrop: false,
-      //         showCancelButton: true,
-      //         confirmButtonColor: "#3085d6",
-      //         cancelButtonColor: "#d33",
-      //         confirmButtonText: "Yes, Update!",
-      //         customClass: "sweet",
-      //       }).then(async (result) => {
-      //         if (result.isConfirmed) {
-      //           const response = await axios.put(
-      //             `/api/update/lms_user/${info?.user_id}`,
-      //             formData,
-      //             {
-      //               headers: {
-      //                 Authorization: `Bearer ${user.token}`,
-      //               },
-      //             }
-      //           );
-      //           if (response.status === 200) {
-      //             Swal.fire({
-      //               title: "User Updated!",
-      //               icon: "success",
-      //               showConfirmButton: false,
-      //               timer: 1500,
-      //             }).then(() => {
-      //               window.location.reload();
-      //             });
-      //           } else {
-      //             throw new Error("Error");
-      //           }
-      //         }
-      //       });
-      //     } catch (error) {
-      //       console.error("Error Updating User Details", error);
-      //       Swal.fire({
-      //         title: "Error Updating User Details!",
-      //         icon: "error",
-      //         showConfirmButton: false,
-      //         timer: 1500,
-      //       }).then(() => {
-      //         window.location.reload();
-      //       });
-      //     }
-      //   }
-      // };
       const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (formData.new_password === formData.repassword) {
@@ -255,7 +150,7 @@ export const columns: ColumnDef<User>[] = [
               throw new Error("Error");
             }
           } catch (error) {
-            console.error("Error Updating User Details", error);
+            // console.error("Error Updating User Details", error);
             Swal.fire({
               title: "Error Updating User Details!",
               text: error?.response?.data?.detail,
@@ -342,29 +237,6 @@ export const columns: ColumnDef<User>[] = [
                       }
                       required
                     />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="phone_no" className="text-right">
-                      User Type
-                    </Label>
-                    <Select
-                      onValueChange={(value) =>
-                        handleInputChange("user_type", value)
-                      }
-                      value={formData.user_type || ""}
-                      required
-                    >
-                      <SelectTrigger className="col-span-3 !bg-gray-500 !text-white-A700">
-                        <SelectValue placeholder="Select Type..." />
-                      </SelectTrigger>
-                      <SelectContent className="col-span-3 !bg-gray-500 !text-white-A700">
-                        <SelectItem value="user">User</SelectItem>
-                        <SelectItem value="admin">Admin</SelectItem>
-                        <SelectItem value="teacher">Teacher</SelectItem>
-                        <SelectItem value="student">Student</SelectItem>
-                        <SelectItem value="parent">Parent</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="new_password" className="text-right">

@@ -87,7 +87,7 @@ input:focus {
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.4)
     ),
-    url(../../public/images/education.jpg);
+    url(/images/education.jpg);
   background-attachment: fixed;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -95,7 +95,7 @@ input:focus {
 }
 
 .card-img-atch {
-  background-image: url(../../public/images/img_rectangle_42.png);
+  background-image: url(/images/img_rectangle_42.png);
   background-attachment: fixed;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -104,6 +104,15 @@ input:focus {
 
 .ruby-disp {
   display: ruby;
+}
+
+.blur {
+  filter: blur(20px);
+  transition: filter 0.3s ease-out;
+}
+
+.loaded {
+  filter: blur(0);
 }
 
 /* .dashboard {

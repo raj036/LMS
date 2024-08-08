@@ -7,7 +7,6 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function SignUpPagePage() {
   const { signup, error, setError, isLoading } = useSignup();
-  console.log(error);
   const [forgetVisible, setForgetVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [formData, setFormData] = useState({

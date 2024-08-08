@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info, Edit, Trash2 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -21,7 +19,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import Swal from "sweetalert2";
@@ -164,7 +161,7 @@ export const columns: ColumnDef<User>[] = [
           setInfo(response?.data?.data[0]?.user_details);
           setError(false);
         } catch (error) {
-          console.error("Error Fetching Profile", error);
+          // console.error("Error Fetching Profile", error);
           setError(true);
         }
       };
@@ -255,7 +252,7 @@ export const columns: ColumnDef<User>[] = [
               throw new Error("Error");
             }
           } catch (error) {
-            console.error("Error Updating User Details", error);
+            // console.error("Error Updating User Details", error);
             Swal.fire({
               title: "Error Updating User Details!",
               text: error?.response?.data?.detail,

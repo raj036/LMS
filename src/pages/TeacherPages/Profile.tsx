@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "components";
 import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -60,7 +59,7 @@ const TeacherProfile = () => {
       setTeacherId(response?.data?.Teacher_id);
       setShow(true);
     } catch (error) {
-      console.error("Error getting Profile", error);
+      // console.error("Error getting Profile", error);
     }
   };
 
@@ -157,7 +156,7 @@ const TeacherProfile = () => {
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
-        console.error("Error submitting data:", error);
+        // console.error("Error submitting data:", error);
       });
   };
 
@@ -241,7 +240,7 @@ const TeacherProfile = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         Swal.fire({
           title: "Data was not updated due to some technical issue",
           icon: "error",

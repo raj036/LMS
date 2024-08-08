@@ -58,7 +58,7 @@ const index = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Error Submitting Offline Demo Form", error);
+      // console.error("Error Submitting Offline Demo Form", error);
       if (error || error.response.status === 400) {
         Swal.fire({
           title: "Error Submitting Offline Demo Form!",

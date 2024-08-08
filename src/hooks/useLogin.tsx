@@ -27,7 +27,7 @@ export const useLogin = () => {
       const { from }: any = location.state || { from: { pathname: "/" } };
       navigate(from);
     } catch (error) {
-      console.error("Error in useLogin", error);
+      // console.error("Error in useLogin", error);
       setError(error);
       setIsLoading(false);
     }

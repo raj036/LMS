@@ -14,6 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Swal from "sweetalert2";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+import DelIcon from "/images/delete.png";
 
 const AdminAnnouncements = () => {
   const { user }: any = useAuthContext();
@@ -23,6 +26,11 @@ const AdminAnnouncements = () => {
     title: "",
     announcement_text: "   ",
   });
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
 
   const getAnnouncementData = async () => {
     try {
@@ -31,10 +39,9 @@ const AdminAnnouncements = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
       setAnnouncementData(response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -72,7 +79,7 @@ const AdminAnnouncements = () => {
         },
       });
       setCreateAnnData(response.data);
-      console.log(response.data);
+      getAnnouncementData();
       // Swal.fire({
       //   title: "Announcement added",
       //   // text: "You have already completed the form submission and payment. Check Dashboard for more information",
@@ -81,7 +88,37 @@ const AdminAnnouncements = () => {
       //   confirmButtonText: "OK",
       // });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+    }
+  };
+
+  const deleteContent = async (id: any) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const response = await axios.delete(`/api/announcement/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        if (response.status === 200) {
+          Swal.fire("Deleted!", "Your content has been deleted.", "success");
+        } else {
+          throw new Error("Failed to delete Content");
+        }
+      }
+    } catch (error) {
+      // console.log(error);
     }
   };
 
@@ -158,21 +195,37 @@ const AdminAnnouncements = () => {
                 <h1>{format(ele.created_on, "yyyy-MM-dd")}</h1>
               </div>
               <div className="border-solid border-[#FF7008] border-2 mx-4"></div>
-              <div className="flex justify-between w-[80%] gap-2">
+              <div className="flex justify-between w-full gap-2">
                 <div>
                   <h1 className="text-[30px] text-[#002D51] font-semibold mb-2">
                     {ele.title}!{" "}
                   </h1>
                   <p className="text-[17px]">{ele.announcement_text || "-"}</p>
                 </div>
-                <div className="   w-56 justify-items-end md:w-96 md:ml-[10px]">
-                  <img
-                    loading="lazy"
-                    src={ele.announcement_images}
-                    alt=""
-                    className="w-full h-auto"
-                  />
-                </div>
+
+                <Zoom>
+                  <div className="w-56 justify-items-end md:w-96 md:ml-[10px] h-[170px]">
+                    <img
+                      loading="lazy"
+                      src={ele.announcement_images}
+                      alt="announcement images"
+                      onLoad={handleImageLoad}
+                      className={`w-full h-full ${
+                        isLoaded ? "loaded" : "blur"
+                      }`}
+                    />
+                  </div>
+                </Zoom>
+              </div>
+              <div
+                onClick={() => deleteContent(ele.id)}
+                className={`flex items-center mx-4 cursor-pointer`}
+              >
+                <img
+                  src={DelIcon}
+                  alt="deleteIcon"
+                  className="w-[24px] h-[24px] m-1 ml-5 cursor-pointer"
+                />
               </div>
             </div>
           );

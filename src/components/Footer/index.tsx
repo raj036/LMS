@@ -45,7 +45,7 @@ export default function Footer({ ...props }: Props) {
         });
       }
     } catch (error) {
-      console.error("Error Submitting Query", error);
+      // console.error("Error Submitting Query", error);
       if (error || error.response.status !== 200) {
         Swal.fire({
           title: "Technical Issue",

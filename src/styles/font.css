@@ -1,91 +1,91 @@
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/PlusJakartaSansRomanRegular.ttf");
+  src: url("/fonts/PlusJakartaSansRomanRegular.ttf");
   font-family: "Plus Jakarta Sans";
   font-weight: 400;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/PlusJakartaSansRomanBold.ttf");
+  src: url("/fonts/PlusJakartaSansRomanBold.ttf");
   font-family: "Plus Jakarta Sans";
   font-weight: 700;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/PlusJakartaSansRomanMedium.ttf");
+  src: url("/fonts/PlusJakartaSansRomanMedium.ttf");
   font-family: "Plus Jakarta Sans";
   font-weight: 500;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/OswaldMedium.ttf");
+  src: url("/fonts/OswaldMedium.ttf");
   font-family: "Oswald";
   font-weight: 500;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/RalewayMedium.ttf");
+  src: url("/fonts/RalewayMedium.ttf");
   font-family: "Raleway";
   font-weight: 500;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/InterBold.ttf");
+  src: url("/fonts/InterBold.ttf");
   font-family: "Inter";
   font-weight: 700;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/InterRegular.ttf");
+  src: url("/fonts/InterRegular.ttf");
   font-family: "Inter";
   font-weight: 400;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/InterSemiBold.ttf");
+  src: url("/fonts/InterSemiBold.ttf");
   font-family: "Inter";
   font-weight: 600;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/InterMedium.ttf");
+  src: url("/fonts/InterMedium.ttf");
   font-family: "Inter";
   font-weight: 500;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/PlusJakartaSansRomanSemiBold.ttf");
+  src: url("/fonts/PlusJakartaSansRomanSemiBold.ttf");
   font-family: "Plus Jakarta Sans";
   font-weight: 600;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/MontserratBold.ttf");
+  src: url("/fonts/MontserratBold.ttf");
   font-family: "Montserrat";
   font-weight: 700;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/MontserratRegular.ttf");
+  src: url("/fonts/MontserratRegular.ttf");
   font-family: "Montserrat";
   font-weight: 400;
 }
 @font-face {
   font-display: swap;
   font-style: normal;
-  src: url("/public/fonts/PoppinsBold.ttf");
+  src: url("/fonts/PoppinsBold.ttf");
   font-family: "Poppins";
   font-weight: 700;
 }

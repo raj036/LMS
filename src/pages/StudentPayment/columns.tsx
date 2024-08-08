@@ -1,45 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Button, Label } from "flowbite-react";
-import {
-  Info,
-  Edit,
-  Trash2,
-  CircleCheck,
-  SquareArrowOutUpRight,
-} from "lucide-react";
+import { Button } from "flowbite-react";
+import { Info } from "lucide-react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
-import Swal from "sweetalert2";
 import { format } from "date-fns";
 
 export type Enquiry = {
@@ -74,7 +55,7 @@ export const columns: ColumnDef<Enquiry>[] = [
     header: "Received on",
     cell: (value: any) => {
       let date = new Date(value.getValue());
-      return format(date, 'dd/MM/yyyy');
+      return format(date, "dd/MM/yyyy");
     },
   },
   {
@@ -99,23 +80,23 @@ export const columns: ColumnDef<Enquiry>[] = [
           // let dateHistory = response?.data?.payment_history?.created_on
           const formattedData = {
             ...response.data,
-            payment_history: response.data.payment_history.map((invoice: any) => ({
-              ...invoice,
-              created_on: format(new Date(invoice.created_on), 'dd/MM/yy - h:mm a'), // Format the date using date-fns
-            })),
+            payment_history: response.data.payment_history.map(
+              (invoice: any) => ({
+                ...invoice,
+                created_on: format(
+                  new Date(invoice.created_on),
+                  "dd/MM/yy - h:mm a"
+                ), // Format the date using date-fns
+              })
+            ),
           };
           setInfo(formattedData);
           setError(false);
         } catch (error) {
-          console.error("Error Fetching Profile", error);
+          // console.error("Error Fetching Profile", error);
           setError(true);
         }
       };
-      // let DateForm:any;
-
-      // useEffect(()=> {
-      //   DateForm = 
-      // })
 
       return (
         <>
@@ -138,23 +119,45 @@ export const columns: ColumnDef<Enquiry>[] = [
                   <Table className="border-2">
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="bg-teal-900 text-white-A700">Sr no</TableHead>
-                        <TableHead className="bg-teal-900 text-white-A700">Payment ID</TableHead>
-                        <TableHead className="bg-teal-900 text-white-A700">Course</TableHead>
-                        <TableHead className="bg-teal-900 text-white-A700">Date</TableHead>
-                        <TableHead className="bg-teal-900 text-white-A700">Amount</TableHead>
+                        <TableHead className="bg-teal-900 text-white-A700">
+                          Sr no
+                        </TableHead>
+                        <TableHead className="bg-teal-900 text-white-A700">
+                          Payment ID
+                        </TableHead>
+                        <TableHead className="bg-teal-900 text-white-A700">
+                          Course
+                        </TableHead>
+                        <TableHead className="bg-teal-900 text-white-A700">
+                          Date
+                        </TableHead>
+                        <TableHead className="bg-teal-900 text-white-A700">
+                          Amount
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {info?.payment_history?.map((invoice: any ,index: any) => (
-                        <TableRow key={index}>
-                          <TableCell className="border-b-2">{index + 1}</TableCell>
-                          <TableCell className="border-b-2">{invoice.payment_id}</TableCell>
-                          <TableCell className="border-b-2">{invoice.course_name}</TableCell>
-                          <TableCell className="border-b-2">{invoice.created_on}</TableCell>
-                          <TableCell className="border-b-2">{invoice.amount}</TableCell>
-                        </TableRow>
-                      ))}
+                      {info?.payment_history?.map(
+                        (invoice: any, index: any) => (
+                          <TableRow key={index}>
+                            <TableCell className="border-b-2">
+                              {index + 1}
+                            </TableCell>
+                            <TableCell className="border-b-2">
+                              {invoice.payment_id}
+                            </TableCell>
+                            <TableCell className="border-b-2">
+                              {invoice.course_name}
+                            </TableCell>
+                            <TableCell className="border-b-2">
+                              {invoice.created_on}
+                            </TableCell>
+                            <TableCell className="border-b-2">
+                              {invoice.amount}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
                     </TableBody>
                     <TableFooter>
                       <TableRow>
@@ -162,7 +165,9 @@ export const columns: ColumnDef<Enquiry>[] = [
                         <TableCell className="bg-teal-900 text-white-A700"></TableCell>
                         <TableCell className="bg-teal-900 text-white-A700"></TableCell>
                         <TableCell className="bg-teal-900 text-white-A700"></TableCell>
-                        <TableCell className="bg-teal-900 text-white-A700"><span>Total: </span> ₹{info?.total_amount}</TableCell>
+                        <TableCell className="bg-teal-900 text-white-A700">
+                          <span>Total: </span> ₹{info?.total_amount}
+                        </TableCell>
                       </TableRow>
                     </TableFooter>
                   </Table>

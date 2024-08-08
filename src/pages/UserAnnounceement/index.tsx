@@ -17,7 +17,7 @@ const StudentAnnouncements = () => {
       });
       setAnnouncementData(response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -46,12 +46,12 @@ const StudentAnnouncements = () => {
                       {ele.announcement_text || "-"}
                     </p>
                   </div>
-                  <div className="   w-56 justify-items-end md:w-96 md:ml-[10px]">
+                  <div className="w-56 justify-items-end md:w-96 md:ml-[10px] h-[170px]">
                     <img
                     loading="lazy"
                       src={ele.announcement_images}
                       alt=""
-                      className="w-full h-auto"
+                      className="w-full h-full"
                     />
                   </div>
                 </div>

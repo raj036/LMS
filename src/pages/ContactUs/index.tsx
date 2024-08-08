@@ -40,7 +40,7 @@ export default function ContactUsPage() {
         });
       }
     } catch (error) {
-      console.error("Error Sending Mail", error);
+      // console.error("Error Sending Mail", error);
       if (error || error.response.status !== 200) {
         Swal.fire({
           title: "Error Sending Mail!",

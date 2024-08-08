@@ -38,9 +38,8 @@ const MyCourses = () => {
         },
       });
       setCourseData(response?.data);
-      console.log(response.data);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -51,11 +50,10 @@ const MyCourses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data.related_course_details, "data");
       setCourseDetails(response.data.related_course_details);
       setSelectedCourseDetailId(response.data.related_course_details);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -102,7 +100,7 @@ const MyCourses = () => {
         });
       }
     } catch (error) {
-      console.error("Error fetching content:", error.response.data.detail);
+      // console.error("Error fetching content:", error.response.data.detail);
       Swal.fire({
         title: "No Content Available For This Course.",
         text: "Please add content first.",
@@ -125,11 +123,11 @@ const MyCourses = () => {
             onClick={() => handleCourseClick(tab.id)}
           >
             <div
-              className={`flex items-center mb-2 bg-gray-100 p-3 ${
+              className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
                 selectedCourseId === tab.id ? "bg-blue-200" : "bg-white"
               }`}
             >
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-2">
+              <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-gray-600"
@@ -187,12 +185,18 @@ const MyCourses = () => {
                     {ele.module_name}
                   </TableCell>
                   <TableCell className="text-right">
-                    <button onClick={() => handleCreateContentLink(ele.id)} className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500">
+                    <button
+                      onClick={() => handleCreateContentLink(ele.id)}
+                      className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500"
+                    >
                       Create Content
                     </button>
                   </TableCell>
                   <TableCell className="text-right">
-                    <button onClick={() => handleViewContentLink(ele.id)} className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500">
+                    <button
+                      onClick={() => handleViewContentLink(ele.id)}
+                      className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500"
+                    >
                       View Content
                     </button>
                   </TableCell>
@@ -201,9 +205,10 @@ const MyCourses = () => {
             </TableBody>
           </Table>
         ) : (
-          <div className="flex justify-center h-[350px] text-[20px] font-bold text-indigo-500 items-center shadow-lg border-gray-600">
-            Please select any course
-          </div>
+          // <div className="flex justify-center h-[350px] text-[20px] font-bold text-indigo-500 items-center shadow-lg border-gray-600">
+          //   Please select any course
+          // </div>
+          ""
         )}
       </div>
     </>

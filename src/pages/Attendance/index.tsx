@@ -45,7 +45,7 @@ const MyAttendance = () => {
       
       setStudentId(response.data.student_id);
     } catch (error) {
-      // console.error("Error fetching student data:", error);
+      console.error("Error fetching student data:", error);
     }
   };
 
@@ -54,17 +54,19 @@ const MyAttendance = () => {
       const response = await axios.get(`/api/attendance/?student_ids=${studentId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
         },
       });
-      const attendanceEvents = response.data.map((attendance) => ({
+      const attendanceEvents = response.data.map((attendance:any) => ({
         title: `${attendance.status.join(", ")}`,
         date: attendance.date,
         backgroundColor: attendance.status.includes("present") ? "green" : "red",
         borderColor: attendance.status.includes("present") ? "green" : "red",
       }));
       setEvents(attendanceEvents);
+      console.log(attendanceEvents);
     } catch (error) {
-      // console.error("Error fetching attendance:", error);
+      console.error("Error fetching attendance:", error);
     }
   };
 
@@ -73,7 +75,7 @@ const MyAttendance = () => {
     setModalIsOpen(true);
   };
 
-  const handleEventClick = (info) => {
+  const handleEventClick = (info:any) => {
     const event = events.find(
       (event) =>
         event.title === info.event.title && event.date === info.event.startStr

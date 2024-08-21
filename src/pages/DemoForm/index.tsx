@@ -344,23 +344,32 @@ const Courses = () => {
 };
 
 const TabsDemo = () => {
+  // State to track the active tab
+  const [activeTab, setActiveTab] = useState("enquiry");
+
   return (
     <>
       <Helmet>
         <title>Demo page</title>
       </Helmet>
-      <Topbar heading={"Demo"} /> 
-      <Tabs defaultValue="enquiry" className="w-full">
+      <Topbar heading={"Demo"} />
+      <Tabs defaultValue={activeTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 mt-8">
           <TabsTrigger
             value="enquiry"
-            className="py-2 px-4 rounded-t-lg text-gray-700 border-b-2 border-transparent hover:bg-gray-200 focus:bg-teal-900 focus:text-[white]"
+            onClick={() => setActiveTab("enquiry")}
+            className={`py-2 px-4 rounded-t-lg text-gray-700 border-b-2 border-transparent hover:bg-gray-200 focus:bg-teal-900 focus:text-[white] ${
+              activeTab === "enquiry" ? "bg-teal-900 text-[white]" : ""
+            }`}
           >
             Enquiry
           </TabsTrigger>
           <TabsTrigger
             value="demo-video"
-            className="py-2 px-4 rounded-t-lg text-gray-700 border-b-2 border-transparent hover:bg-gray-200 focus:bg-teal-900 focus:text-[white]"
+            onClick={() => setActiveTab("demo-video")}
+            className={`py-2 px-4 rounded-t-lg text-gray-700 border-b-2 border-transparent hover:bg-gray-200 focus:bg-teal-900 focus:text-[white] ${
+              activeTab === "demo-video" ? "bg-teal-900 text-[white]" : ""
+            }`}
           >
             Demo Video
           </TabsTrigger>

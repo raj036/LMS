@@ -151,7 +151,7 @@ export default function SignUpPagePage() {
                       handleInputChange("user_password", value)
                     }
                     autoComplete="on"
-                    placeholder="Enter your password"
+                    placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
                     required
                   />
@@ -183,7 +183,7 @@ export default function SignUpPagePage() {
                       handleInputChange("repassword", value)
                     }
                     name="repassword"
-                    placeholder="Enter password again"
+                    placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
                     required
                   />

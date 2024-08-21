@@ -38,7 +38,7 @@ const index = () => {
 
     try {
       setIsLoading(true);
-      const response = await axios.post("api/demoformfill", formData, {
+      const response = await axios.post("api/demoformfill/", formData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,

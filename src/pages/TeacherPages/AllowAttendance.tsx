@@ -77,12 +77,13 @@ const AllowAttendance = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      Swal.fire({
-        icon: "success",
-        title: `Attendance Updated`,
-        showConfirmButton: false,
-        timer: 2500,
-      });
+      // Swal.fire({
+      //   icon: "success",
+      //   title: `Attendance Updated`,
+      //   showConfirmButton: false,
+      //   timer: 2500,
+      // });
+      console.log(response.data);
     } catch (error) {
       // console.error("Submission error:", error);
       Swal.fire({

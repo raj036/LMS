@@ -50,13 +50,12 @@ export default function LoginPage() {
     clearLoginFields();
   };
 
-
   const clearLoginFields = () => {
     setLoginData({
       email: "",
       user_password: "",
-    })
-  }
+    });
+  };
 
   const clearInputFields = () => {
     setForgetData({
@@ -92,6 +91,7 @@ export default function LoginPage() {
       navigate("/login");
       clearInputFields();
       setForgetPass(!forgetPass);
+      setLoadUpdate(false);
     } catch (error) {
       setForgetError(error.response.data.detail);
       Swal.fire({
@@ -102,6 +102,7 @@ export default function LoginPage() {
         // timer: 5000,
       });
       setLoadUpdate(false);
+      navigate("/login");
     }
   };
 
@@ -157,20 +158,20 @@ export default function LoginPage() {
                   New Password
                 </Heading>
                 <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type={forgetVisible ? "text" : "password"}
-                  name="new_password"
-                  required
-                  onChange={(value: any) =>
-                    handleForgetChange("new_password", value)
-                  }
-                  placeholder="Enter your new password"
-                  className="w-full -[35px] font-inter rounded-[5px]"
-                />
-                <span
+                  <Input
+                    color="teal_900"
+                    size="xs"
+                    variant="fill"
+                    type={forgetVisible ? "text" : "password"}
+                    name="new_password"
+                    required
+                    onChange={(value: any) =>
+                      handleForgetChange("new_password", value)
+                    }
+                    placeholder="Minimum 8 characters*"
+                    className="w-full -[35px] font-inter rounded-[5px]"
+                  />
+                  <span
                     onClick={() => {
                       setForgetVisible(!forgetVisible);
                     }}
@@ -197,7 +198,7 @@ export default function LoginPage() {
                     onChange={(value: any) =>
                       handleForgetChange("confirm_new_password", value)
                     }
-                    placeholder="Enter your confirm password"
+                    placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
                   />
                   <span
@@ -371,13 +372,12 @@ export default function LoginPage() {
                       <span>Log In</span>
                     )}
                   </Button>
-                 
                 </form>
                 {error && (
-                    <p className="text-[red] mt-4">
-                      {error.message || "An error occurred during login"}
-                    </p>
-                  )}
+                  <p className="text-[red] mt-4">
+                    {error.message || "An error occurred during login"}
+                  </p>
+                )}
               </>
             )}
 
@@ -407,7 +407,7 @@ export default function LoginPage() {
               Sign Up
             </Button> */}
             <Img
-            loading="lazy"
+              loading="lazy"
               src="images/img_reshot_illustra.png"
               alt="reshotillustra"
               className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8"
@@ -418,4 +418,3 @@ export default function LoginPage() {
     </>
   );
 }
-

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CourseUpload = () => {
   const [detailId, setDetailId] = useState(null);
@@ -19,6 +20,8 @@ const CourseUpload = () => {
     files: null,
   });
   const { user }: any = useAuthContext();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -81,19 +84,21 @@ const CourseUpload = () => {
         },
       });
       Swal.fire({
-        title: "Data uploaded successfully!",
+        title: "Content created successfully!",
         confirmButtonColor: "#7066E0",
         icon: "success",
       });
+      navigate("/dashboard/mycourses");
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Data was not uploaded due to some server issue.",
-        text: "Please try again later.",
+        title:
+          error.response.data.detail ||
+          "An error occured while creating content",
+        text: "Please try again...",
         showConfirmButton: false,
         timer: 3000,
       });
-      // console.log(error);
     }
   };
 

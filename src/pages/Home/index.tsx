@@ -345,11 +345,11 @@ export default function HomePage() {
                 {isMobile ? (
                   <div className="justify-center w-[90%] mt-[33px] gap-[13px] min-h-[auto] max-w-[1157px]">
                     <Swiper
-                      autoplay={{
-                        delay: 2000,
-                        disableOnInteraction: false,
-                      }}
-                      modules={[Autoplay]}
+                      // autoplay={{
+                      //   delay: 2000,
+                      //   disableOnInteraction: false,
+                      // }}
+                      // modules={[Autoplay]}
                       spaceBetween={10}
                       slidesPerView={1}
                       breakpoints={{
@@ -709,7 +709,7 @@ export default function HomePage() {
                   </div>
                 )}
 
-                <div className="flex flex-row justify-center w-full mt-[141px] sm:mt-[86px] attch-img">
+                <div className="flex flex-row justify-center w-full mt-[141px] sm:mt-[166px] xs:mt-[86px] attch-img">
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="h-[227px] w-full z-[1] relative max-w-[1424px]">
                     <div className="justify-center items-center h-[226px] xs:h-[170px] xs:top-[-50%] w-full left-0 bottom-0 right-0 top-[-100%] m-auto bg-teal-900 absolute rounded-[25px]">
@@ -981,7 +981,7 @@ export default function HomePage() {
                     className="h-[600px] w-full bottom-0 right-0 left-0 m-auto object-cover absolute"
                   /> */}
                   <div className="flex gap-4 absolute sm:flex-col 3xl:top-[-39%] top-[-54%] 2xl:top-[-45%] lg:top-[-29%] sm:top-[-33%] xs:top-[-28%] w-full h-full">
-                    <div className="sm:w-[90%] w-[30%] right-[7%] m-auto shadow-lg -absolute sm:h-[19%] xs:h-[21%] 2xl:h-[66%] 3xl:h-[43%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
+                    <div className="sm:w-[90%] w-[30%] right-[7%] m-auto shadow-lg -absolute sm:h-[20%] xs:h-[21%] 2xl:h-[66%] 3xl:h-[43%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
                           src="images/img_rectangle_47.png"
@@ -1016,7 +1016,7 @@ export default function HomePage() {
                         </Button>
                       </div>
                     </div>
-                    <div className="sm:w-[90%] w-[30%] right-0 left-0 m-auto shadow-lg -absolute sm:h-[20%] xs:h-[23%] 2xl:h-[66%] 3xl:h-[43%] md:h-[86%] lg:h-[76%] sm:mb-[-270px]">
+                    <div className="sm:w-[90%] w-[30%] right-0 left-0 m-auto shadow-lg -absolute sm:h-[21%] xs:h-[23%] 2xl:h-[66%] 3xl:h-[43%] md:h-[86%] lg:h-[76%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
                           src="images/img_rectangle_46.png"
@@ -1051,7 +1051,7 @@ export default function HomePage() {
                         </Button>
                       </div>
                     </div>
-                    <div className="sm:w-[90%] w-[30%] left-[8%] m-auto shadow-lg -absolute sm:h-[19%] 2xl:h-[66%] 3xl:h-[43%] xs:h-[21%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
+                    <div className="sm:w-[90%] w-[30%] left-[8%] m-auto shadow-lg -absolute sm:h-[20%] 2xl:h-[66%] 3xl:h-[43%] xs:h-[21%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
                           src="images/img_rectangle_45.png"
@@ -1133,11 +1133,11 @@ export default function HomePage() {
                                   spaceBetween: 20,
                                 },
                               }}
-                              // autoplay={{
-                              //   delay: 2000,
-                              //   disableOnInteraction: false,
-                              // }}
-                              // modules={[Autoplay]}
+                              autoplay={{
+                                delay: 1000,
+                                disableOnInteraction: false,
+                              }}
+                              modules={[Autoplay]}
                             >
                               {reviewData.map((ele, index) => {
                                 if (!ele.text) return null; // Skip if there's no text

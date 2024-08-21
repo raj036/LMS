@@ -27,6 +27,7 @@ const AdminAnnouncements = () => {
     announcement_text: "   ",
   });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isDialogue, setIsDialogue] = useState(false);
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -72,21 +73,21 @@ const AdminAnnouncements = () => {
         );
       }
 
-      const response = await axios.post(`/api/announcement`, formData, {
+      const response = await axios.post(`/api/announcement/`, formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "multipart/form-data",
         },
       });
       setCreateAnnData(response.data);
+      Swal.fire({
+        title: "Announcement added",
+        icon: "success",
+        confirmButtonColor: "#7066E0",
+        confirmButtonText: "OK",
+      });
+      setIsDialogue(false);
       getAnnouncementData();
-      // Swal.fire({
-      //   title: "Announcement added",
-      //   // text: "You have already completed the form submission and payment. Check Dashboard for more information",
-      //   icon: "success",
-      //   confirmButtonColor: "#7066E0",
-      //   confirmButtonText: "OK",
-      // });
     } catch (error) {
       // console.log(error);
     }
@@ -112,13 +113,28 @@ const AdminAnnouncements = () => {
           },
         });
         if (response.status === 200) {
-          Swal.fire("Deleted!", "Your content has been deleted.", "success");
+          await Swal.fire(
+            "Deleted!",
+            "Your content has been deleted.",
+            "success"
+          );
+          getAnnouncementData();
+          setAnnouncementData((prevData) =>
+            prevData.filter((item) => item.id !== id)
+          );
         } else {
           throw new Error("Failed to delete Content");
         }
       }
     } catch (error) {
-      // console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: "Your content was not deleted.",
+        icon: "error",
+        timer: 2000, // Timer in milliseconds (3000ms = 3 seconds)
+        timerProgressBar: true, // Shows a progress bar for the timer
+        showConfirmButton: false, // Optionally hide the confirm button
+      });
     }
   };
 
@@ -130,7 +146,7 @@ const AdminAnnouncements = () => {
     <>
       <Topbar heading={"Announcements"} />
       <div className="container py-5">
-        <Dialog>
+        <Dialog open={isDialogue} onOpenChange={setIsDialogue}>
           <div className="flex justify-end">
             <DialogTrigger asChild>
               <Button className="bg-teal-900 hover:!bg-blue-900">
@@ -188,48 +204,59 @@ const AdminAnnouncements = () => {
         </Dialog>
       </div>
       <div className="sm:w-[190%]">
-        {announcementData.map((ele, index) => {
-          return (
-            <div className="flex flex-row p-6 " key={index}>
-              <div className="text-lg pl-[5px]">
-                <h1>{format(ele.created_on, "yyyy-MM-dd")}</h1>
-              </div>
-              <div className="border-solid border-[#FF7008] border-2 mx-4"></div>
-              <div className="flex justify-between w-full gap-2">
-                <div>
-                  <h1 className="text-[30px] text-[#002D51] font-semibold mb-2">
-                    {ele.title}!{" "}
-                  </h1>
-                  <p className="text-[17px]">{ele.announcement_text || "-"}</p>
+        {announcementData.length > 0 ? 
+        (
+          announcementData.map((ele, index) => {
+            return (
+              <div className="flex flex-row p-6 " key={index}>
+                <div className="text-lg pl-[5px]">
+                  <h1>{format(ele.created_on, "yyyy-MM-dd")}</h1>
                 </div>
-
-                <Zoom>
-                  <div className="w-56 justify-items-end md:w-96 md:ml-[10px] h-[170px]">
-                    <img
-                      loading="lazy"
-                      src={ele.announcement_images}
-                      alt="announcement images"
-                      onLoad={handleImageLoad}
-                      className={`w-full h-full ${
-                        isLoaded ? "loaded" : "blur"
-                      }`}
-                    />
+                <div className="border-solid border-[#FF7008] border-2 mx-4"></div>
+                <div className="flex justify-between w-full gap-2">
+                  <div>
+                    <h1 className="text-[30px] text-[#002D51] font-semibold mb-2">
+                      {ele.title}!{" "}
+                    </h1>
+                    <p className="text-[17px]">
+                      {ele.announcement_text || "-"}
+                    </p>
                   </div>
-                </Zoom>
+
+                  <Zoom>
+                    <div className="w-56 justify-items-end md:w-96 md:ml-[10px] h-[170px]">
+                      <img
+                        loading="lazy"
+                        src={ele.announcement_images}
+                        alt="announcement images"
+                        onLoad={handleImageLoad}
+                        className={`w-full h-full ${
+                          isLoaded ? "loaded" : "blur"
+                        }`}
+                      />
+                    </div>
+                  </Zoom>
+                </div>
+                <div
+                  onClick={() => deleteContent(ele.id)}
+                  className={`flex items-center mx-4 cursor-pointer`}
+                >
+                  <img
+                    src={DelIcon}
+                    alt="deleteIcon"
+                    className="w-[24px] h-[24px] m-1 ml-5 cursor-pointer"
+                  />
+                </div>
               </div>
-              <div
-                onClick={() => deleteContent(ele.id)}
-                className={`flex items-center mx-4 cursor-pointer`}
-              >
-                <img
-                  src={DelIcon}
-                  alt="deleteIcon"
-                  className="w-[24px] h-[24px] m-1 ml-5 cursor-pointer"
-                />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div className="p-6">
+            <h1 className="text-[24px] text-[#002D51] font-semibold">
+              No announcements available.
+            </h1>
+          </div>
+        )}
       </div>
     </>
   );

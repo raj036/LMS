@@ -103,7 +103,7 @@ const MyCourses = () => {
       // console.error("Error fetching content:", error.response.data.detail);
       Swal.fire({
         title: "No Content Available For This Course.",
-        text: "Please add content first.",
+        text: "Please add content.",
         icon: "info",
         confirmButtonText: "OK",
         confirmButtonColor: "#7066E0",

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Heading } from "components";
 import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
@@ -69,12 +70,9 @@ const TeacherProfile = () => {
 
   // post Data
   const [formData, setFormData] = useState<any>({
-    teacher_data: {
       name: "",
       email: "",
       department: "",
-    },
-    employee: {
       f_name: "",
       m_name: "",
       l_name: "",
@@ -84,51 +82,37 @@ const TeacherProfile = () => {
       marital_status: "",
       citizenship_status: "",
       date_of_hire: "",
-      date_of_termination: "",
-    },
-    teacher_contact_info: {
+      date_of_termination: "", //--
       primary_number: "",
       secondary_number: "",
       primary_email_id: "",
       secondary_email_id: "",
       current_address: "",
       permanent_address: "",
-    },
-    dependent: {
       dependent_name: "",
-      realtion: "",
-      date_of_birth: "",
-    },
-    education: {
+      relation : "",
+      date_of_birth: "", //--
       education_level: "",
       institution: "",
       specialization: "",
       field_of_study: "",
       year_of_passing: "",
       percentage: "",
-    },
-    skill: {
       skill: "",
       certification: "",
-      license: "",
-    },
-    emergency_contact: {
-      emergency_contact_name: "",
-      relation: "",
+      license: "", //--
+      emergency_contact_name: "", //--
       emergency_contact_number: "",
-    },
-    languages_spoken: {
       languages: "",
-    },
   });
 
-  const handleChange = (section: any, field: any, value: any) => {
+  const handleChange = ( field: any, value: any) => {
     setFormData((prevFormData) => ({
-      ...prevFormData,
-      [section]: {
-        ...prevFormData[section],
+      // ...prevFormData,
+      // [section]: {
+        ...prevFormData,
         [field]: value,
-      },
+      // },
     }));
   };
 
@@ -138,10 +122,11 @@ const TeacherProfile = () => {
       .post("api/teachers/", formData, {
         headers: {
           Authorization: `Bearer ${user.token}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
+        console.log(response);
         Swal.fire({
           icon: "success",
           title: `Profile data was submitted successfully`,
@@ -150,8 +135,10 @@ const TeacherProfile = () => {
         });
       })
       .catch((error) => {
+        console.log(error.response.data.detail);
+        const errorMessage = error.response.data.detail;
         Swal.fire({
-          title: "Due to some error the data was not submitted",
+          title: errorMessage,
           icon: "error",
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
@@ -239,6 +226,7 @@ const TeacherProfile = () => {
           confirmButtonText: "OK",
         });
       })
+
       .catch((error) => {
         // console.log(error);
         Swal.fire({
@@ -492,7 +480,7 @@ const TeacherProfile = () => {
                       onChange={(e) => handleNestedInputChange(e, "skill")}
                     />
                   </div>
-                  <div className="flex justify-between border-b-2 py-2 text-[14px]">
+                  {/* <div className="flex justify-between border-b-2 py-2 text-[14px]">
                     <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
                       License :
                     </span>
@@ -504,7 +492,7 @@ const TeacherProfile = () => {
                       name="license"
                       onChange={(e) => handleNestedInputChange(e, "skill")}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -520,434 +508,782 @@ const TeacherProfile = () => {
           </div>
         </form>
       ) : (
-        <form onSubmit={handleSubmit} className="p-[20px]">
+        <form onSubmit={handleSubmit} className="py-[20px] px-[120px]">
           {/* Teacher Data */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Name:</label>
-            <input
-              type="text"
-              name="name"
-              className="border-b-2 border-[black]"
-              value={formData.teacher_data.name}
-              onChange={(e) =>
-                handleChange("teacher_data", "name", e.target.value)
-              }
-            />
+          <Heading
+            size="3xl"
+            className="block my-2 text-sm font-extrabold text-gray-900 dark:text-white-A700"
+          >
+            Personal Details
+          </Heading>
+          <div className="grid grid-cols-3 gap-x-10 gap-y-4 md:grid-cols-2 sm:grid-cols-1 sm:gap-6">
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+               Full Name<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.name}
+                  onChange={(e) =>
+                    handleChange( "name", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Email:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="email"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.email}
+                  onChange={(e) =>
+                    handleChange( "email", e.target.value)
+                  }
+                />
+              </div>
+            </div> */}
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Department:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="department"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.department}
+                  onChange={(e) =>
+                    handleChange( "department", e.target.value)
+                  }
+                />
+              </div>
+            </div> */}
+            {/* Employee */}
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                First Name :
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="f_name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.f_name}
+                  onChange={(e) =>
+                    handleChange("f_name", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Middle Name:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="m_name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.m_name}
+                  onChange={(e) =>
+                    handleChange( "m_name", e.target.value)
+                  }
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Last Name:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="l_name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.l_name}
+                  onChange={(e) =>
+                    handleChange( "l_name", e.target.value)
+                  }
+                />
+              </div>
+            </div> */}
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                DOB<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="date"
+                  name="dob"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.dob}
+                  onChange={(e) =>
+                    handleChange( "dob", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Gender<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="gender"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.gender}
+                  onChange={(e) =>
+                    handleChange( "gender", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Nationality<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="nationality"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.nationality}
+                  onChange={(e) =>
+                    handleChange("nationality", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Marital status<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="marital_status"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.marital_status}
+                  onChange={(e) =>
+                    handleChange("marital_status",e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Citizenship status:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="citizenship_status"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.citizenship_status}
+                  onChange={(e) =>
+                    handleChange(
+                      "citizenship_status",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div> */}
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Date of hire<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="date"
+                  name="date_of_hire"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.date_of_hire}
+                  onChange={(e) =>
+                    handleChange( "date_of_hire", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Date of termination:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="date"
+                  name="date_of_termination"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.date_of_termination}
+                  onChange={(e) =>
+                    handleChange(
+                      "date_of_termination",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div> */}
+            {/* {teacher_contact_info} */}
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Primary No<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="primary_number"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.primary_number}
+                  maxLength={10}
+                  onChange={(e) =>
+                    handleChange(
+                      "primary_number",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Secondary No
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="secondary_number"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.secondary_number}
+                  maxLength={10}
+                  onChange={(e) =>
+                    handleChange(
+                      "secondary_number",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Primary email<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="email"
+                  name="primary_email_id"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.primary_email_id}
+                  onChange={(e) =>
+                    handleChange(
+                      "primary_email_id",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Secondary email
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="email"
+                  name="secondary_email_id"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.secondary_email_id}
+                  onChange={(e) =>
+                    handleChange(
+                      "secondary_email_id",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Current Address<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="current_address"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.current_address}
+                  onChange={(e) =>
+                    handleChange(
+                      "current_address",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Permanent address<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="primary_number"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.permanent_address}
+                  onChange={(e) =>
+                    handleChange(
+                      "permanent_address",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={formData.teacher_data.email}
-              onChange={(e) =>
-                handleChange("teacher_data", "email", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Department:</label>
-            <input
-              type="text"
-              name="department"
-              value={formData.teacher_data.department}
-              onChange={(e) =>
-                handleChange("teacher_data", "department", e.target.value)
-              }
-            />
-          </div>
-          {/* Employee */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>First Name :</label>
-            <input
-              type="text"
-              name="f_name"
-              value={formData.employee.f_name}
-              onChange={(e) =>
-                handleChange("employee", "f_name", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Middle Name:</label>
-            <input
-              type="text"
-              name="m_name"
-              value={formData.employee.m_name}
-              onChange={(e) =>
-                handleChange("employee", "m_name", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Last Name:</label>
-            <input
-              type="text"
-              name="l_name"
-              value={formData.employee.l_name}
-              onChange={(e) =>
-                handleChange("employee", "l_name", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>DOB:</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.employee.dob}
-              onChange={(e) => handleChange("employee", "dob", e.target.value)}
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Gender:</label>
-            <input
-              type="text"
-              name="gender"
-              value={formData.employee.gender}
-              onChange={(e) =>
-                handleChange("employee", "gender", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Nationality:</label>
-            <input
-              type="text"
-              name="nationality"
-              value={formData.employee.nationality}
-              onChange={(e) =>
-                handleChange("employee", "nationality", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Marital status:</label>
-            <input
-              type="text"
-              name="marital_status"
-              value={formData.employee.marital_status}
-              onChange={(e) =>
-                handleChange("employee", "marital_status", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Citizenship status:</label>
-            <input
-              type="text"
-              name="citizenship_status"
-              value={formData.employee.citizenship_status}
-              onChange={(e) =>
-                handleChange("employee", "citizenship_status", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Date of hire:</label>
-            <input
-              type="date"
-              name="date_of_hire"
-              value={formData.employee.date_of_hire}
-              onChange={(e) =>
-                handleChange("employee", "date_of_hire", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Date of termination:</label>
-            <input
-              type="date"
-              name="date_of_termination"
-              value={formData.employee.date_of_termination}
-              onChange={(e) =>
-                handleChange("employee", "date_of_termination", e.target.value)
-              }
-            />
-          </div>
-          {/* {teacher_contact_info} */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Primary No:</label>
-            <input
-              type="text"
-              name="primary_number"
-              value={formData.teacher_contact_info.primary_number}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "primary_number",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Secondary No:</label>
-            <input
-              type="text"
-              name="secondary_number"
-              value={formData.teacher_contact_info.secondary_number}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "secondary_number",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Primary email:</label>
-            <input
-              type="text"
-              name="primary_email_id"
-              value={formData.teacher_contact_info.primary_email_id}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "primary_email_id",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Secondary email:</label>
-            <input
-              type="text"
-              name="secondary_email_id"
-              value={formData.teacher_contact_info.secondary_email_id}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "secondary_email_id",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Current Address:</label>
-            <input
-              type="text"
-              name="current_address"
-              value={formData.teacher_contact_info.current_address}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "current_address",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Permanent address :</label>
-            <input
-              type="text"
-              name="primary_number"
-              value={formData.teacher_contact_info.permanent_address}
-              onChange={(e) =>
-                handleChange(
-                  "teacher_contact_info",
-                  "permanent_address",
-                  e.target.value
-                )
-              }
-            />
-          </div>
+          {/* changing the section from here */}
           {/* Dependent */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Dependent Name:</label>
-            <input
-              type="text"
-              name="dependent_name"
-              value={formData.dependent.dependent_name}
-              onChange={(e) =>
-                handleChange("dependent", "dependent_name", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Relation:</label>
-            <input
-              type="text"
-              name="realtion"
-              value={formData.dependent.realtion}
-              onChange={(e) =>
-                handleChange("dependent", "realtion", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Date of Birth:</label>
-            <input
-              type="date"
-              name="date_of_birth"
-              value={formData.dependent.date_of_birth}
-              onChange={(e) =>
-                handleChange("dependent", "date_of_birth", e.target.value)
-              }
-            />
+          <Heading
+            size="3xl"
+            className="block my-2 text-sm font-extrabold text-gray-900 dark:text-white-A700 pt-4"
+          >
+            Dependent Details
+          </Heading>
+          <div className="grid grid-cols-3 gap-x-10 gap-y-4 md:grid-cols-2 sm:grid-cols-1 sm:gap-6">
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Dependent Name<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="dependent_name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.dependent_name}
+                  onChange={(e) =>
+                    handleChange( "dependent_name", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Relation<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="relation"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.relation}
+                  onChange={(e) =>
+                    handleChange( "relation", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Emergency Contact Number<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="number"
+                  name="emergency_contact_number"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.emergency_contact_number}
+                  onChange={(e) =>
+                    handleChange(
+                      "emergency_contact_number",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Date of Birth:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="date"
+                  name="date_of_birth"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.date_of_birth}
+                  onChange={(e) =>
+                    handleChange( "date_of_birth", e.target.value)
+                  }
+                />
+              </div>
+            </div> */}
           </div>
           {/* {Education} */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Education level:</label>
-            <input
-              type="text"
-              name="education_level"
-              value={formData.education.education_level}
-              onChange={(e) =>
-                handleChange("education", "education_level", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Institution:</label>
-            <input
-              type="text"
-              name="institution"
-              value={formData.education.institution}
-              onChange={(e) =>
-                handleChange("education", "institution", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Specialization:</label>
-            <input
-              type="text"
-              name="specialization"
-              value={formData.education.specialization}
-              onChange={(e) =>
-                handleChange("education", "specialization", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Field of study:</label>
-            <input
-              type="text"
-              name="field_of_study"
-              value={formData.education.field_of_study}
-              onChange={(e) =>
-                handleChange("education", "field_of_study", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Year of passing:</label>
-            <input
-              type="number"
-              name="year_of_passing"
-              value={formData.education.year_of_passing}
-              onChange={(e) =>
-                handleChange("education", "year_of_passing", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Percentage:</label>
-            <input
-              type="text"
-              name="percentage"
-              value={formData.education.percentage}
-              onChange={(e) =>
-                handleChange("education", "percentage", e.target.value)
-              }
-            />
+          <Heading
+            size="3xl"
+            className="block my-2 text-sm font-extrabold text-gray-900  dark:text-white-A700 pt-4"
+          >
+            Education
+          </Heading>
+          <div className="grid grid-cols-3 gap-x-10 gap-y-4 md:grid-cols-2 sm:grid-cols-1 sm:gap-6">
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Education level<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="education_level"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.education_level}
+                  onChange={(e) =>
+                    handleChange( "education_level", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Institution<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="institution"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.institution}
+                  onChange={(e) =>
+                    handleChange( "institution", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Specialization<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="specialization"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.specialization}
+                  onChange={(e) =>
+                    handleChange("specialization", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Field of study<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="field_of_study"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.field_of_study}
+                  onChange={(e) =>
+                    handleChange( "field_of_study", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Year of passing<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="number"
+                  name="year_of_passing"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.year_of_passing}
+                  onChange={(e) =>
+                    handleChange( "year_of_passing", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Percentage<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="percentage"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.percentage}
+                  onChange={(e) =>
+                    handleChange("percentage", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
           </div>
           {/* {Skill} */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Skill:</label>
-            <input
-              type="text"
-              name="skill"
-              value={formData.skill.skill}
-              onChange={(e) => handleChange("skill", "skill", e.target.value)}
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Certification:</label>
-            <input
-              type="text"
-              name="certification"
-              value={formData.skill.certification}
-              onChange={(e) =>
-                handleChange("skill", "certification", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>License:</label>
-            <input
-              type="text"
-              name="license"
-              value={formData.skill.license}
-              onChange={(e) => handleChange("skill", "license", e.target.value)}
-            />
-          </div>
-          {/* {Emergency Contact} */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Emergency Contact Name:</label>
-            <input
-              type="text"
-              name="emergency_contact_name"
-              value={formData.emergency_contact.emergency_contact_name}
-              onChange={(e) =>
-                handleChange(
-                  "emergency_contact",
-                  "emergency_contact_name",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Relation:</label>
-            <input
-              type="text"
-              name="relation"
-              value={formData.emergency_contact.relation}
-              onChange={(e) =>
-                handleChange("emergency_contact", "relation", e.target.value)
-              }
-            />
-          </div>
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Emergency Contact Number:</label>
-            <input
-              type="text"
-              name="emergency_contact_number"
-              value={formData.emergency_contact.emergency_contact_number}
-              onChange={(e) =>
-                handleChange(
-                  "emergency_contact",
-                  "emergency_contact_number",
-                  e.target.value
-                )
-              }
-            />
-          </div>
-          {/* {Language spoken} */}
-          <div className="flex p-3 border-2 border-[grey] w-[40%] rounded-[10px] mb-3">
-            <label>Language Known:</label>
-            <input
-              type="text"
-              name="emergency_contact_number"
-              value={formData.languages_spoken.languages}
-              onChange={(e) =>
-                handleChange("languages_spoken", "languages", e.target.value)
-              }
-            />
+          <Heading
+            size="3xl"
+            className="block my-2 text-sm font-extrabold text-gray-900 dark:text-white-A700 pt-4"
+          >
+            Skills
+          </Heading>
+          <div className="grid grid-cols-3 gap-x-10 gap-y-4 md:grid-cols-2 sm:grid-cols-1 sm:gap-6">
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Skill<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="skill"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.skill}
+                  onChange={(e) =>
+                    handleChange( "skill", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Certification<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="certification"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.certification}
+                  onChange={(e) =>
+                    handleChange( "certification", e.target.value)
+                  }
+                  required
+                />
+              </div>
+            </div>
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                License:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="license"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.license}
+                  onChange={(e) =>
+                    handleChange( "license", e.target.value)
+                  }
+                />
+              </div>
+            </div> */}
+            {/* {Emergency Contact} */}
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Emergency Contact Name:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="emergency_contact_name"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.emergency_contact_name}
+                  onChange={(e) =>
+                    handleChange(
+                      "emergency_contact_name",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div> */}
+            {/* <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Relation:
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="relation"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.relation}
+                  onChange={(e) =>
+                    handleChange(
+                      "relation",
+                      e.target.value
+                    )
+                  }
+                />
+              </div>
+            </div> */}
+           
+            {/* {Language spoken} */}
+            <div className="sm:w-[400px]">
+              <Heading
+                size="s"
+                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+              >
+                Language Known<span className="text-red-500">*</span>
+              </Heading>
+              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                <input
+                  type="text"
+                  name="emergency_contact_number"
+                  className="bg-transparent outline-none w-full h-full px-2"
+                  value={formData.languages}
+                  onChange={(e) =>
+                    handleChange(
+                      "languages",
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+              </div>
+            </div>
           </div>
 
-          <button
+          <Button
             type="submit"
-            className="border-2 border-[grey] py-3 px-6 rounded-[10px] bg-sky-500 hover:bg-sky-700"
+            size="lg"
+            className=" flex my-5 mx-auto xs:h-[40px] sm:w-full   font-bold max-w-[250px] bg-deep_orange-500 z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
           >
             Submit
-          </button>
+          </Button>
         </form>
       )}
 

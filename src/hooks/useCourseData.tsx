@@ -8,11 +8,15 @@ const useCourseData = () => {
   const [modules, setModules] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  // const [courseAll, setCourseAll] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
+        // const courseResponseAll = await axios.get("api/courses_all/");
+        // setCourseAll(courseResponseAll.data);
+
         const courseResponse = await axios.get("api/courses/");
         setCourses(courseResponse.data);
 

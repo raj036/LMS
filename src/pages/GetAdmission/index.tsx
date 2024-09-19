@@ -1,7 +1,7 @@
 import { Button, Heading, Input, TextArea } from "components";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -11,8 +11,7 @@ const index = () => {
   const { user }: any = useAuthContext();
   const navigate = useNavigate();
 
-  const { courses, standards, subjects, isLoading, modules, error } =
-    useCourseData();
+  const { isLoading, error } = useCourseData();
 
   const [formData, setFormData] = useState<any>({
     first_name: "",
@@ -46,14 +45,82 @@ const index = () => {
 
     id_proof: null,
     address_proof: null,
-
+    profile_photo: null,
     course: "",
     standard: "",
     subject: "",
-    module: 1,
+    module: "",
   });
   const [copyAddress, setCopyAddress] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [courseAll, setCourseAll] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState({ id: "", name: "" });
+  const [selectedStandard, setSelectedStandard] = useState({
+    id: "",
+    name: "",
+  });
+  const [selectedSubject, setSelectedSubject] = useState({ id: "", name: "" });
+  const [selectedModule, setSelectedModule] = useState({ id: "", name: "" });
+
+  const [courses, setCourses] = useState([]);
+  const [standards, setStandards] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [modules, setModules] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("api/courses_all/");
+        setCourseAll(response.data.course_list);
+        setCourses(response.data.course_list);
+        setLoading(false);
+        // console.log(response.data.course_list)
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const handleCourseChange = (e) => {
+    const courseId = e.target.value;
+    const course = courses.find((c) => c.course_id.toString() === courseId);
+    setSelectedCourse({ id: courseId, name: course.course_name });
+    setSelectedStandard({ id: "", name: "" });
+    setSelectedSubject({ id: "", name: "" });
+    setSelectedModule({ id: "", name: "" });
+    setStandards(course ? course.standards : []);
+    setSubjects([]);
+    setModules([]);
+  };
+
+  const handleStandardChange = (e) => {
+    const standardId = e.target.value;
+    const standard = standards.find(
+      (s) => s.standard_id.toString() === standardId
+    );
+    setSelectedStandard({ id: standardId, name: standard.standard_name });
+    setSelectedSubject({ id: "", name: "" });
+    setSelectedModule({ id: "", name: "" });
+    setSubjects(standard ? standard.subjects : []);
+    setModules([]);
+  };
+
+  const handleSubjectChange = (e) => {
+    const subjectId = e.target.value;
+    const subject = subjects.find((s) => s.subject_id.toString() === subjectId);
+    setSelectedSubject({ id: subjectId, name: subject.subject_name });
+    setSelectedModule({ id: "", name: "" });
+    setModules(subject ? subject.modules : []);
+  };
+
+  const handleModuleChange = (e) => {
+    const moduleId = e.target.value;
+    const module = modules.find((m) => m.module_id.toString() === moduleId);
+    setSelectedModule({ id: moduleId, name: module.module_name });
+  };
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear - i);
@@ -101,7 +168,11 @@ const index = () => {
     const formDataToSend = new FormData();
 
     for (const field in formData) {
-      if (field === "id_proof" || field === "address_proof") {
+      if (
+        field === "id_proof" ||
+        field === "address_proof" ||
+        field === "profile_photo"
+      ) {
         if (formData[field]) {
           formDataToSend.append(field, formData[field]);
         }
@@ -109,6 +180,11 @@ const index = () => {
         formDataToSend.append(field, formData[field]);
       }
     }
+
+    formDataToSend.append("course", selectedCourse.id);
+    formDataToSend.append("standard", selectedStandard.id);
+    formDataToSend.append("subject", selectedSubject.id);
+    formDataToSend.append("module", selectedModule.id);
 
     try {
       setLoading(true);
@@ -126,22 +202,25 @@ const index = () => {
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             setLoading(false);
-            navigate("/payments");
+            // navigate("/payments");
           }
         });
       }
+
+      console.log(response);
     } catch (error) {
       setLoading(false);
       // console.error("Error Submitting Admission Form", error);
       if (error || error.response.status === 400) {
+        console.log(error);
         Swal.fire({
           title: "Error Submitting Admission Form!",
           text: `${error?.response?.data?.detail}`,
           icon: "error",
         }).then((result: { isConfirmed: any }) => {
-          if (result.isConfirmed) {
-            navigate("/");
-          }
+          // if (result.isConfirmed) {
+          //   navigate("/");
+          // }
         });
       }
     }
@@ -392,6 +471,27 @@ const index = () => {
                   }
                 />
               </div>
+              <div className="sm:col-span-2">
+                <Heading
+                  size="s"
+                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+                >
+                  Profile Photo<span className="text-red-500">*</span>
+                </Heading>
+                <input
+                  type="file"
+                  name="profile_photo"
+                  id="profile_photo"
+                  className="p-3 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  accept=".pdf,.jgp,.jpeg,.png"
+                  onChange={(e: any) =>
+                    setFormData({
+                      ...formData,
+                      profile_photo: e.target.files[0],
+                    })
+                  }
+                />
+              </div>
             </div>
 
             <Heading
@@ -400,7 +500,7 @@ const index = () => {
             >
               Enroll Course Details
             </Heading>
-            <div className="grid grid-cols-4 gap-x-10 gap-y-4 sm:grid-cols-2 sm:gap-6">
+            {/* <div className="grid grid-cols-4 gap-x-10 gap-y-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
                 <Heading
                   size="s"
@@ -504,23 +604,114 @@ const index = () => {
                     ))
                   )}
                 </select>
-                {/* <Input
-                  size="xs"
-                  type="number"
-                  pattern="\d*"
+              </div>
+            </div> */}
+
+            <div className="grid grid-cols-4 gap-x-10 gap-y-4 sm:grid-cols-2 sm:gap-6">
+              {/* Course Dropdown */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="course"
+                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+                >
+                  Course<span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="course"
+                  id="course"
+                  className="p-4 bg-teal-900 border border-teal-90 text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  value={selectedCourse.id}
+                  onChange={handleCourseChange}
+                  required
+                >
+                  <option value="">Select a course...</option>
+                  {courses.map((course) => (
+                    <option key={course.course_id} value={course.course_id}>
+                      {course.course_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Standard Dropdown */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="standard"
+                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+                >
+                  Standard<span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="standard"
+                  id="standard"
+                  className="p-4 bg-teal-900 border border-teal-90 text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  value={selectedStandard.id}
+                  onChange={handleStandardChange}
+                  required
+                  disabled={!standards.length}
+                >
+                  <option value="">Select a standard...</option>
+                  {standards.map((standard) => (
+                    <option
+                      key={standard.standard_id}
+                      value={standard.standard_id}
+                    >
+                      {standard.standard_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Subject Dropdown */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="subject"
+                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+                >
+                  Subject<span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="subject"
+                  id="subject"
+                  className="p-4 bg-teal-900 border border-teal-90 text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  value={selectedSubject.id}
+                  onChange={handleSubjectChange}
+                  required
+                  disabled={!subjects.length}
+                >
+                  <option value="">Select a subject...</option>
+                  {subjects.map((subject) => (
+                    <option key={subject.subject_id} value={subject.subject_id}>
+                      {subject.subject_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Module Dropdown */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="module"
+                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
+                >
+                  Modules<span className="text-red-500">*</span>
+                </label>
+                <select
                   name="module"
                   id="module"
-                  min={0}
-                  maxLength={2}
-                  value={formData?.module}
-                  onFocus={(e: { target: { select: () => any } }) =>
-                    e.target.select()
-                  }
-                  onChange={(value: any) => handleChange("module", value)}
-                  className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  placeholder="Number of Enrolled Modules"
+                  className="p-4 bg-teal-900 border border-teal-90 text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                  value={selectedModule.id}
+                  onChange={handleModuleChange}
                   required
-                /> */}
+                  disabled={!modules.length}
+                >
+                  <option value="">Select a module...</option>
+                  {modules.map((module) => (
+                    <option key={module.module_id} value={module.module_id}>
+                      {module.module_name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 

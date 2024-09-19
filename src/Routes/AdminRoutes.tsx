@@ -12,6 +12,8 @@ import Mail from "pages/Mail";
 import StudentPayment from "pages/StudentPayment";
 import AdminAnnouncements from "pages/AdminAnnouncement";
 import Teachers from "pages/AdminTeacherPage";
+import path from "path";
+import AdminViewContent from "pages/AdminViewContent";
 
 const AdminRoutes = () => {
   const { user }: any = useAuthContext();
@@ -61,6 +63,10 @@ const AdminRoutes = () => {
       path: "tutor",
       element: <Teachers />,
     },
+    {
+      path: "adminview",
+      element: <AdminViewContent />
+    }
   ];
 
   const getProtectedElement = (element: any, path: any) => {

@@ -9,6 +9,7 @@ import {
 import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
+import { BookOpenText } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -71,39 +72,36 @@ const TeacherAttendance = () => {
   return (
     <>
       <Topbar heading={"Attendance"} />
-      <div className="ruby-disp">
-        {courseData.map((tab, index) => (
-       <div
-       className=" m-4 cursor-pointer rounded-lg"
-       key={index}
-       onClick={() => handleCourseClick(tab.id)}
-     >
-       <div
-         className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
-           selectedCourseId === tab.id ? "bg-blue-200" : "bg-white"
-         }`}
-       >
-         <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-           <svg
-             xmlns="http://www.w3.org/2000/svg"
-             className="h-5 w-5 text-gray-600"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke="currentColor"
-           >
-             <path
-               strokeLinecap="round"
-               strokeLinejoin="round"
-               strokeWidth="2"
-               d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-             />
-           </svg>
-         </div>
-         <span className="text-gray-700 font-semibold  ">{tab.name}</span>
-       </div>
-     </div>
-        ))}
-      </div>
+      {courseData.length > 0 ? (
+        <div className="ruby-disp">
+          {courseData.map((tab, index) => (
+            <div
+              className=" m-4 cursor-pointer rounded-lg"
+              key={index}
+              onClick={() => handleCourseClick(tab.id)}
+            >
+              <div
+                className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
+                  selectedCourseId === tab.id ? "bg-blue-200" : "bg-white"
+                }`}
+              >
+                <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
+                  <BookOpenText className="h-5 w-5 text-gray-600" />
+                </div>
+                <span className="text-gray-700 font-semibold  ">
+                  {tab.name}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="p-6">
+          <h1 className="text-[24px] text-[#002D51] font-semibold">
+            Students details was not there .
+          </h1>
+        </div>
+      )}
 
       {/* course details */}
       <div className="mt-20 px-11 ">
@@ -138,7 +136,10 @@ const TeacherAttendance = () => {
                     {ele.module_name}
                   </TableCell>
                   <TableCell className="text-right">
-                    <button onClick={() => handleAttendancePage(ele.id)} className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500">
+                    <button
+                      onClick={() => handleAttendancePage(ele.id)}
+                      className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500"
+                    >
                       Attendance
                     </button>
                   </TableCell>
@@ -147,9 +148,6 @@ const TeacherAttendance = () => {
             </TableBody>
           </Table>
         ) : (
-          // <div className="flex justify-center h-[350px] text-[20px] font-bold text-indigo-500 items-center shadow-lg border-gray-600">
-          //   Please select any course
-          // </div>
           ""
         )}
       </div>

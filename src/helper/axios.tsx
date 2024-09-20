@@ -4,7 +4,7 @@ export default axios.create({
   // baseURL: "https://il8rigour.com/",
   // baseURL: "http://il8rigour.com:8000/",
   // baseURL: "https://ilate.onrender.com/",
-  baseURL: "https://321e-2405-201-37-21d9-4a8-9053-a909-c2b8.ngrok-free.app/",
+  baseURL: "https://ee5f-2405-201-37-21d9-917c-eb07-7add-281f.ngrok-free.app/",
   // baseURL: "https://lms-5wr7.onrender.com/",
   headers: {
     "Content-Type": "application/json",

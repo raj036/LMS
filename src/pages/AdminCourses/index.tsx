@@ -30,7 +30,7 @@ const Courses = () => {
   const [courseData, setCourseData] = useState([]);
   const [isDialogue, setIsDialogue] = useState(false);
   const [courseDetails, setCourseDetails] = useState([]);
-  const [selectedCourseDetailId, setSelectedCourseDetailId] = useState(null);
+  const [selectedTeacherId, setSelectedTeacherId] = useState(null);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
   const [formData, setFormData] = useState({
     course_name: "",
@@ -51,17 +51,18 @@ const Courses = () => {
       },
     ],
   });
+  const [teacherData, setTeacherData] = useState(null);
 
-  
   const getCourseDetails = async (courseId: any) => {
     try {
-      const response = await axios.get(`/api/course/${courseId}`, {
+      const response = await axios.get(`/api/course/admin/${courseId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      setCourseDetails(response.data.related_course_details);
-      setSelectedCourseDetailId(response.data.related_course_details);
+      // console.log(response.data),
+        setCourseDetails(response.data.related_course_details);
+      // setSelectedCourseDetailId(response.data.related_course_details);
     } catch (error) {
       // console.log(error);
     }
@@ -80,14 +81,14 @@ const Courses = () => {
     }));
   };
 
-  const handleStandardChange = (value) => {
+  const handleStandardChange = (value:any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [{ ...prevData.standards[0], standard_name: value }],
     }));
   };
 
-  const handleSubjectChange = (value) => {
+  const handleSubjectChange = (value:any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [
@@ -101,7 +102,7 @@ const Courses = () => {
     }));
   };
 
-  const handleModuleChange = (value) => {
+  const handleModuleChange = (value:any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [
@@ -162,52 +163,83 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data)
+      // console.log(response.data);
       setCourseData(response?.data);
     } catch (error) {
       // console.error(error);
     }
   };
-  const navigate = useNavigate();
 
-  const handleViewContentLink = async (detailId: any) => {
+  const getTeacherDetails = async () => {
     try {
-      const response = await axios.get(`/api/course_contents/${detailId}`, {
+      const response = await axios.get("/api/teachers/get_all", {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       });
-
-      if (response?.data?.lessons?.length > 0) {
-        navigate(`/adminview?detailId=${detailId}`);
-      } else {
-        Swal.fire({
-          title: "No Content",
-          text: "There is no content available for this course detail.",
-          icon: "info",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#7066E0",
-        });
-      }
+      // console.log(response.data);
+      setTeacherData(response.data);
     } catch (error) {
-      // console.error("Error fetching content:", error.response.data.detail);
-      Swal.fire({
-        title: "No Content Available For This Course.",
-        text: "Please add content.",
-        icon: "info",
-        confirmButtonText: "OK",
-        confirmButtonColor: "#7066E0",
-      });
+      // console.log(error);
     }
   };
+
   const handleCourseClick = (courseId: any) => {
     setSelectedCourseId(courseId);
   };
 
   useEffect(() => {
     getCourseData();
+    getTeacherDetails();
   }, []);
+
+  const [assignData, setAssignData] = useState({
+    teacher_id: "",
+    course_id: "",
+    course_content_id:[""],
+  });
+
+  const handleTeacherSelect = (event, courseDetailId , courseId) => {
+    const selectedTeacherId = event.target.value;
+    setAssignData((prevData) => ({
+      ...prevData,
+      teacher_id: selectedTeacherId,
+      course_id: courseId,
+      course_content_id:[courseDetailId]
+    }));
+  };
+
+  const handleAssign = async (e:any) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `/api/teachers/assign_courses`,
+        assignData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      // console.log(response);
+      Swal.fire({
+        icon: "success",
+        title: "Course assigned successfully",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } catch (error) {
+      // console.error("Error assigning teacher", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error occured while assigning course",
+        text: error?.response?.data?.message || "Please try again later.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
 
   return (
     <>
@@ -293,33 +325,20 @@ const Courses = () => {
         {/* <h1 className="text-2xl font-bold">Courses</h1> */}
       </div>
 
-      
       <div className="ruby-disp">
         {courseData.map((tab, index) => (
-          <div key={index}
-           className="m-4 cursor-pointer rounded-lg" 
-          onClick={() => handleCourseClick(tab.id)}>
+          <div
+            key={index}
+            className="m-4 cursor-pointer rounded-lg"
+            onClick={() => handleCourseClick(tab.id)}
+          >
             <div
               className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
-                index === activeTab ? "bg-blue-200" : "bg-white"
+                selectedCourseId === tab.id ? "bg-blue-200" : "bg-white"
               }`}
               onClick={() => setActiveTab(index)}
             >
               <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                  />
-                </svg> */}
                 <BookOpenText className="h-5 w-5 text-gray-600" />
               </div>
               <span className="text-gray-700 font-semibold  ">{tab.name}</span>
@@ -343,11 +362,11 @@ const Courses = () => {
                 <TableHead className="text-center bg-teal-900 text-white-A700">
                   Module
                 </TableHead>
-                {/* <TableHead className="text-right bg-teal-900 text-white-A700">
-                  Create
-                </TableHead> */}
+                <TableHead className="text-center bg-teal-900 text-white-A700">
+                  Assign course
+                </TableHead>
                 <TableHead className="text-right bg-teal-900 text-white-A700">
-                  View
+                  Assign
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -363,20 +382,28 @@ const Courses = () => {
                   <TableCell className="text-center">
                     {ele.module_name}
                   </TableCell>
-                  {/* <TableCell className="text-right">
-                    <button
-                      onClick={() => handleCreateContentLink(ele.id)}
-                      className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500"
+                  <TableCell className="text-right flex mx-auto">
+                    <select
+                      name="course"
+                      id="course"
+                      className="p-4 mx-auto bg-teal-900 border border-teal-90 float-right text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-[60%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      onChange={(event) => handleTeacherSelect(event, ele.id , selectedCourseId)}
+                      required
                     >
-                      Create Content
-                    </button>
-                  </TableCell> */}
+                      <option value="">Select teacher...</option>
+                      {teacherData.map((ele) => (
+                        <option key={ele.Teacher_id} value={ele.Teacher_id}>
+                          {ele.name}
+                        </option>
+                      ))}
+                    </select>
+                  </TableCell>
                   <TableCell className="text-right">
                     <button
-                      onClick={() => handleViewContentLink(ele.id)}
+                      onClick={handleAssign}
                       className="border p-[6px] text-[white] z-10 transition hover:bg-white-A700 hover:text-deep_orange-500 border-deep_orange-500 bg-deep_orange-500"
                     >
-                      View Content
+                      Assign
                     </button>
                   </TableCell>
                 </TableRow>

@@ -20,7 +20,7 @@ const MyCourses = () => {
   const [courseData, setCourseData] = useState([]);
   const [courseDetails, setCourseDetails] = useState([]);
   const [selectedCourseId, setSelectedCourseId] = useState(null);
-  const [selectedCourseDetailId, setSelectedCourseDetailId] = useState(null);
+  // const [selectedCourseDetailId, setSelectedCourseDetailId] = useState(null);
 
   const getCourseData = async () => {
     try {
@@ -29,7 +29,7 @@ const MyCourses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data)
+      // console.log(response.data)
       setCourseData(response?.data);
     } catch (error) {
       // console.error(error);
@@ -44,7 +44,7 @@ const MyCourses = () => {
         },
       });
       setCourseDetails(response.data.related_course_details);
-      setSelectedCourseDetailId(response.data.related_course_details);
+      // setSelectedCourseDetailId(response.data.related_course_details);
     } catch (error) {
       // console.log(error);
     }

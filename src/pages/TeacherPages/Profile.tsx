@@ -33,6 +33,13 @@ const TeacherProfile = () => {
       year_of_passing: null,
       percentage: null,
     },
+    employee: {
+      date_of_hire: "",
+      dob: "",
+      gender: "",
+      marital_status: "",
+      nationality: "",
+    },
     emergency_contact: {
       emergency_contact_name: "",
       relation: "",
@@ -57,6 +64,7 @@ const TeacherProfile = () => {
         },
       });
       setUserData(response?.data);
+      // console.log(response.data);
       setTeacherId(response?.data?.Teacher_id);
       setShow(true);
     } catch (error) {
@@ -70,48 +78,48 @@ const TeacherProfile = () => {
 
   // post Data
   const [formData, setFormData] = useState<any>({
-      name: "",
-      email: "",
-      department: "",
-      f_name: "",
-      m_name: "",
-      l_name: "",
-      dob: "",
-      gender: "",
-      nationality: "",
-      marital_status: "",
-      citizenship_status: "",
-      date_of_hire: "",
-      date_of_termination: "", //--
-      primary_number: "",
-      secondary_number: "",
-      primary_email_id: "",
-      secondary_email_id: "",
-      current_address: "",
-      permanent_address: "",
-      dependent_name: "",
-      relation : "",
-      date_of_birth: "", //--
-      education_level: "",
-      institution: "",
-      specialization: "",
-      field_of_study: "",
-      year_of_passing: "",
-      percentage: "",
-      skill: "",
-      certification: "",
-      license: "", //--
-      emergency_contact_name: "", //--
-      emergency_contact_number: "",
-      languages: "",
+    name: "",
+    email: "",
+    department: "",
+    f_name: "",
+    m_name: "",
+    l_name: "",
+    dob: "",
+    gender: "",
+    nationality: "",
+    marital_status: "",
+    citizenship_status: "",
+    date_of_hire: "",
+    date_of_termination: "", //--
+    primary_number: "",
+    secondary_number: "",
+    primary_email_id: "",
+    secondary_email_id: "",
+    current_address: "",
+    permanent_address: "",
+    dependent_name: "",
+    relation: "",
+    date_of_birth: "", //--
+    education_level: "",
+    institution: "",
+    specialization: "",
+    field_of_study: "",
+    year_of_passing: "",
+    percentage: "",
+    skill: "",
+    certification: "",
+    license: "", //--
+    emergency_contact_name: "", //--
+    emergency_contact_number: "",
+    languages: "",
   });
 
-  const handleChange = ( field: any, value: any) => {
+  const handleChange = (field: any, value: any) => {
     setFormData((prevFormData) => ({
       // ...prevFormData,
       // [section]: {
-        ...prevFormData,
-        [field]: value,
+      ...prevFormData,
+      [field]: value,
       // },
     }));
   };
@@ -126,7 +134,7 @@ const TeacherProfile = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         Swal.fire({
           icon: "success",
           title: `Profile data was submitted successfully`,
@@ -135,7 +143,7 @@ const TeacherProfile = () => {
         });
       })
       .catch((error) => {
-        console.log(error.response.data.detail);
+        // console.log(error.response.data.detail);
         const errorMessage = error.response.data.detail;
         Swal.fire({
           title: errorMessage,
@@ -156,7 +164,7 @@ const TeacherProfile = () => {
     });
   };
 
-  const handleNestedInputChange = (e, section) => {
+  const handleNestedInputChange = (e: any, section: any) => {
     const { name, value } = e.target;
     setUserData({
       ...userData,
@@ -331,15 +339,15 @@ const TeacherProfile = () => {
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
                   <span className="font-semibold w-[30%] text-indigo-500 text-[18px]">
-                    Date of birth :
+                    DOB :
                   </span>
                   <input
                     className="w-[60%]"
                     id="autofillfoc"
-                    value={userData?.dependent?.date_of_birth || "-"}
+                    value={userData?.employee?.dob || ""}
                     type="date"
-                    name="date_of_birth"
-                    onChange={(e) => handleNestedInputChange(e, "dependent")}
+                    name="dob"
+                    onChange={(e) => handleNestedInputChange(e, "employee")}
                   />
                 </div>
                 <div className="flex justify-between border-b-2 py-2">
@@ -522,7 +530,7 @@ const TeacherProfile = () => {
                 size="s"
                 className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
               >
-               Full Name<span className="text-red-500">*</span>
+                Full Name<span className="text-red-500">*</span>
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
@@ -530,9 +538,7 @@ const TeacherProfile = () => {
                   name="name"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.name}
-                  onChange={(e) =>
-                    handleChange( "name", e.target.value)
-                  }
+                  onChange={(e) => handleChange("name", e.target.value)}
                   required
                 />
               </div>
@@ -646,9 +652,7 @@ const TeacherProfile = () => {
                   name="dob"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.dob}
-                  onChange={(e) =>
-                    handleChange( "dob", e.target.value)
-                  }
+                  onChange={(e) => handleChange("dob", e.target.value)}
                   required
                 />
               </div>
@@ -666,9 +670,7 @@ const TeacherProfile = () => {
                   name="gender"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.gender}
-                  onChange={(e) =>
-                    handleChange( "gender", e.target.value)
-                  }
+                  onChange={(e) => handleChange("gender", e.target.value)}
                   required
                 />
               </div>
@@ -686,9 +688,7 @@ const TeacherProfile = () => {
                   name="nationality"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.nationality}
-                  onChange={(e) =>
-                    handleChange("nationality", e.target.value)
-                  }
+                  onChange={(e) => handleChange("nationality", e.target.value)}
                   required
                 />
               </div>
@@ -707,7 +707,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.marital_status}
                   onChange={(e) =>
-                    handleChange("marital_status",e.target.value)
+                    handleChange("marital_status", e.target.value)
                   }
                   required
                 />
@@ -748,9 +748,7 @@ const TeacherProfile = () => {
                   name="date_of_hire"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.date_of_hire}
-                  onChange={(e) =>
-                    handleChange( "date_of_hire", e.target.value)
-                  }
+                  onChange={(e) => handleChange("date_of_hire", e.target.value)}
                   required
                 />
               </div>
@@ -787,16 +785,13 @@ const TeacherProfile = () => {
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
-                  type="text"
+                  type="number"
                   name="primary_number"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.primary_number}
                   maxLength={10}
                   onChange={(e) =>
-                    handleChange(
-                      "primary_number",
-                      e.target.value
-                    )
+                    handleChange("primary_number", e.target.value)
                   }
                   required
                 />
@@ -811,16 +806,13 @@ const TeacherProfile = () => {
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
-                  type="text"
+                  type="number"
                   name="secondary_number"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.secondary_number}
                   maxLength={10}
                   onChange={(e) =>
-                    handleChange(
-                      "secondary_number",
-                      e.target.value
-                    )
+                    handleChange("secondary_number", e.target.value)
                   }
                 />
               </div>
@@ -839,10 +831,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.primary_email_id}
                   onChange={(e) =>
-                    handleChange(
-                      "primary_email_id",
-                      e.target.value
-                    )
+                    handleChange("primary_email_id", e.target.value)
                   }
                   required
                 />
@@ -862,10 +851,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.secondary_email_id}
                   onChange={(e) =>
-                    handleChange(
-                      "secondary_email_id",
-                      e.target.value
-                    )
+                    handleChange("secondary_email_id", e.target.value)
                   }
                 />
               </div>
@@ -884,10 +870,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.current_address}
                   onChange={(e) =>
-                    handleChange(
-                      "current_address",
-                      e.target.value
-                    )
+                    handleChange("current_address", e.target.value)
                   }
                   required
                 />
@@ -907,10 +890,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.permanent_address}
                   onChange={(e) =>
-                    handleChange(
-                      "permanent_address",
-                      e.target.value
-                    )
+                    handleChange("permanent_address", e.target.value)
                   }
                   required
                 />
@@ -940,7 +920,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.dependent_name}
                   onChange={(e) =>
-                    handleChange( "dependent_name", e.target.value)
+                    handleChange("dependent_name", e.target.value)
                   }
                   required
                 />
@@ -959,9 +939,7 @@ const TeacherProfile = () => {
                   name="relation"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.relation}
-                  onChange={(e) =>
-                    handleChange( "relation", e.target.value)
-                  }
+                  onChange={(e) => handleChange("relation", e.target.value)}
                   required
                 />
               </div>
@@ -977,13 +955,11 @@ const TeacherProfile = () => {
                 <input
                   type="number"
                   name="emergency_contact_number"
+                  maxLength={10}
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.emergency_contact_number}
                   onChange={(e) =>
-                    handleChange(
-                      "emergency_contact_number",
-                      e.target.value
-                    )
+                    handleChange("emergency_contact_number", e.target.value)
                   }
                   required
                 />
@@ -1031,7 +1007,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.education_level}
                   onChange={(e) =>
-                    handleChange( "education_level", e.target.value)
+                    handleChange("education_level", e.target.value)
                   }
                   required
                 />
@@ -1050,9 +1026,7 @@ const TeacherProfile = () => {
                   name="institution"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.institution}
-                  onChange={(e) =>
-                    handleChange( "institution", e.target.value)
-                  }
+                  onChange={(e) => handleChange("institution", e.target.value)}
                   required
                 />
               </div>
@@ -1091,7 +1065,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.field_of_study}
                   onChange={(e) =>
-                    handleChange( "field_of_study", e.target.value)
+                    handleChange("field_of_study", e.target.value)
                   }
                   required
                 />
@@ -1111,7 +1085,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.year_of_passing}
                   onChange={(e) =>
-                    handleChange( "year_of_passing", e.target.value)
+                    handleChange("year_of_passing", e.target.value)
                   }
                   required
                 />
@@ -1127,12 +1101,12 @@ const TeacherProfile = () => {
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
                   type="text"
+                  maxLength={3}
+                  minLength={2}
                   name="percentage"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.percentage}
-                  onChange={(e) =>
-                    handleChange("percentage", e.target.value)
-                  }
+                  onChange={(e) => handleChange("percentage", e.target.value)}
                   required
                 />
               </div>
@@ -1159,9 +1133,7 @@ const TeacherProfile = () => {
                   name="skill"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.skill}
-                  onChange={(e) =>
-                    handleChange( "skill", e.target.value)
-                  }
+                  onChange={(e) => handleChange("skill", e.target.value)}
                   required
                 />
               </div>
@@ -1180,7 +1152,7 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.certification}
                   onChange={(e) =>
-                    handleChange( "certification", e.target.value)
+                    handleChange("certification", e.target.value)
                   }
                   required
                 />
@@ -1250,7 +1222,7 @@ const TeacherProfile = () => {
                 />
               </div>
             </div> */}
-           
+
             {/* {Language spoken} */}
             <div className="sm:w-[400px]">
               <Heading
@@ -1265,12 +1237,7 @@ const TeacherProfile = () => {
                   name="emergency_contact_number"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.languages}
-                  onChange={(e) =>
-                    handleChange(
-                      "languages",
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => handleChange("languages", e.target.value)}
                   required
                 />
               </div>

@@ -94,8 +94,8 @@ const AdminViewContent = () => {
               <h3>Course Details</h3>
             </div>
             {courseData && (
-              <div className="mb-16 flex justify-center">
-                <table className="w-[50%]   shadow-md rounded-lg">
+              <div className="mb-16 flex justify-center ">
+                <table className="w-[50%]   shadow-xl rounded-lg">
                   <thead>
                     <tr className=" text-white">
                       <th className="p-4 bg-gradient-to-r from-[#fa9960] to-[#f6753b] ">

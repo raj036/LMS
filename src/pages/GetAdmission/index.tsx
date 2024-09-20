@@ -202,21 +202,21 @@ const index = () => {
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             setLoading(false);
-            // navigate("/payments");
+            navigate("/payments");
           }
         });
       }
 
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       setLoading(false);
       // console.error("Error Submitting Admission Form", error);
       if (error || error.response.status === 400) {
-        console.log(error);
+        // console.log(error);
         Swal.fire({
-          title: "Error Submitting Admission Form!",
+          title: "Failed to Submit Admission Form",
           text: `${error?.response?.data?.detail}`,
-          icon: "error",
+          // icon: "error",
         }).then((result: { isConfirmed: any }) => {
           // if (result.isConfirmed) {
           //   navigate("/");
@@ -437,7 +437,7 @@ const index = () => {
                   size="s"
                   className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
                 >
-                  ID Proof
+                  ID Proof<span className="text-red-500">*</span>
                 </Heading>
                 <input
                   type="file"
@@ -448,6 +448,7 @@ const index = () => {
                   onChange={(e: any) =>
                     setFormData({ ...formData, id_proof: e.target.files[0] })
                   }
+                  required
                 />
               </div>
               <div className="sm:col-span-2">
@@ -490,6 +491,7 @@ const index = () => {
                       profile_photo: e.target.files[0],
                     })
                   }
+                  required
                 />
               </div>
             </div>
@@ -850,7 +852,7 @@ const index = () => {
                   size="xs"
                   type="text"
                   name="s_secondary_no"
-                  maxLength={10}
+                  // maxLength={10}
                   id="s_secondary_no"
                   value={formData?.s_secondary_no}
                   onChange={(value: any) =>

@@ -64,7 +64,7 @@ const MyAttendance = () => {
         borderColor: attendance.status.includes("present") ? "green" : "red",
       }));
       setEvents(attendanceEvents);
-      console.log(attendanceEvents);
+      // console.log(attendanceEvents);
     } catch (error) {
       console.error("Error fetching attendance:", error);
     }

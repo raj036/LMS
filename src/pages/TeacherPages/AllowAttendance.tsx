@@ -3,6 +3,8 @@ import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
 import qs from "qs";
 import Swal from "sweetalert2";
+import { Button } from "components";
+import { useNavigate } from "react-router-dom";
 
 interface StudentRecord {
   id: string;
@@ -54,6 +56,8 @@ const AllowAttendance = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const handleSubmitAll = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -77,13 +81,17 @@ const AllowAttendance = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      // Swal.fire({
-      //   icon: "success",
-      //   title: `Attendance Updated`,
-      //   showConfirmButton: false,
-      //   timer: 2500,
-      // });
-      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: `Attendance Updated`,
+        showConfirmButton: true,
+      }).then((result)=> {
+        if(result.isConfirmed){
+          navigate("/dashboard/myattendance")
+        }
+      })
+      // console.log(response.data);
+      
     } catch (error) {
       // console.error("Submission error:", error);
       Swal.fire({
@@ -99,6 +107,9 @@ const AllowAttendance = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        <div className="my-9 text-center text-[30px]">
+          <h3>Students Attendance</h3>
+        </div>
         <form onSubmit={handleSubmitAll}>
           <table className="w-full border-collapse mb-8">
             <thead>
@@ -165,12 +176,13 @@ const AllowAttendance = () => {
             </tbody>
           </table>
           <div>
-            <button
+            <Button
               type="submit"
-              className="bg-green-500 text-white px-4 py-2 rounded"
+              size="lg"
+              className=" flex my-5 mx-auto xs:h-[40px] sm:w-full   font-bold max-w-[250px] bg-deep_orange-500 z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
             >
-              Submit All Changes
-            </button>
+              Submit
+            </Button>
           </div>
         </form>
       </div>

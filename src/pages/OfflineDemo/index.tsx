@@ -49,6 +49,8 @@ const index = () => {
           title: "Offline Demo Form Submitted!",
           text: "Kindly Wait for Confirmation from the Office.",
           icon: "success",
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             setIsLoading(false);
@@ -63,6 +65,8 @@ const index = () => {
         Swal.fire({
           title: "Error Submitting Offline Demo Form!",
           icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             navigate("/");

@@ -219,6 +219,8 @@ const index = () => {
           title: "Failed to Submit Admission Form",
           text: `${error?.response?.data?.detail}`,
           icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             navigate("/");

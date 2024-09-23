@@ -33,6 +33,8 @@ export default function ContactUsPage() {
         Swal.fire({
           title: "Mail Has Been Sent!",
           icon: "success",
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             window.location.reload();
@@ -46,6 +48,8 @@ export default function ContactUsPage() {
           title: "Error Sending Mail!",
           text: `${error?.response?.data?.detail}`,
           icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             window.location.reload();

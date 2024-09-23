@@ -89,6 +89,8 @@ const Payments = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.detail,
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
     }
   };
@@ -145,6 +147,8 @@ const Payments = () => {
         Swal.fire({
           title: "Please Enter Payment Details",
           icon: "error",
+          showConfirmButton: true,
+          confirmButtonColor: "red",
         });
         return;
       }
@@ -182,7 +186,6 @@ const Payments = () => {
         if (result.isConfirmed) {
           setLoading(false);
           navigate("/");
-          
         }
       });
       window.scrollTo(0, 0);
@@ -237,6 +240,8 @@ const Payments = () => {
         icon: "error",
         title: "Error",
         text: "Please Select Batch Size and Years",
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
       return;
     }

@@ -50,6 +50,8 @@ const Teachers = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.detail,
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
       setLoading(false);
     }

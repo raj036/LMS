@@ -60,6 +60,8 @@ const Enquiry = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.detail || "Failed to fetch enquiry data",
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
     } finally {
       setLoading(false);
@@ -109,6 +111,8 @@ const Courses = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.message || "Failed to fetch video data",
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
     } finally {
       setLoading(false);
@@ -183,6 +187,8 @@ const Courses = () => {
         icon: "error",
         title: "Error uploading video",
         html: errorMessage, // Use HTML format to handle line breaks
+        showConfirmButton: true,
+        confirmButtonColor: "red",
       });
     }
   };

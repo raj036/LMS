@@ -35,6 +35,7 @@ const Mail = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.detail,
+        confirmButtonColor: "red",
       });
       setLoading(false);
     }

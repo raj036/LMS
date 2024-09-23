@@ -54,7 +54,7 @@ export default function Footer({ ...props }: Props) {
           text: `Error Occured While Submitting Admission Enquiry!`,
           icon: "error",
           showConfirmButton: true,
-        confirmButtonColor: "red"
+          confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             navigate("/");

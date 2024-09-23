@@ -87,6 +87,7 @@ const CourseUpload = () => {
         title: "Content created successfully!",
         confirmButtonColor: "#7066E0",
         icon: "success",
+        confirmButtonText: "Yes",
       });
       navigate("/dashboard/mycourses");
     } catch (error) {

@@ -87,6 +87,8 @@ export default function LoginPage() {
         icon: "success",
         title: "Password Updated Successfully",
         showConfirmButton: true,
+        confirmButtonColor: "#7066E0",
+          confirmButtonText: "Yes",
       });
       navigate("/login");
       clearInputFields();
@@ -99,6 +101,7 @@ export default function LoginPage() {
         title: "Error While Changing Password ",
         text: forgetError,
         showConfirmButton: true,
+        confirmButtonColor: "red",
         // timer: 5000,
       });
       setLoadUpdate(false);

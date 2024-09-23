@@ -1,6 +1,6 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { BookOpenTextIcon, EllipsisVertical } from "lucide-react";
+import { BookOpenText, BookOpenTextIcon, EllipsisVertical } from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
 
@@ -11,12 +11,13 @@ const UserDashboard = () => {
 
   const getCourseData = async () => {
     try {
-      const response = await axios.get("api/courses/unique", {
+      const response = await axios.get("api/course_active/enlrolled_course", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      setCourseData(response?.data?.unique_courses);
+      setCourseData(response?.data);
+      console.log(response.data[0].course_info);
     } catch (error) {
       // console.error(error);
     }
@@ -29,27 +30,28 @@ const UserDashboard = () => {
   return (
     <>
       <Topbar heading={"Dashboard"} />
-      <div className="ruby-disp p-4  sm:flex-col sm:p-7">
+      <div className="ruby-disp">
         {courseData.map((tab, index) => (
+          <div 
+          key={index}
+          className="m-4 cursor-pointer rounded-lg"
+          >
           <div
             key={index}
-            className={`flex items-center justify-between md:h-20 m-4 p-4 w-[300px] sm:w-full bg-white rounded-lg shadow-md cursor-pointer ${
-              index === activeTab ? "border-2 border-gray-300" : "border"
+            className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
+              index === tab.id ? "bg-blue-200" : "bg-white"
             }`}
             onClick={() => setActiveTab(index)}
           >
             <div className="flex items-center">
-              <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
+            <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
+                <BookOpenText className="h-5 w-5 text-gray-600" />
+              </div>
               <div className="m-5">
-                {/* <span className="block text-gray-600 text-[15px]">
-                  {tab}
-                </span> */}
-                <span className="block font-semibold text-gray-800">{tab}</span>
+                <span className="block font-semibold text-gray-800">{tab.course_info.course_name}</span>
               </div>
             </div>
-            <div className="text-gray-400">
-              <EllipsisVertical />
-            </div>
+          </div>
           </div>
         ))}
       </div>

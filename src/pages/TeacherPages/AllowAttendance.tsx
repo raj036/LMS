@@ -21,17 +21,22 @@ const AllowAttendance = () => {
   const [studentRecords, setStudentRecords] = useState<StudentAttendance[]>([]);
   const [attendanceStatuses, setAttendanceStatuses] = useState<AttendanceStatus>({});
   const [detailID, setDetailID] = useState<string | null>(null);
+  const [courseContID, setCourseContId] = useState<string | null>(null);
   const { user }: any = useAuthContext();
 
-  const getStudentData = async () => {
+  const getStudentData = async (detailID:any, courseContID:any) => {
+
+    if (!detailID || !courseContID) {
+      return; // Don't make the request if either ID is missing
+    }
     try {
-      const response = await axios.get(`/api/attendance_students/`, {
+      const response = await axios.get(`/api/attendance_students/module_wise/?course_id=${courseContID}&admin_course_id=${detailID}`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
       });
       setStudentRecords(response.data);
-
+      // console.log(response.data);
       const initialStatuses = response.data.reduce(
         (acc: AttendanceStatus, student: StudentAttendance) => {
           acc[student.student_id] = "present";
@@ -39,12 +44,12 @@ const AllowAttendance = () => {
         },
         {}
       );
-      console.log(response.data);
+      // console.log(response.data);
       setAttendanceStatuses(initialStatuses);
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Error fetching student data.",
+        title: "Student data was not found.",
         text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
         timer: 2500,
@@ -53,11 +58,20 @@ const AllowAttendance = () => {
   };
 
   useEffect(() => {
-    getStudentData();
     const queryParams = new URLSearchParams(window.location.search);
-    const detailId = queryParams.get("detailId");
+    const detailId = queryParams.get('detailId');
+    const courseContentId = queryParams.get('selectedCourseId');
+    
+    setCourseContId(courseContentId);
     setDetailID(detailId);
-  }, []);
+
+    // Only fetch student data if both IDs are available
+    if (detailId && courseContentId) {
+      getStudentData(detailId, courseContentId);
+    }
+  }, [detailID, courseContID]);
+
+  
 
   const handleStatusChange = (studentId: string, status: string) => {
     setAttendanceStatuses((prev) => ({
@@ -187,7 +201,7 @@ const AllowAttendance = () => {
           <Button
             type="submit"
             size="lg"
-            className="my-5 font-bold max-w-[250px] bg-deep_orange-500 transition duration-200 hover:bg-white border hover:text-deep_orange-500 border-deep_orange-500"
+            className="my-5 font-bold max-w-[250px] bg-deep_orange-500 transition duration-200 hover:bg-[white] border hover:text-deep_orange-500 border-deep_orange-500"
           >
             Submit
           </Button>

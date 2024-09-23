@@ -38,6 +38,8 @@ export default function Footer({ ...props }: Props) {
           title: "Admission Enquiry Submitted!",
           text: "Kindly Wait for Confirmation from the Admission Office.",
           icon: "success",
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             window.location.reload();
@@ -51,9 +53,12 @@ export default function Footer({ ...props }: Props) {
           title: "Technical Issue",
           text: `Error Occured While Submitting Admission Enquiry!`,
           icon: "error",
+          showConfirmButton: true,
+        confirmButtonColor: "red"
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             navigate("/");
+            window.scrollTo(0, 0);
           }
         });
       }

@@ -176,12 +176,16 @@ const Payments = () => {
         icon: "success",
         // title: "Payment Successful",
         text: "Thank you for Enrolling to ILATE, Kindly Wait for the Response from Admission Office",
+        confirmButtonColor: "#7066E0",
+        confirmButtonText: "Yes",
       }).then((result: { isConfirmed: any }) => {
         if (result.isConfirmed) {
           setLoading(false);
           navigate("/");
+          
         }
       });
+      window.scrollTo(0, 0);
     } catch (error) {
       // console.error("Error in Payment", error);
       setLoading(false);
@@ -189,6 +193,8 @@ const Payments = () => {
         icon: "error",
         title: "Error",
         text: error?.response?.data?.detail,
+        showConfirmButton: true,
+        confirmButtonColor: "red"
       });
     }
   };

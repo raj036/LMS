@@ -18,6 +18,7 @@ export const useLogin = () => {
         user_password,
       });
       const userData = await response.data;
+      
       if (userData.status_code === 500) {
         throw new Error(`${userData.detail}`);
       }
@@ -26,6 +27,7 @@ export const useLogin = () => {
       setIsLoading(false);
       const { from }: any = location.state || { from: { pathname: "/" } };
       navigate(from);
+      window.scrollTo(0, 0);
     } catch (error) {
       // console.error("Error in useLogin", error);
       setError(error);

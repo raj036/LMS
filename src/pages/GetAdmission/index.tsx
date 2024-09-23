@@ -199,6 +199,8 @@ const index = () => {
           title: "Admission Form Submitted!",
           text: "Kindly Make Payment on Next Page & Wait for Confirmation from the Admission Office.",
           icon: "success",
+          confirmButtonColor: "#7066E0",
+          confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
             setLoading(false);
@@ -216,11 +218,12 @@ const index = () => {
         Swal.fire({
           title: "Failed to Submit Admission Form",
           text: `${error?.response?.data?.detail}`,
-          // icon: "error",
+          icon: "error",
         }).then((result: { isConfirmed: any }) => {
-          // if (result.isConfirmed) {
-          //   navigate("/");
-          // }
+          if (result.isConfirmed) {
+            navigate("/");
+            window.scrollTo(0, 0);
+          }
         });
       }
     }

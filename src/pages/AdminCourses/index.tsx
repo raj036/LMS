@@ -60,7 +60,7 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      // console.log(response.data),
+      console.log(response.data),
         setCourseDetails(response.data.related_course_details);
       // setSelectedCourseDetailId(response.data.related_course_details);
     } catch (error) {
@@ -163,7 +163,7 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      // console.log(response.data);
+      console.log(response.data);
       setCourseData(response?.data);
     } catch (error) {
       // console.error(error);
@@ -177,7 +177,7 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      // console.log(response.data);
+      console.log(response.data);
       setTeacherData(response.data);
     } catch (error) {
       // console.log(error);

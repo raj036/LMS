@@ -6,10 +6,11 @@ import Swal from "sweetalert2";
 import { Button } from "components";
 import { useNavigate } from "react-router-dom";
 
-interface StudentRecord {
-  id: string;
+interface StudentAttendance {
+  student_id: any;
   first_name: string;
   last_name: string;
+  course_name: string;
 }
 
 interface AttendanceStatus {
@@ -17,28 +18,37 @@ interface AttendanceStatus {
 }
 
 const AllowAttendance = () => {
-  const [studentRecords, setStudentRecords] = useState<StudentRecord[]>([]);
-  const [attendanceStatuses, setAttendanceStatuses] =
-    useState<AttendanceStatus>({});
+  const [studentRecords, setStudentRecords] = useState<StudentAttendance[]>([]);
+  const [attendanceStatuses, setAttendanceStatuses] = useState<AttendanceStatus>({});
   const [detailID, setDetailID] = useState<string | null>(null);
   const { user }: any = useAuthContext();
 
   const getStudentData = async () => {
     try {
-      const response = await axios.get(`/api/attendance_students/`);
+      const response = await axios.get(`/api/attendance_students/`, {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      });
       setStudentRecords(response.data);
 
-      // Initialize all statuses to 'present'
       const initialStatuses = response.data.reduce(
-        (acc: AttendanceStatus, student: StudentRecord) => {
-          acc[student.id] = "present";
+        (acc: AttendanceStatus, student: StudentAttendance) => {
+          acc[student.student_id] = "present";
           return acc;
         },
         {}
       );
+      console.log(response.data);
       setAttendanceStatuses(initialStatuses);
     } catch (error) {
-      // console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error fetching student data.",
+        text: error?.response?.data?.message || "Please try again later.",
+        showConfirmButton: false,
+        timer: 2500,
+      });
     }
   };
 
@@ -61,10 +71,10 @@ const AllowAttendance = () => {
   const handleSubmitAll = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const student_ids = studentRecords.map((student) => student.id).join(",");
+      const student_ids = studentRecords.map((student) => student.student_id).join(",");
       const course_content_id = detailID;
       const status = studentRecords
-        .map((student) => attendanceStatuses[student.id])
+        .map((student) => attendanceStatuses[student.student_id])
         .join(",");
 
       const payload = {
@@ -85,15 +95,12 @@ const AllowAttendance = () => {
         icon: "success",
         title: `Attendance Updated`,
         showConfirmButton: true,
-      }).then((result)=> {
-        if(result.isConfirmed){
-          navigate("/dashboard/myattendance")
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/dashboard/myattendance");
         }
-      })
-      // console.log(response.data);
-      
+      });
     } catch (error) {
-      // console.error("Submission error:", error);
       Swal.fire({
         icon: "error",
         title: "Error updating attendance.",
@@ -105,88 +112,86 @@ const AllowAttendance = () => {
   };
 
   return (
-    <>
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        <div className="my-9 text-center text-[30px]">
-          <h3>Students Attendance</h3>
-        </div>
-        <form onSubmit={handleSubmitAll}>
-          <table className="w-full border-collapse mb-8">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border border-gray-300 px-4 py-2 text-left hidden">
-                  Content ID
-                </th>
-                <th className="border border-gray-300 px-4 py-2 text-left">
-                  Roll Number
-                </th>
-                <th className="border border-gray-300 px-4 py-2 text-left">
-                  Student Name
-                </th>
-                <th className="border border-gray-300 px-4 py-2 text-left">
-                  Attendance Status
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {studentRecords.map((student) => (
-                <tr key={student.id}>
-                  <td className="border border-gray-300 px-4 py-2 hidden">
-                    <input
-                      type="text"
-                      name="course_content_id"
-                      value={detailID || ""}
-                      className="w-full px-2 py-1 border rounded"
-                      readOnly
-                    />
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <input
-                      type="text"
-                      name="student_ids"
-                      value={student.id}
-                      className="w-full px-2 py-1 border rounded"
-                      readOnly
-                    />
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <input
-                      type="text"
-                      name="studentName"
-                      value={`${student.first_name} ${student.last_name}`}
-                      className="w-full px-2 py-1 border rounded"
-                      readOnly
-                    />
-                  </td>
-                  <td className="border border-gray-300 px-4 py-2">
-                    <select
-                      name="status"
-                      value={attendanceStatuses[student.id]}
-                      className="w-full px-2 py-1 border rounded"
-                      onChange={(e) =>
-                        handleStatusChange(student.id, e.target.value)
-                      }
-                    >
-                      <option value="present">Present</option>
-                      <option value="absent">Absent</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div>
-            <Button
-              type="submit"
-              size="lg"
-              className=" flex my-5 mx-auto xs:h-[40px] sm:w-full   font-bold max-w-[250px] bg-deep_orange-500 z-10 transition hover:bg-white-A700 border hover:text-deep_orange-500 border-deep_orange-500"
-            >
-              Submit
-            </Button>
-          </div>
-        </form>
+    <div className="container mx-auto px-4 py-8 max-w-6xl bg-white shadow-lg rounded-lg">
+      <div className="my-9 text-center text-2xl font-bold text-gray-800">
+        <h3>Students Attendance</h3>
       </div>
-    </>
+      <form onSubmit={handleSubmitAll}>
+        <table className="min-w-full border border-gray-300 mb-8">
+          <thead>
+            <tr className="bg-gray-100 text-gray-700">
+              <th className="border border-gray-300 px-4 py-2 hidden">Content ID</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Roll Number</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Student Name</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Course Name</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Attendance Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {studentRecords.map((student) => (
+              <tr key={student.student_id} className="hover:bg-gray-50 transition duration-150">
+                <td className="border border-gray-300 px-4 py-2 hidden">
+                  <input
+                    type="text"
+                    name="course_content_id"
+                    value={detailID || ""}
+                    className="w-full px-2 py-1 border rounded"
+                    readOnly
+                  />
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <input
+                    type="text"
+                    name="student_ids"
+                    value={student.student_id}
+                    className="w-full px-2 py-1 border rounded"
+                    readOnly
+                  />
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <input
+                    type="text"
+                    name="studentName"
+                    value={`${student.first_name} ${student.last_name}`}
+                    className="w-full px-2 py-1 border rounded"
+                    readOnly
+                  />
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <input
+                    type="text"
+                    name="courseName"
+                    value={student.course_name}
+                    className="w-full px-2 py-1 border rounded"
+                    readOnly
+                  />
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <select
+                    name="status"
+                    value={attendanceStatuses[student.student_id]}
+                    className="w-full px-2 py-1 border rounded bg-white text-gray-700"
+                    onChange={(e) => handleStatusChange(student.student_id, e.target.value)}
+                  >
+                    <option value="present">Present</option>
+                    <option value="absent">Absent</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex justify-center">
+          <Button
+            type="submit"
+            size="lg"
+            className="my-5 font-bold max-w-[250px] bg-deep_orange-500 transition duration-200 hover:bg-white border hover:text-deep_orange-500 border-deep_orange-500"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

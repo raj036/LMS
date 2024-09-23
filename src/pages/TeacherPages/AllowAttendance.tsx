@@ -95,6 +95,8 @@ const AllowAttendance = () => {
         icon: "success",
         title: `Attendance Updated`,
         showConfirmButton: true,
+        confirmButtonColor: "#7066E0",
+        confirmButtonText: "Yes",
       }).then((result) => {
         if (result.isConfirmed) {
           navigate("/dashboard/myattendance");

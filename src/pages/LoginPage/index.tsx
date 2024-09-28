@@ -100,6 +100,9 @@ export default function LoginPage() {
         icon: "error",
         title: "Error While Changing Password ",
         text: forgetError,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         showConfirmButton: true,
         confirmButtonColor: "red",
         // timer: 5000,
@@ -409,11 +412,13 @@ export default function LoginPage() {
             >
               Sign Up
             </Button> */}
-            <Img
+            <img
               loading="lazy"
-              src="images/img_reshot_illustra.png"
+              src="images/img_reshot_illustra.webp"
               alt="reshotillustra"
               className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8"
+              width="800"  // Explicit width
+              height="600" // Explicit height
             />
           </div>
         </div>

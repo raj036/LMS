@@ -38,6 +38,9 @@ export default function Footer({ ...props }: Props) {
           title: "Admission Enquiry Submitted!",
           text: "Kindly Wait for Confirmation from the Admission Office.",
           icon: "success",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
@@ -53,6 +56,9 @@ export default function Footer({ ...props }: Props) {
           title: "Technical Issue",
           text: `Error Occured While Submitting Admission Enquiry!`,
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           showConfirmButton: true,
           confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
@@ -284,6 +290,9 @@ export default function Footer({ ...props }: Props) {
                           id="name"
                           type="text"
                           onChange={(value: any) => handleChange("name", value)}
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                          }}
                           required
                         />
                       </div>
@@ -308,14 +317,18 @@ export default function Footer({ ...props }: Props) {
                           variant="fill"
                           className="!p-0 tracking-[0.20px] text-white-A700"
                           placeholder="Phone (10 Digit)*"
+                          minLength={10}
                           maxLength={10}
                           name="phone"
                           id="phone"
-                          type="tel"
+                          type="text"
                           pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                           onChange={(value: any) =>
                             handleChange("phone", value)
                           }
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                          }}
                           required
                         />
                       </div>

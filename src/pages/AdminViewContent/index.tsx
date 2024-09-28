@@ -55,6 +55,9 @@ const AdminViewContent = () => {
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, delete it!",
       });

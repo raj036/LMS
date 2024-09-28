@@ -136,6 +136,9 @@ const UserProfile = () => {
         Swal.fire({
           text: "Form updated Success Fully",
           icon: "success",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -146,6 +149,9 @@ const UserProfile = () => {
         Swal.fire({
           text: "Form not updated due to some issue",
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });

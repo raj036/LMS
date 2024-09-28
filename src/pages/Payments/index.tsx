@@ -90,6 +90,9 @@ const Payments = () => {
         title: "Error",
         text: error?.response?.data?.detail,
         showConfirmButton: true,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         confirmButtonColor: "red",
       });
     }
@@ -147,6 +150,9 @@ const Payments = () => {
         Swal.fire({
           title: "Please Enter Payment Details",
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           showConfirmButton: true,
           confirmButtonColor: "red",
         });
@@ -181,6 +187,9 @@ const Payments = () => {
         // title: "Payment Successful",
         text: "Thank you for Enrolling to ILATE, Kindly Wait for the Response from Admission Office",
         confirmButtonColor: "#7066E0",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         confirmButtonText: "Yes",
       }).then((result: { isConfirmed: any }) => {
         if (result.isConfirmed) {
@@ -195,6 +204,9 @@ const Payments = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.detail,
         showConfirmButton: true,
         confirmButtonColor: "red"
@@ -239,6 +251,9 @@ const Payments = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: "Please Select Batch Size and Years",
         showConfirmButton: true,
         confirmButtonColor: "red",

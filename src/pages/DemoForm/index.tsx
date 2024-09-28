@@ -26,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Trash2 } from "lucide-react";
 
 interface AddVideoData {
   course_name: any;
@@ -59,6 +60,9 @@ const Enquiry = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.detail || "Failed to fetch enquiry data",
         showConfirmButton: true,
         confirmButtonColor: "red",
@@ -91,10 +95,64 @@ const Courses = () => {
     subject_name: "",
     standard_name: "",
     name: "",
-    video_file: "",
+    video_file: null,
   });
   const [loading, setLoading] = useState(false);
   const [isDialogue, setIsDialogue] = useState(false);
+
+  const [selectedCourse, setSelectedCourse] = useState({ id: "", name: "" });
+  const [selectedStandard, setSelectedStandard] = useState({
+    id: "",
+    name: "",
+  });
+  const [selectedSubject, setSelectedSubject] = useState({ id: "", name: "" });
+
+  const [courses, setCourses] = useState([]);
+  const [standards, setStandards] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get("api/courses_all/");
+        setCourses(response.data.course_list);
+        setLoading(false);
+        console.log(response.data.course_list)
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  const handleCourseChange = (e) => {
+    const courseId = e.target.value;
+    const course = courses.find((c) => c.course_id.toString() === courseId);
+    setSelectedCourse({ id: courseId, name: course.course_name });
+    setSelectedStandard({ id: "", name: "" });
+    setSelectedSubject({ id: "", name: "" });
+    setStandards(course ? course.standards : []);
+    setSubjects([]);
+    setAddVideo(prev => ({ ...prev, course_name: course.course_name }));
+  };
+
+  const handleStandardChange = (e) => {
+    const standardId = e.target.value;
+    const standard = standards.find((s) => s.standard_id.toString() === standardId);
+    setSelectedStandard({ id: standardId, name: standard.standard_name });
+    setSelectedSubject({ id: "", name: "" });
+    setSubjects(standard ? standard.subjects : []);
+    setAddVideo(prev => ({ ...prev, standard_name: standard.standard_name }));
+  };
+
+  const handleSubjectChange = (e) => {
+    const subjectId = e.target.value;
+    const subject = subjects.find((s) => s.subject_id.toString() === subjectId);
+    setSelectedSubject({ id: subjectId, name: subject.subject_name });
+    setAddVideo(prev => ({ ...prev, subject_name: subject.subject_name }));
+  };
 
   const fetchVideoData = async () => {
     setLoading(true);
@@ -105,11 +163,15 @@ const Courses = () => {
         },
       });
       setVideoData(response.data);
+      console.log(response)
     } catch (error) {
       // console.error("Error fetching video data", error);
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.message || "Failed to fetch video data",
         showConfirmButton: true,
         confirmButtonColor: "red",
@@ -128,67 +190,156 @@ const Courses = () => {
     }));
   };
 
-  const handleSubmit = async (e: any) => {
+  // const handleSubmit = async (e: any) => {
+
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const response = await axios.post("/api/videos/", addVideo, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+  //     // Swal.fire({
+  //     //   icon: "success",
+  //     //   title: `Video Uploaded Successfully`,
+  //     //   customClass: {
+  //     //     icon: "swal-my-icon",
+  //     //   },
+  //     //   showConfirmButton: false,
+  //     //   timer: 1500,
+  //     // });
+  //     setIsDialogue(false);
+  //     setLoading(false);
+  //     fetchVideoData(); // Refresh video list after upload
+  //     console.log(response);
+  //   } catch (error) {
+  //     // console.error("Error uploading video", error);
+  //     console.log(error);
+  //     // let errorMessage =
+  //     //   "An unexpected error occurred. Please try again later.";
+
+  //     // if (error.response) {
+  //     //   // console.error("Error response:", error.response.data);
+
+  //     //   if (error.response.status === 422 && error.response.data.detail) {
+  //     //     // Detailed validation errors
+  //     //     const validationErrors = error.response.data.detail;
+  //     //     // console.error("Validation errors:", validationErrors);
+
+  //     //     if (Array.isArray(validationErrors)) {
+  //     //       errorMessage = validationErrors
+  //     //         .map((err: any) => {
+  //     //           if (err.loc && err.msg) {
+  //     //             // Format the error message
+  //     //             return `${err.loc.join(".")} : ${err.msg}`;
+  //     //           }
+  //     //           return "Unknown validation error.";
+  //     //         })
+  //     //         .join("<br>"); // Join errors with line breaks for HTML display
+  //     //     } else {
+  //     //       errorMessage =
+  //     //         "Validation error occurred. Please check your input.";
+  //     //     }
+  //     //   } else {
+  //     //     // Fallback for other types of errors
+  //     //     errorMessage =
+  //     //       error.response.data.message ||
+  //     //       error.response.data.detail ||
+  //     //       errorMessage;
+  //     //   }
+  //     // }
+
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Error uploading video",
+  //       // html: errorMessage, // Use HTML format to handle line breaks
+  //       showConfirmButton: true,
+  //       confirmButtonColor: "red",
+  //       customClass: {
+  //         icon: "swal-my-icon",
+  //       },
+  //     });
+  //   }
+  // };
+
+
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await axios.post("/api/videos/", addVideo, {
+      const formData = new FormData();
+      formData.append('course_name', addVideo.course_name);
+      formData.append('subject_name', addVideo.subject_name);
+      formData.append('standard_name', addVideo.standard_name);
+      formData.append('name', addVideo.name);
+      formData.append('video_file', addVideo.video_file);
+
+      console.log(formData);
+
+      const response = await axios.post("/api/videos/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${user.token}`,
         },
       });
-      Swal.fire({
-        icon: "success",
-        title: `Video Uploaded Successfully`,
-        showConfirmButton: false,
-        timer: 1500,
-      });
       setIsDialogue(false);
-      fetchVideoData(); // Refresh video list after upload
+      setLoading(false);
+      fetchVideoData();
+      console.log(response);
     } catch (error) {
-      // console.error("Error uploading video", error);
+      console.error("Error uploading video", error);
+      // Handle error...
+    }
+  };
 
-      let errorMessage =
-        "An unexpected error occurred. Please try again later.";
+  const deleteContent = async (id: any) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        customClass: {
+          icon: "swal-my-icon",
+        },
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
 
-      if (error.response) {
-        // console.error("Error response:", error.response.data);
-
-        if (error.response.status === 422 && error.response.data.detail) {
-          // Detailed validation errors
-          const validationErrors = error.response.data.detail;
-          // console.error("Validation errors:", validationErrors);
-
-          if (Array.isArray(validationErrors)) {
-            errorMessage = validationErrors
-              .map((err: any) => {
-                if (err.loc && err.msg) {
-                  // Format the error message
-                  return `${err.loc.join(".")} : ${err.msg}`;
-                }
-                return "Unknown validation error.";
-              })
-              .join("<br>"); // Join errors with line breaks for HTML display
-          } else {
-            errorMessage =
-              "Validation error occurred. Please check your input.";
-          }
+      if (result.isConfirmed) {
+        const response = await axios.delete(`/api/videos/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        if (response.status === 200) {
+          await Swal.fire(
+            "Deleted!",
+            "Your content has been deleted.",
+            "success"
+          );
+          fetchVideoData();
         } else {
-          // Fallback for other types of errors
-          errorMessage =
-            error.response.data.message ||
-            error.response.data.detail ||
-            errorMessage;
+          throw new Error("Failed to delete Content");
         }
       }
-
+    } catch (error) {
       Swal.fire({
+        title: "Error",
+        text: "Your content was not deleted.",
         icon: "error",
-        title: "Error uploading video",
-        html: errorMessage, // Use HTML format to handle line breaks
-        showConfirmButton: true,
-        confirmButtonColor: "red",
+        customClass: {
+          icon: "swal-my-icon",
+        },
+        timer: 2000, // Timer in milliseconds (3000ms = 3 seconds)
+        timerProgressBar: true, // Shows a progress bar for the timer
+        showConfirmButton: false, // Optionally hide the confirm button
       });
     }
   };
@@ -212,7 +363,7 @@ const Courses = () => {
   }, [user]);
 
   return (
-    <div className="container mx-auto p-5 bg-white shadow-lg rounded-lg">
+    <div className="container mx-auto p-5 bg-[white] shadow-lg rounded-lg">
       {/* <h2 className="text-2xl font-semibold mb-4">Upload New Video</h2> */}
       <Dialog open={isDialogue} onOpenChange={setIsDialogue}>
         <div className="flex justify-end">
@@ -227,42 +378,65 @@ const Courses = () => {
           <form onSubmit={handleSubmit} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="course_name" className="text-right">
-                Course Name
+                Course
               </Label>
-              <Input
+              <select
                 id="course_name"
                 name="course_name"
                 required
-                type="text"
-                className="col-span-3 border-gray-300"
-                onChange={(e) => handleChange("course_name", e)}
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="subject_name" className="text-right">
-                Subject Name
-              </Label>
-              <Input
-                id="subject_name"
-                name="subject_name"
-                required
-                type="text"
-                className="col-span-3 border-gray-300"
-                onChange={(e) => handleChange("subject_name", e)}
-              />
+                className="col-span-3 p-4 bg-gray-500 border border-teal-90 text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                value={selectedCourse.id}
+                onChange={handleCourseChange}
+              >
+                <option value="">Select a course...</option>
+                  {courses.map((course) => (
+                    <option key={course.course_id} value={course.course_id}>
+                      {course.course_name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="standard_name" className="text-right">
                 Standard Name
               </Label>
-              <Input
+              <select
                 id="standard_name"
                 name="standard_name"
                 required
-                type="text"
-                className="col-span-3 border-gray-300"
-                onChange={(e) => handleChange("standard_name", e)}
-              />
+                className="col-span-3 p-4 bg-gray-500 border border-teal-90 text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                value={selectedStandard.id}
+                onChange={handleStandardChange}
+                disabled={!standards.length}
+              >
+                <option value="">Select a standard...</option>
+                  {standards.map((std) => (
+                    <option key={std.standard_id} value={std.standard_id}>
+                      {std.standard_name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="subject_name" className="text-right">
+                Subject Name
+              </Label>
+              <select
+                id="subject_name"
+                name="subject_name"
+                required
+                className="col-span-3 p-4 bg-gray-500 border border-teal-90 text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                value={selectedSubject.id}
+                onChange={handleSubjectChange}
+                disabled={!subjects.length}
+              >
+                <option value="">Select a Subject...</option>
+                  {subjects.map((sub) => (
+                    <option key={sub.subject_id} value={sub.subject_id}>
+                      {sub.subject_name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
@@ -295,7 +469,7 @@ const Courses = () => {
                 type="submit"
                 className="bg-teal-900 hover:!bg-blue-900 text-[white]"
               >
-                Upload
+                {loading ? "Uploading..." : "Upload"}
               </Button>
             </DialogFooter>
           </form>
@@ -306,43 +480,52 @@ const Courses = () => {
         {loading ? (
           <Loader />
         ) : (
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-1/3">Name</TableHead>
-                <TableHead className="w-1/3">Course</TableHead>
-                <TableHead className="w-1/3">Subject</TableHead>
-                <TableHead className="w-1/3">Std</TableHead>
-                <TableHead className="w-1/3">URL</TableHead>
-                {/* <TableHead className="w-1/3">Actions</TableHead> */}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {videoData.map((video) => (
-                <TableRow key={video.id}>
-                  <TableCell>{video.name}</TableCell>
-                  <TableCell>{video.course_name}</TableCell>
-                  <TableCell>{video.subject_name}</TableCell>
-                  <TableCell>{video.standard_name}</TableCell>
-                  <TableCell>
-                    <a
-                      href={video.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600"
-                    >
-                      {video.url}
-                    </a>
-                  </TableCell>
-                  {/* <TableCell>
-                    <Button className="bg-red-600 hover:bg-red-700 text-white">
-                      Delete
-                    </Button>
-                  </TableCell> */}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <>
+            {videoData && videoData.length > 0 ? (
+              <Table className="w-full">
+                <TableHeader>
+                  <TableRow>
+                    {/* <TableHead className="w-1/3">Name</TableHead> */}
+                    <TableHead className="w-1/3">Course</TableHead>
+                    <TableHead className="w-1/3">Subject</TableHead>
+                    <TableHead className="w-1/3">Std</TableHead>
+                    <TableHead className="w-1/3">URL</TableHead>
+                    {/* <TableHead className="w-1/3">Actions</TableHead> */}
+                  </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                  {videoData.map((video) => (
+                    <TableRow key={video.id}>
+                      <TableCell>{video.course_name}</TableCell>
+                      <TableCell>{video.subject_name}</TableCell>
+                      <TableCell>{video.standard_name}</TableCell>
+                      <TableCell>
+                        <a
+                          href={video.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600"
+                        >
+                          {video.name}
+                        </a>
+                      </TableCell>
+                      <TableCell>
+                        <button
+                          className=""
+                          onClick={() => deleteContent(video.id)}
+                        >
+                          <Trash2 className=" hover:text-[black] text-[red]" />
+                        </button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="w-full text-center">No videos was uploaded</div>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -360,7 +543,7 @@ const TabsDemo = () => {
       </Helmet>
       <Topbar heading={"Demo"} />
       <Tabs defaultValue={activeTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mt-8">
+        <TabsList className="grid w-full grid-cols-2 mt-8 p-0">
           <TabsTrigger
             value="enquiry"
             onClick={() => setActiveTab("enquiry")}
@@ -382,13 +565,13 @@ const TabsDemo = () => {
         </TabsList>
         <TabsContent
           value="enquiry"
-          className="p-4 bg-white shadow-md rounded-b-lg mt-4"
+          className="p-4 bg-[white] shadow-md rounded-b-lg mt-4"
         >
           <Enquiry />
         </TabsContent>
         <TabsContent
           value="demo-video"
-          className="p-4 bg-white shadow-md rounded-b-lg mt-4"
+          className="p-4 bg-[white] shadow-md rounded-b-lg mt-4"
         >
           <Courses />
         </TabsContent>

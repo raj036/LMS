@@ -83,6 +83,9 @@ const AdminAnnouncements = () => {
       Swal.fire({
         title: "Announcement added",
         icon: "success",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         confirmButtonColor: "#7066E0",
         confirmButtonText: "OK",
       });
@@ -99,6 +102,9 @@ const AdminAnnouncements = () => {
         title: "Are you sure?",
         text: "You won't be able to revert this!",
         icon: "warning",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
@@ -131,6 +137,9 @@ const AdminAnnouncements = () => {
         title: "Error",
         text: "Your content was not deleted.",
         icon: "error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         timer: 2000, // Timer in milliseconds (3000ms = 3 seconds)
         timerProgressBar: true, // Shows a progress bar for the timer
         showConfirmButton: false, // Optionally hide the confirm button

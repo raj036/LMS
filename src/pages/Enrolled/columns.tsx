@@ -293,6 +293,9 @@ export const columns: ColumnDef<User>[] = [
                 Swal.fire({
                   title: "Admission Form Updated!",
                   icon: "success",
+                  customClass: {
+                    icon: "swal-my-icon",
+                  },
                   showConfirmButton: false,
                   timer: 2000,
                 }).then((result: { isConfirmed: any }) => {
@@ -308,6 +311,9 @@ export const columns: ColumnDef<User>[] = [
           Swal.fire({
             title: "Error Updating Admission Details!",
             icon: "error",
+            customClass: {
+              icon: "swal-my-icon",
+            },
             timer: 2000,
           });
         }
@@ -328,6 +334,9 @@ export const columns: ColumnDef<User>[] = [
             Swal.fire({
               title: "Admission Form Deleted!",
               icon: "success",
+              customClass: {
+                icon: "swal-my-icon",
+              },
               showConfirmButton: false,
               footer: "This window will be closed in 2 seconds.",
               timer: 2000,
@@ -341,6 +350,9 @@ export const columns: ColumnDef<User>[] = [
             title: "Error Deleting Admission Details!",
             showConfirmButton: false,
             icon: "error",
+            customClass: {
+              icon: "swal-my-icon",
+            },
             footer: "This window will be closed in 2 seconds.",
             timer: 2000,
           });
@@ -363,6 +375,9 @@ export const columns: ColumnDef<User>[] = [
               Swal.fire({
                 title: "Payment Verified!",
                 icon: "success",
+                customClass: {
+                  icon: "swal-my-icon",
+                },
                 showConfirmButton: false,
                 timer: 2000,
               }).then(() => {

@@ -66,6 +66,9 @@ export default function HomePage() {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });

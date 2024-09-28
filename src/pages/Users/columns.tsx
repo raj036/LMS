@@ -243,6 +243,9 @@ export const columns: ColumnDef<User>[] = [
               Swal.fire({
                 title: "User Updated!",
                 icon: "success",
+                customClass: {
+                  icon: "swal-my-icon",
+                },
                 showConfirmButton: false,
                 timer: 1500,
               }).then(() => {
@@ -257,6 +260,9 @@ export const columns: ColumnDef<User>[] = [
               title: "Error Updating User Details!",
               text: error?.response?.data?.detail,
               icon: "error",
+              customClass: {
+                icon: "swal-my-icon",
+              },
               showConfirmButton: false,
               timer: 1500,
             });
@@ -266,6 +272,9 @@ export const columns: ColumnDef<User>[] = [
             title: "Password Do Not Match!",
             text: "Kindly Check Both Passwords",
             icon: "error",
+            customClass: {
+              icon: "swal-my-icon",
+            },
             showConfirmButton: false,
             timer: 1500,
           });

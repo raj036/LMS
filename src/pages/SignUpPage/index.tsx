@@ -86,6 +86,9 @@ export default function SignUpPagePage() {
                   onChange={(value: any) =>
                     handleInputChange("user_name", value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
                 <Heading
@@ -130,6 +133,9 @@ export default function SignUpPagePage() {
                   }
                   placeholder="Enter Your Phone (10 Digit)*"
                   className="w-full mt-[18px] font-inter rounded-[5px]"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
                 <Heading
@@ -150,6 +156,7 @@ export default function SignUpPagePage() {
                     onChange={(value: any) =>
                       handleInputChange("user_password", value)
                     }
+                    minLength={8}
                     autoComplete="on"
                     placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
@@ -183,6 +190,7 @@ export default function SignUpPagePage() {
                       handleInputChange("repassword", value)
                     }
                     name="repassword"
+                    minLength={8}
                     placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
                     required

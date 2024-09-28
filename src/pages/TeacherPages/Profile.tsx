@@ -137,6 +137,9 @@ const TeacherProfile = () => {
         // console.log(response);
         Swal.fire({
           icon: "success",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           title: `Profile data was submitted successfully`,
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
@@ -148,6 +151,9 @@ const TeacherProfile = () => {
         Swal.fire({
           title: errorMessage,
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -230,6 +236,9 @@ const TeacherProfile = () => {
         Swal.fire({
           icon: "success",
           title: `Profile updated successfully`,
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -240,6 +249,9 @@ const TeacherProfile = () => {
         Swal.fire({
           title: "Data was not updated due to some technical issue",
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -539,106 +551,13 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
             </div>
-            {/* <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                Email:
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
-                  name="email"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.email}
-                  onChange={(e) =>
-                    handleChange( "email", e.target.value)
-                  }
-                />
-              </div>
-            </div> */}
-            {/* <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                Department:
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
-                  name="department"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.department}
-                  onChange={(e) =>
-                    handleChange( "department", e.target.value)
-                  }
-                />
-              </div>
-            </div> */}
-            {/* Employee */}
-            {/* <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                First Name :
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
-                  name="f_name"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.f_name}
-                  onChange={(e) =>
-                    handleChange("f_name", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-            <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                Middle Name:
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
-                  name="m_name"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.m_name}
-                  onChange={(e) =>
-                    handleChange( "m_name", e.target.value)
-                  }
-                />
-              </div>
-            </div>
-            <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                Last Name:
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
-                  name="l_name"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.l_name}
-                  onChange={(e) =>
-                    handleChange( "l_name", e.target.value)
-                  }
-                />
-              </div>
-            </div> */}
             <div className="sm:w-[400px]">
               <Heading
                 size="s"
@@ -664,16 +583,20 @@ const TeacherProfile = () => {
               >
                 Gender<span className="text-red-500">*</span>
               </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="text"
+              {/* <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"> */}
+                <select
                   name="gender"
-                  className="bg-transparent outline-none w-full h-full px-2"
+                  className="p-3 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[8px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   value={formData.gender}
                   onChange={(e) => handleChange("gender", e.target.value)}
                   required
-                />
-              </div>
+                >
+                     <option value="">Select a Gender...</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              {/* </div> */}
             </div>
             <div className="sm:w-[400px]">
               <Heading
@@ -689,6 +612,9 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.nationality}
                   onChange={(e) => handleChange("nationality", e.target.value)}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -709,6 +635,9 @@ const TeacherProfile = () => {
                   onChange={(e) =>
                     handleChange("marital_status", e.target.value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -785,14 +714,18 @@ const TeacherProfile = () => {
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
-                  type="number"
+                  type="text"
                   name="primary_number"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.primary_number}
+                  minLength={10}
                   maxLength={10}
                   onChange={(e) =>
                     handleChange("primary_number", e.target.value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
@@ -806,14 +739,18 @@ const TeacherProfile = () => {
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
-                  type="number"
+                  type="text"
                   name="secondary_number"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.secondary_number}
+                  minLength={10}
                   maxLength={10}
                   onChange={(e) =>
                     handleChange("secondary_number", e.target.value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                 />
               </div>
             </div>
@@ -922,6 +859,9 @@ const TeacherProfile = () => {
                   onChange={(e) =>
                     handleChange("dependent_name", e.target.value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -940,6 +880,9 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.relation}
                   onChange={(e) => handleChange("relation", e.target.value)}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -953,37 +896,22 @@ const TeacherProfile = () => {
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
-                  type="number"
+                  type="text"
                   name="emergency_contact_number"
+                  minLength={10}
                   maxLength={10}
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.emergency_contact_number}
                   onChange={(e) =>
                     handleChange("emergency_contact_number", e.target.value)
                   }
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
             </div>
-            {/* <div className="sm:w-[400px]">
-              <Heading
-                size="s"
-                className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-              >
-                Date of Birth:
-              </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                <input
-                  type="date"
-                  name="date_of_birth"
-                  className="bg-transparent outline-none w-full h-full px-2"
-                  value={formData.date_of_birth}
-                  onChange={(e) =>
-                    handleChange( "date_of_birth", e.target.value)
-                  }
-                />
-              </div>
-            </div> */}
           </div>
           {/* {Education} */}
           <Heading
@@ -1087,6 +1015,11 @@ const TeacherProfile = () => {
                   onChange={(e) =>
                     handleChange("year_of_passing", e.target.value)
                   }
+                  minLength={4}
+                  maxLength={4}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
@@ -1107,6 +1040,9 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.percentage}
                   onChange={(e) => handleChange("percentage", e.target.value)}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
@@ -1134,6 +1070,9 @@ const TeacherProfile = () => {
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.skill}
                   onChange={(e) => handleChange("skill", e.target.value)}
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>

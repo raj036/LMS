@@ -34,6 +34,9 @@ export const useSignup = () => {
         text: "Kindly Login to Continue.",
         confirmButtonColor: "#7066E0",
         icon: "success",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         confirmButtonText: "Yes",
       }).then((result: { isConfirmed: any }) => {
         if (result.isConfirmed) {

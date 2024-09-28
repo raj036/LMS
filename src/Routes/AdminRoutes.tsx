@@ -14,6 +14,9 @@ import AdminAnnouncements from "pages/AdminAnnouncement";
 import Teachers from "pages/AdminTeacherPage";
 import path from "path";
 import AdminViewContent from "pages/AdminViewContent";
+import FessCreate from "pages/AdminFeesCreate";
+import AdminAssignedCourses from "pages/AdminAssignedCourses";
+
 
 const AdminRoutes = () => {
   const { user }: any = useAuthContext();
@@ -54,6 +57,14 @@ const AdminRoutes = () => {
     {
       path: "payment",
       element: <StudentPayment />,
+    },
+    {
+      path: "fees",
+      element: <FessCreate />,
+    },
+    {
+      path: "AdminAssignedCourses",
+      element: <AdminAssignedCourses />,
     },
     {
       path: "announcement",

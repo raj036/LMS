@@ -50,6 +50,9 @@ const index = () => {
           text: "Kindly Wait for Confirmation from the Office.",
           icon: "success",
           confirmButtonColor: "#7066E0",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
@@ -65,6 +68,9 @@ const index = () => {
         Swal.fire({
           title: "Error Submitting Offline Demo Form!",
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           showConfirmButton: true,
           confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {

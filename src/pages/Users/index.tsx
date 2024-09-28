@@ -56,6 +56,9 @@ const Enrolled = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.detail,
         showConfirmButton: true,
         confirmButtonColor: "red",

@@ -23,6 +23,9 @@ const Topbar = ({ heading }) => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
+      customClass: {
+        icon: "swal-my-icon",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         logout();

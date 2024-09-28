@@ -1,8 +1,9 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { BookOpenText, BookOpenTextIcon, EllipsisVertical } from "lucide-react";
+import { BookOpenTextIcon, EllipsisVertical, EyeIcon, View } from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
+import { Link } from "react-router-dom";
 
 const UserDashboard = () => {
   const { user }: any = useAuthContext();
@@ -16,8 +17,8 @@ const UserDashboard = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      setCourseData(response?.data);
-      console.log(response.data[0].course_info);
+      setCourseData(response.data);
+      console.log(response.data);
     } catch (error) {
       // console.error(error);
     }
@@ -29,29 +30,51 @@ const UserDashboard = () => {
 
   return (
     <>
-      <Topbar heading={"Dashboard"} />
-      <div className="ruby-disp">
-        {courseData.map((tab, index) => (
-          <div 
-          key={index}
-          className="m-4 cursor-pointer rounded-lg"
-          >
-          <div
-            key={index}
-            className={`flex rounded-[10px] items-center mb-2 bg-gray-100 p-3 w-[250px] border-[1px] ${
-              index === tab.id ? "bg-blue-200" : "bg-white"
-            }`}
-            onClick={() => setActiveTab(index)}
-          >
-            <div className="flex items-center">
-            <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center mr-3">
-                <BookOpenText className="h-5 w-5 text-gray-600" />
+      <Topbar heading="Dashboard" />
+      <div className="p-4 sm:p-7 flex flex-wrap">
+        {courseData.map((course, index) => (
+          <div key={index} className="w-full mb-6">
+            <div
+              className={`flex items-center justify-between md:h-20 m-4 p-4 w-[300px] sm:w-full bg-white rounded-lg shadow-md cursor-pointer ${
+                index === activeTab ? "border-2 border-gray-300" : "border"
+              }`}
+              onClick={() => setActiveTab(index === activeTab ? null : index)}
+            >
+              <div className="flex items-center">
+                <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
+                <div className="ml-5">
+                  <span className="block font-semibold text-gray-800">
+                    {course.course_info.course_name}
+                  </span>
+                  <span className="block text-gray-600 text-sm">
+                    {course.course_info.subject_name} -{" "}
+                    {course.course_info.standard_name}
+                  </span>
+                </div>
               </div>
-              <div className="m-5">
-                <span className="block font-semibold text-gray-800">{tab.course_info.course_name}</span>
+              <div className="text-gray-400">
+                <EllipsisVertical />
               </div>
             </div>
-          </div>
+            {index === activeTab && ( 
+              <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+                <h3 className="font-semibold mb-2">
+                  Module: {course.course_info.module_name}
+                </h3>
+                <h4 className="font-medium mb-2">Lessons:</h4>
+                {course.lessons.map((lesson: any, lessonIndex: any) => (
+                  <div
+                    key={lessonIndex}
+                    className="mb-4 p-3 bg-white rounded shadow"
+                  >
+                    <h5 className="font-medium my-3">{lesson.title}</h5>
+                    {lesson.content_info.content_path.map((path, pathIndex) => (
+                    <a target="_blank" className="text-[#3f5de4ce] flex items-center  gap-2" href={path}><EyeIcon /> {lesson.content_info.description}</a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

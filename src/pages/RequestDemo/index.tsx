@@ -4,10 +4,7 @@ import { Heading, Button } from "components";
 import { useAuthContext } from "hooks/useAuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "helper/axios";
-import Loading from "assets/Loading.svg";
-import Header from "components/Header";
 import { Helmet } from "react-helmet";
-import Footer from "components/Footer";
 import useCourseData from "hooks/useCourseData";
 import Swal from "sweetalert2";
 
@@ -40,6 +37,9 @@ const index = () => {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -50,43 +50,6 @@ const index = () => {
       navigate("/getadmission");
     }
   };
-  // const [isLoading, setIsLoading] = useState(false);
-  const dummyData = [
-    {
-      course: "Course 1",
-      standard: "Standard 3",
-      subject: "Subject 1",
-      video_link: [
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      ],
-    },
-    {
-      course: "Course 2",
-      standard: "Standard 2",
-      subject: "Subject 2",
-      video_link: [
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      ],
-    },
-    {
-      course: "Course 3",
-      standard: "Standard 1",
-      subject: "Subject 3",
-      video_link: [
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      ],
-    },
-    {
-      course: "Course 4",
-      standard: "Standard 4",
-      subject: "Subject 4",
-      video_link: [
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      ],
-    },
-  ];
 
   const { courses, standards, subjects, isLoading} = useCourseData();
 
@@ -127,30 +90,6 @@ const index = () => {
       // console.error("Error Getting Video Links", error);
       setVideoErr(true);
     }
-
-    // return;
-    // const selectedData = dummyData.find(
-    //   (data) =>
-    //     data.course === course &&
-    //     data.standard === standard &&
-    //     data.subject === subject
-    // );
-    // if (selectedData) {
-    //   console.log("Video Link:", selectedData.video_link);
-    //   setVideoErr(false);
-    //   setVideoLinks([]);
-    //   setTimeout(() => {
-    //     setVideoLinks((prevLinks) => [
-    //       ...prevLinks,
-    //       ...selectedData.video_link,
-    //     ]);
-    //   }, 100);
-    // } else {
-    //   setVideoErr(true);
-    //   console.log(
-    //     "Video link not found for selected course, standard, and subject."
-    //   );
-    // }
   };
 
   return (

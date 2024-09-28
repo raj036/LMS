@@ -7,7 +7,7 @@ import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 
 const ParentAttendance = () => {
-  const { user }:any = useAuthContext();
+  const { user }: any = useAuthContext();
   const [studentData, setStudentData] = useState(null);
   const [studentId, setStudentId] = useState(null);
   const [events, setEvents] = useState([]);
@@ -20,12 +20,30 @@ const ParentAttendance = () => {
   });
   const [currentEvent, setCurrentEvent] = useState(null);
 
+  const [studUserId, setStudUserID] = useState(null);
+  useEffect(() => {
+    const getParentData = async () => {
+      try {
+        const response = await axios.get(`api/parent/${user.user_id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+        console.log(response.data.s_user_id);
+        setStudUserID(response?.data?.s_user_id);
+      } catch (error) {
+        // console.error("Error getting Profile", error);
+      }
+    };
+
+    getParentData();
+  }, []);
 
   useEffect(() => {
-    if (user) {
+    if (studUserId) {
       fetchStudentData();
     }
-  }, [user]);
+  }, [studUserId]);
 
   useEffect(() => {
     if (studentId) {
@@ -35,43 +53,51 @@ const ParentAttendance = () => {
 
   const fetchStudentData = async () => {
     try {
-      const response = await axios.get(`api/admission/${user.user_id}`, {
+      const response = await axios.get(`api/admission/${studUserId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
       setStudentData(response.data);
+      console.log(response);
       setStudentId(response.data.student_id);
     } catch (error) {
-      // console.error("Error fetching student data:", error);
+      console.error("Error fetching student data:", error);
     }
   };
 
   const fetchAttendanceForStudent = async () => {
     try {
-      const response = await axios.get(`/api/attendance/?student_ids=${studentId}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const attendanceEvents = response.data.map((attendance) => ({
+      const response = await axios.get(
+        `/api/attendance/?student_ids=${studentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const attendanceEvents = response.data.map((attendance: any) => ({
         title: `${attendance.status.join(", ")}`,
         date: attendance.date,
-        backgroundColor: attendance.status.includes("present") ? "green" : "red",
+        backgroundColor: attendance.status.includes("present")
+          ? "green"
+          : "red",
         borderColor: attendance.status.includes("present") ? "green" : "red",
       }));
       setEvents(attendanceEvents);
+      // console.log(attendanceEvents);
     } catch (error) {
-      // console.error("Error fetching attendance:", error);
+      console.error("Error fetching attendance:", error);
     }
   };
 
-  const handleDateClick = (arg:any) => {
+  const handleDateClick = (arg: any) => {
     setNewEvent({ ...newEvent, date: arg.dateStr });
     setModalIsOpen(true);
   };
 
-  const handleEventClick = (info:any) => {
+  const handleEventClick = (info: any) => {
     const event = events.find(
       (event) =>
         event.title === info.event.title && event.date === info.event.startStr
@@ -83,7 +109,7 @@ const ParentAttendance = () => {
   return (
     <>
       <Topbar heading={"Attendance"} />
-      <div className="w-[80%] mx-auto">
+      <div className="w-[80%] mx-auto mt-6">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"

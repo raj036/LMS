@@ -11,8 +11,6 @@ const index = () => {
   const { user }: any = useAuthContext();
   const navigate = useNavigate();
 
-  const { isLoading, error } = useCourseData();
-
   const [formData, setFormData] = useState<any>({
     first_name: "",
     middle_name: "",
@@ -53,7 +51,6 @@ const index = () => {
   });
   const [copyAddress, setCopyAddress] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [courseAll, setCourseAll] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState({ id: "", name: "" });
   const [selectedStandard, setSelectedStandard] = useState({
     id: "",
@@ -71,7 +68,6 @@ const index = () => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get("api/courses_all/");
-        setCourseAll(response.data.course_list);
         setCourses(response.data.course_list);
         setLoading(false);
         // console.log(response.data.course_list)
@@ -84,7 +80,7 @@ const index = () => {
     fetchCourses();
   }, []);
 
-  const handleCourseChange = (e) => {
+  const handleCourseChange = (e:any) => {
     const courseId = e.target.value;
     const course = courses.find((c) => c.course_id.toString() === courseId);
     setSelectedCourse({ id: courseId, name: course.course_name });
@@ -199,6 +195,9 @@ const index = () => {
           title: "Admission Form Submitted!",
           text: "Kindly Make Payment on Next Page & Wait for Confirmation from the Admission Office.",
           icon: "success",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "Yes",
         }).then((result: { isConfirmed: any }) => {
@@ -219,11 +218,14 @@ const index = () => {
           title: "Failed to Submit Admission Form",
           text: `${error?.response?.data?.detail}`,
           icon: "error",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           showConfirmButton: true,
           confirmButtonColor: "red",
         }).then((result: { isConfirmed: any }) => {
           if (result.isConfirmed) {
-            navigate("/");
+            // navigate("/");
             window.scrollTo(0, 0);
           }
         });
@@ -275,6 +277,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("first_name", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your First Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -294,6 +299,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("middle_name", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Middle Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -313,6 +321,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("last_name", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Last Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -393,6 +404,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("referral", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Reference if Any"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                 />
               </div>
               <div className="sm:col-span-2">
@@ -507,113 +521,6 @@ const index = () => {
             >
               Enroll Course Details
             </Heading>
-            {/* <div className="grid grid-cols-4 gap-x-10 gap-y-4 sm:grid-cols-2 sm:gap-6">
-              <div className="sm:col-span-2">
-                <Heading
-                  size="s"
-                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-                >
-                  Course<span className="text-red-500">*</span>
-                </Heading>
-                <select
-                  name="course"
-                  id="course"
-                  className="p-4 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  onChange={(e) => handleChange("course", e.target.value)}
-                  required
-                >
-                  <option value="">Select a course...</option>
-                  {isLoading ? (
-                    <option value="loading">Loading...</option>
-                  ) : (
-                    courses.map((course) => (
-                      <option key={course.id} value={course.id}>
-                        {course.name}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <Heading
-                  size="s"
-                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-                >
-                  Standard<span className="text-red-500">*</span>
-                </Heading>
-                <select
-                  name="standard"
-                  id="standard"
-                  className="p-4 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  onChange={(e) => handleChange("standard", e.target.value)}
-                  required
-                >
-                  <option value="">Select a standard...</option>
-                  {isLoading ? (
-                    <option value="loading">Loading...</option>
-                  ) : (
-                    standards.map((standard) => (
-                      <option key={standard.id} value={standard.id}>
-                        {standard.name}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <Heading
-                  size="s"
-                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-                >
-                  Subject<span className="text-red-500">*</span>
-                </Heading>
-                <select
-                  name="subject"
-                  id="subject"
-                  className="p-4 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full"
-                  onChange={(e) => handleChange("subject", e.target.value)}
-                  required
-                >
-                  <option value="">Select a subject...</option>
-                  {isLoading ? (
-                    <option value="loading">Loading...</option>
-                  ) : (
-                    subjects.map((subject) => (
-                      <option key={subject.id} value={subject.id}>
-                        {subject.name}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <Heading
-                  size="s"
-                  className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
-                >
-                  Modules<span className="text-red-500">*</span>
-                </Heading>
-                <select
-                  name="module"
-                  id="module"
-                  className="p-4 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-full"
-                  onChange={(e) => handleChange("module", e.target.value)}
-                  required
-                >
-                  <option value="">Select a Module...</option>
-                  {isLoading ? (
-                    <option value="loading">Loading...</option>
-                  ) : (
-                    modules.map((module) => (
-                      <option key={module.id} value={module.id}>
-                        {module.name}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-            </div> */}
-
             <div className="grid grid-cols-4 gap-x-10 gap-y-4 sm:grid-cols-2 sm:gap-6">
               {/* Course Dropdown */}
               <div className="sm:col-span-2">
@@ -766,6 +673,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("school", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your School Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -801,19 +711,22 @@ const index = () => {
                 </Heading>
                 <Input
                   size="xs"
-                  type="number"
+                  type="text"
                   pattern="\d*"
                   name="percentage"
-                  min={0}
+                  min={1}
                   maxLength={3}
                   id="percentage"
                   value={formData?.percentage}
                   onFocus={(e) => e.target.select()}
                   onChange={(value: any) =>
-                    handleChange("percentage", parseInt(value))
+                    handleChange("percentage", value)
                   }
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Percentage (%)"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
@@ -837,12 +750,16 @@ const index = () => {
                   size="xs"
                   type="text"
                   name="s_primary_no"
+                  minLength={10}
                   maxLength={10}
                   id="s_primary_no"
                   value={formData?.s_primary_no}
                   onChange={(value: any) => handleChange("s_primary_no", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Primary Contact Number"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>
@@ -857,7 +774,8 @@ const index = () => {
                   size="xs"
                   type="text"
                   name="s_secondary_no"
-                  // maxLength={10}
+ minLength={10}
+                  maxLength={10}
                   id="s_secondary_no"
                   value={formData?.s_secondary_no}
                   onChange={(value: any) =>
@@ -865,6 +783,9 @@ const index = () => {
                   }
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Secondary Contact Number"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                 />
               </div>
               <div className="sm:col-span-2">
@@ -981,6 +902,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("p_first_name", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's First Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -1002,6 +926,9 @@ const index = () => {
                   }
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's Middle Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                 />
               </div>
               <div className="sm:col-span-2">
@@ -1020,6 +947,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("p_last_name", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's Last Name"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -1039,6 +969,9 @@ const index = () => {
                   onChange={(value: any) => handleChange("p_guardian", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Relationship With Parent"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                  }}
                   required
                 />
               </div>
@@ -1053,12 +986,16 @@ const index = () => {
                   size="xs"
                   type="text"
                   name="p_primary_no"
+                  minLength={10}
                   maxLength={10}
                   id="p_primary_no"
                   value={formData?.p_primary_no}
                   onChange={(value: any) => handleChange("p_primary_no", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's Contact Number"
+                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+                  }}
                   required
                 />
               </div>

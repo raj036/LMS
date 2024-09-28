@@ -50,6 +50,9 @@ const AllowAttendance = () => {
       Swal.fire({
         icon: "error",
         title: "Student data was not found.",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
         timer: 2500,
@@ -109,6 +112,9 @@ const AllowAttendance = () => {
         icon: "success",
         title: `Attendance Updated`,
         showConfirmButton: true,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         confirmButtonColor: "#7066E0",
         confirmButtonText: "Yes",
       }).then((result) => {
@@ -120,6 +126,9 @@ const AllowAttendance = () => {
       Swal.fire({
         icon: "error",
         title: "Error updating attendance.",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
         timer: 2500,

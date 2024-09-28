@@ -52,6 +52,9 @@ const Teachers = () => {
         text: error?.response?.data?.detail,
         showConfirmButton: true,
         confirmButtonColor: "red",
+        customClass: {
+          icon: "swal-my-icon",
+        },
       });
       setLoading(false);
     }

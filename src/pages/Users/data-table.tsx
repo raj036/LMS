@@ -129,6 +129,9 @@ export function DataTable<TData, TValue>({
           icon: "success",
           title: `User Created Successfully`,
           showConfirmButton: false,
+          customClass: {
+            icon: "swal-my-icon",
+          },
           timer: 1500,
         }).then(() => window.location.reload());
       } catch (error) {
@@ -140,6 +143,9 @@ export function DataTable<TData, TValue>({
             error?.message ||
             "Please check your internet connection or try again later.",
           showConfirmButton: false,
+          customClass: {
+            icon: "swal-my-icon",
+          },
           timer: 1500,
         });
       }
@@ -147,6 +153,9 @@ export function DataTable<TData, TValue>({
       Swal.fire({
         icon: "error",
         title: "Passwords do not match!",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         showConfirmButton: false,
         timer: 1500,
       });

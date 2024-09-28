@@ -45,6 +45,9 @@ export default function Header({ ...props }: Props) {
           title: "Access Restricted",
           text: "You have already completed the form submission and payment. Check Dashboard for more information",
           icon: "info",
+          customClass: {
+            icon: "swal-my-icon",
+          },
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
@@ -64,6 +67,9 @@ export default function Header({ ...props }: Props) {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
+      customClass: {
+        icon: "swal-my-icon",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         logout();
@@ -87,8 +93,10 @@ export default function Header({ ...props }: Props) {
             <Img
               src="images/ILATE_Classes_Final_Logo-02.jpg"
               loading="lazy"
-              alt="whatsappimage"
-              className="w-[40%] sm:w-[50%] inline-block"
+              alt="logo"
+              className="w-[40%] sm:w-[50%] inline-block h-auto"
+              width="400"  
+      height="200"  
             />
           </Link>
         </div>

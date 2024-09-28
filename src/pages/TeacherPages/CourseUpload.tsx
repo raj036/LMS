@@ -86,6 +86,9 @@ const CourseUpload = () => {
       Swal.fire({
         title: "Content created successfully!",
         confirmButtonColor: "#7066E0",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         icon: "success",
         confirmButtonText: "Yes",
       });
@@ -97,6 +100,9 @@ const CourseUpload = () => {
           error.response.data.detail ||
           "An error occured while creating content",
         text: "Please try again...",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         showConfirmButton: false,
         timer: 3000,
       });

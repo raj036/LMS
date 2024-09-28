@@ -96,8 +96,8 @@ const TeacherAttendance = () => {
           ))}
         </div>
       ) : (
-        <div className="p-6">
-          <h1 className="text-[24px] text-[#002D51] font-semibold">
+        <div className="p-6 mt-20 ">
+          <h1 className="px-11 text-[24px] text-[#002D51] font-semibold">
             Students details was not there .
           </h1>
         </div>

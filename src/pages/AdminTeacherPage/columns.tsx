@@ -143,6 +143,9 @@ export const columns: ColumnDef<User>[] = [
                 icon: "success",
                 showConfirmButton: false,
                 timer: 1500,
+                customClass: {
+                  icon: "swal-my-icon",
+                },
               }).then(() => {
                 window.location.reload();
               });
@@ -155,6 +158,9 @@ export const columns: ColumnDef<User>[] = [
               title: "Error Updating User Details!",
               text: error?.response?.data?.detail,
               icon: "error",
+              customClass: {
+                icon: "swal-my-icon",
+              },
               showConfirmButton: false,
               timer: 1500,
             });
@@ -164,6 +170,9 @@ export const columns: ColumnDef<User>[] = [
             title: "Password Do Not Match!",
             text: "Kindly Check Both Passwords",
             icon: "error",
+            customClass: {
+              icon: "swal-my-icon",
+            },
             showConfirmButton: false,
             timer: 1500,
           });

@@ -23,6 +23,7 @@ import { BookOpenText } from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Courses = () => {
   const { user }: any = useAuthContext();
@@ -51,7 +52,7 @@ const Courses = () => {
       },
     ],
   });
-  const [teacherData, setTeacherData] = useState(null);
+  const [teacherData, setTeacherData] = useState<any>(null);
 
   const getCourseDetails = async (courseId: any) => {
     try {
@@ -81,14 +82,14 @@ const Courses = () => {
     }));
   };
 
-  const handleStandardChange = (value:any) => {
+  const handleStandardChange = (value: any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [{ ...prevData.standards[0], standard_name: value }],
     }));
   };
 
-  const handleSubjectChange = (value:any) => {
+  const handleSubjectChange = (value: any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [
@@ -102,7 +103,7 @@ const Courses = () => {
     }));
   };
 
-  const handleModuleChange = (value:any) => {
+  const handleModuleChange = (value: any) => {
     setFormData((prevData) => ({
       ...prevData,
       standards: [
@@ -139,6 +140,9 @@ const Courses = () => {
         icon: "success",
         title: `Course Created Successfully`,
         showConfirmButton: false,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         timer: 1500,
       });
       // Optionally, reset form or fetch updated course data
@@ -151,6 +155,9 @@ const Courses = () => {
         title: "Error creating course.",
         text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         timer: 1500,
       });
     }
@@ -163,7 +170,7 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setCourseData(response?.data);
     } catch (error) {
       // console.error(error);
@@ -177,7 +184,7 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       setTeacherData(response.data);
     } catch (error) {
       // console.log(error);
@@ -196,20 +203,20 @@ const Courses = () => {
   const [assignData, setAssignData] = useState({
     teacher_id: "",
     course_id: "",
-    course_content_id:[""],
+    course_content_id: [""],
   });
 
-  const handleTeacherSelect = (event, courseDetailId , courseId) => {
+  const handleTeacherSelect = (event, courseDetailId, courseId) => {
     const selectedTeacherId = event.target.value;
     setAssignData((prevData) => ({
       ...prevData,
       teacher_id: selectedTeacherId,
       course_id: courseId,
-      course_content_id:[courseDetailId]
+      course_content_id: [courseDetailId],
     }));
   };
 
-  const handleAssign = async (e:any) => {
+  const handleAssign = async (e: any) => {
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -227,6 +234,9 @@ const Courses = () => {
         icon: "success",
         title: "Course assigned successfully",
         showConfirmButton: false,
+        customClass: {
+          icon: "swal-my-icon",
+        },
         timer: 2000,
       });
     } catch (error) {
@@ -234,6 +244,9 @@ const Courses = () => {
       Swal.fire({
         icon: "error",
         title: "Error occured while assigning course",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.message || "Please try again later.",
         showConfirmButton: false,
         timer: 1500,
@@ -244,11 +257,25 @@ const Courses = () => {
   return (
     <>
       <Topbar heading={"Courses"} />
+
       <div className="container py-5">
+        <div className="flex space-x-4 w-full justify-center">
+          <Link to="/fees" onClick={() => setIsDialogue(false)}>
+            <Button className="w-[40rem] bg-teal-900 hover:bg-blue-900 flex">
+              Fees Create
+            </Button>
+          </Link>
+
+          <Link to="/AdminAssignedCourses" onClick={() => setIsDialogue(false)}>
+            <Button className="w-[40rem] bg-teal-900 hover:bg-blue-900 flex">
+              Assigned Courses
+            </Button>
+          </Link>
+        </div>
         <Dialog open={isDialogue} onOpenChange={setIsDialogue}>
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <DialogTrigger asChild>
-              <Button className="bg-teal-900 hover:!bg-blue-900">
+              <Button className="bg-teal-900 hover:!bg-blue-900 mt-6">
                 Create Course
               </Button>
             </DialogTrigger>
@@ -387,7 +414,9 @@ const Courses = () => {
                       name="course"
                       id="course"
                       className="p-4 mx-auto bg-teal-900 border border-teal-90 float-right text-white-A700 text-sm rounded-[20px] focus:ring-white-A700 focus:border-white-A700 block w-[60%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                      onChange={(event) => handleTeacherSelect(event, ele.id , selectedCourseId)}
+                      onChange={(event) =>
+                        handleTeacherSelect(event, ele.id, selectedCourseId)
+                      }
                       required
                     >
                       <option value="">Select teacher...</option>

@@ -34,6 +34,9 @@ const Mail = () => {
       Swal.fire({
         icon: "error",
         title: "Error",
+        customClass: {
+          icon: "swal-my-icon",
+        },
         text: error?.response?.data?.detail,
         confirmButtonColor: "red",
       });

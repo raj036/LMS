@@ -138,3 +138,10 @@ select:-webkit-autofill:focus, */
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
 } */
+
+.swal-my-icon {
+  /* height:50px; */
+  /* width:100px; */
+    font-size: 10px
+  /* object-fit: cover; */
+}

@@ -74,7 +74,7 @@ const AdminSidebarLayout = () => {
           <Link to={"/enquiry"}>
             <SidebarItem
               icon={<BadgeInfo size={20} />}
-              text="Admission"
+              text="Enquiry"
               active={location.pathname === "/enquiry"}
             />
           </Link>

@@ -117,9 +117,9 @@ const Courses = () => {
         const response = await axios.get("api/courses_all/");
         setCourses(response.data.course_list);
         setLoading(false);
-        console.log(response.data.course_list)
+        // console.log(response.data.course_list)
       } catch (error) {
-        console.error("Error fetching courses:", error);
+        // console.error("Error fetching courses:", error);
         setLoading(false);
       }
     };
@@ -163,7 +163,7 @@ const Courses = () => {
         },
       });
       setVideoData(response.data);
-      console.log(response)
+      // console.log(response)
     } catch (error) {
       // console.error("Error fetching video data", error);
       Swal.fire({
@@ -190,82 +190,6 @@ const Courses = () => {
     }));
   };
 
-  // const handleSubmit = async (e: any) => {
-
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   try {
-  //     const response = await axios.post("/api/videos/", addVideo, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     });
-  //     // Swal.fire({
-  //     //   icon: "success",
-  //     //   title: `Video Uploaded Successfully`,
-  //     //   customClass: {
-  //     //     icon: "swal-my-icon",
-  //     //   },
-  //     //   showConfirmButton: false,
-  //     //   timer: 1500,
-  //     // });
-  //     setIsDialogue(false);
-  //     setLoading(false);
-  //     fetchVideoData(); // Refresh video list after upload
-  //     console.log(response);
-  //   } catch (error) {
-  //     // console.error("Error uploading video", error);
-  //     console.log(error);
-  //     // let errorMessage =
-  //     //   "An unexpected error occurred. Please try again later.";
-
-  //     // if (error.response) {
-  //     //   // console.error("Error response:", error.response.data);
-
-  //     //   if (error.response.status === 422 && error.response.data.detail) {
-  //     //     // Detailed validation errors
-  //     //     const validationErrors = error.response.data.detail;
-  //     //     // console.error("Validation errors:", validationErrors);
-
-  //     //     if (Array.isArray(validationErrors)) {
-  //     //       errorMessage = validationErrors
-  //     //         .map((err: any) => {
-  //     //           if (err.loc && err.msg) {
-  //     //             // Format the error message
-  //     //             return `${err.loc.join(".")} : ${err.msg}`;
-  //     //           }
-  //     //           return "Unknown validation error.";
-  //     //         })
-  //     //         .join("<br>"); // Join errors with line breaks for HTML display
-  //     //     } else {
-  //     //       errorMessage =
-  //     //         "Validation error occurred. Please check your input.";
-  //     //     }
-  //     //   } else {
-  //     //     // Fallback for other types of errors
-  //     //     errorMessage =
-  //     //       error.response.data.message ||
-  //     //       error.response.data.detail ||
-  //     //       errorMessage;
-  //     //   }
-  //     // }
-
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error uploading video",
-  //       // html: errorMessage, // Use HTML format to handle line breaks
-  //       showConfirmButton: true,
-  //       confirmButtonColor: "red",
-  //       customClass: {
-  //         icon: "swal-my-icon",
-  //       },
-  //     });
-  //   }
-  // };
-
-
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     setLoading(true);
@@ -278,8 +202,6 @@ const Courses = () => {
       formData.append('name', addVideo.name);
       formData.append('video_file', addVideo.video_file);
 
-      console.log(formData);
-
       const response = await axios.post("/api/videos/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -289,9 +211,9 @@ const Courses = () => {
       setIsDialogue(false);
       setLoading(false);
       fetchVideoData();
-      console.log(response);
+      // console.log(response);
     } catch (error) {
-      console.error("Error uploading video", error);
+      // console.error("Error uploading video", error);
       // Handle error...
     }
   };

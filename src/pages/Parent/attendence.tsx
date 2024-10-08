@@ -29,10 +29,8 @@ const ParentAttendance = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log(response.data.s_user_id);
         setStudUserID(response?.data?.s_user_id);
       } catch (error) {
-        // console.error("Error getting Profile", error);
       }
     };
 
@@ -59,7 +57,6 @@ const ParentAttendance = () => {
         },
       });
       setStudentData(response.data);
-      console.log(response);
       setStudentId(response.data.student_id);
     } catch (error) {
       console.error("Error fetching student data:", error);
@@ -86,7 +83,6 @@ const ParentAttendance = () => {
         borderColor: attendance.status.includes("present") ? "green" : "red",
       }));
       setEvents(attendanceEvents);
-      // console.log(attendanceEvents);
     } catch (error) {
       console.error("Error fetching attendance:", error);
     }

@@ -1,9 +1,12 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import { BookOpenTextIcon, EllipsisVertical, EyeIcon, View } from "lucide-react";
+import {
+  BookOpenTextIcon,
+  EllipsisVertical,
+  EyeIcon,
+} from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
-import { Link } from "react-router-dom";
 
 const UserDashboard = () => {
   const { user }: any = useAuthContext();
@@ -18,9 +21,7 @@ const UserDashboard = () => {
         },
       });
       setCourseData(response.data);
-      console.log(response.data);
     } catch (error) {
-      // console.error(error);
     }
   };
 
@@ -49,6 +50,9 @@ const UserDashboard = () => {
                   <span className="block text-gray-600 text-sm">
                     {course.course_info.subject_name} -{" "}
                     {course.course_info.standard_name}
+                    <h3 className="font-semibold mb-2">
+                  Module: {course.course_info.module_name}
+                </h3>
                   </span>
                 </div>
               </div>
@@ -56,21 +60,32 @@ const UserDashboard = () => {
                 <EllipsisVertical />
               </div>
             </div>
-            {index === activeTab && ( 
+            {index === activeTab && (
               <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-                <h3 className="font-semibold mb-2">
-                  Module: {course.course_info.module_name}
-                </h3>
-                <h4 className="font-medium mb-2">Lessons:</h4>
+                {/* <h4 className="font-medium mb-2">Lessons:</h4> */}
                 {course.lessons.map((lesson: any, lessonIndex: any) => (
                   <div
                     key={lessonIndex}
                     className="mb-4 p-3 bg-white rounded shadow"
                   >
                     <h5 className="font-medium my-3">{lesson.title}</h5>
-                    {lesson.content_info.content_path.map((path, pathIndex) => (
-                    <a target="_blank" className="text-[#3f5de4ce] flex items-center  gap-2" href={path}><EyeIcon /> {lesson.content_info.description}</a>
-                    ))}
+                    {lesson.content_info.content_path ? (
+                      <>
+                        {lesson.content_info.content_path.map(
+                          (path, pathIndex) => (
+                            <a
+                              target="_blank"
+                              className="text-[#3f5de4ce] flex items-center  gap-2"
+                              href={path}
+                            >
+                              <EyeIcon /> {lesson.content_info.description}
+                            </a>
+                          )
+                        )}
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 ))}
               </div>

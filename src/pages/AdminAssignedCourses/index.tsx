@@ -30,10 +30,7 @@ const AdminAssignedCourses = () => {
     };
 
     fetchAssignedCourses();
-  }, [user.token]); // Adding dependency on the token for re-fetching when the token changes
-
-  if (loading) return <div className="text-center">Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+  }, [user.token]); 
 
   const handleBackClick = () => {
     navigate(-1); // Navigate to the previous page
@@ -51,7 +48,7 @@ const AdminAssignedCourses = () => {
         <ArrowLeft className="w-6 h-6" />
         <span>Back</span>
       </button>
-      {assignedCourses && assignedCourses.length > 0 ? (
+      {assignedCourses.length > 0 ? (
         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md mt-7 mb-14">
           <thead>
             <tr className="bg-gray-100">
@@ -78,7 +75,7 @@ const AdminAssignedCourses = () => {
           </tbody>
         </table>
       ) : (
-        <div className="text-center mt-4">No courses assigned to you.</div>
+        <div className="text-center mt-4">No courses were assigned to any teachers.</div>
       )}
     </div>
   );

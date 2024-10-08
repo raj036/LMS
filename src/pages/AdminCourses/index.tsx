@@ -61,12 +61,8 @@ const Courses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data),
-        setCourseDetails(response.data.related_course_details);
-      // setSelectedCourseDetailId(response.data.related_course_details);
-    } catch (error) {
-      // console.log(error);
-    }
+      setCourseDetails(response.data.related_course_details);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -229,7 +225,6 @@ const Courses = () => {
           },
         }
       );
-      // console.log(response);
       Swal.fire({
         icon: "success",
         title: "Course assigned successfully",
@@ -240,16 +235,16 @@ const Courses = () => {
         timer: 2000,
       });
     } catch (error) {
-      // console.error("Error assigning teacher", error);
+      console.error(error.response.data.detail);
       Swal.fire({
         icon: "error",
-        title: "Error occured while assigning course",
         customClass: {
           icon: "swal-my-icon",
+          popup: "swal-txt",
         },
-        text: error?.response?.data?.message || "Please try again later.",
+        text: error?.response?.data?.detail || "Please try again later.",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 4000,
       });
     }
   };
@@ -349,7 +344,6 @@ const Courses = () => {
             </form>
           </DialogContent>
         </Dialog>
-        {/* <h1 className="text-2xl font-bold">Courses</h1> */}
       </div>
 
       <div className="ruby-disp">

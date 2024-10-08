@@ -1,11 +1,12 @@
 import { Button, Heading, Input, TextArea } from "components";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import useCourseData from "hooks/useCourseData";
+import ReactFlagsSelect from "react-flags-select";
 
 const index = () => {
   const { user }: any = useAuthContext();
@@ -80,7 +81,7 @@ const index = () => {
     fetchCourses();
   }, []);
 
-  const handleCourseChange = (e:any) => {
+  const handleCourseChange = (e: any) => {
     const courseId = e.target.value;
     const course = courses.find((c) => c.course_id.toString() === courseId);
     setSelectedCourse({ id: courseId, name: course.course_name });
@@ -151,7 +152,7 @@ const index = () => {
   const handleCheckboxChange = () => {
     setCopyAddress(!copyAddress);
     if (!copyAddress) {
-      setFormData((prevData) => ({
+      setFormData((prevData:any) => ({
         ...prevData,
         permanent_address: prevData.current_address,
       }));
@@ -278,7 +279,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your First Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -300,7 +301,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Middle Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -322,7 +323,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Last Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -376,7 +377,14 @@ const index = () => {
                 >
                   Nationality<span className="text-red-500">*</span>
                 </Heading>
-                <Input
+                <ReactFlagsSelect
+                  selected={formData.nationality} // Bind to formData's nationality value
+                  onSelect={(value) => handleChange("nationality", value)} // Use existing handleChange function
+                  searchable // Enable search
+                  placeholder="Select Country" // Optional placeholder
+                  className=" bg-teal-900 border border-teal-90 text-sm rounded-[20px] border-none focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                />
+                {/* <Input
                   size="xs"
                   type="text"
                   name="nationality"
@@ -386,14 +394,14 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Nationality"
                   required
-                />
+                /> */}
               </div>
               <div className="sm:col-span-2">
                 <Heading
                   size="s"
                   className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
                 >
-                  Referred By
+                  Referred By<span className="text-red-500">*</span>
                 </Heading>
                 <Input
                   size="xs"
@@ -405,8 +413,9 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your Reference if Any"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
+                  required
                 />
               </div>
               <div className="sm:col-span-2">
@@ -674,7 +683,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Your School Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -707,26 +716,18 @@ const index = () => {
                   size="s"
                   className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
                 >
-                  Percentage<span className="text-red-500">*</span>
+                  Percentage/Grade<span className="text-red-500">*</span>
                 </Heading>
                 <Input
                   size="xs"
                   type="text"
-                  pattern="\d*"
                   name="percentage"
-                  min={1}
-                  maxLength={3}
                   id="percentage"
                   value={formData?.percentage}
                   onFocus={(e) => e.target.select()}
-                  onChange={(value: any) =>
-                    handleChange("percentage", value)
-                  }
+                  onChange={(value: any) => handleChange("percentage", value)}
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Percentage (%)"
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                  }}
                   required
                 />
               </div>
@@ -774,7 +775,7 @@ const index = () => {
                   size="xs"
                   type="text"
                   name="s_secondary_no"
- minLength={10}
+                  minLength={10}
                   maxLength={10}
                   id="s_secondary_no"
                   value={formData?.s_secondary_no}
@@ -903,7 +904,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's First Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -927,7 +928,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's Middle Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, "");// Remove non-alphabetic characters
                   }}
                 />
               </div>
@@ -948,7 +949,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Parent's Last Name"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -970,7 +971,7 @@ const index = () => {
                   className="bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-md focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   placeholder="Enter Relationship With Parent"
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />

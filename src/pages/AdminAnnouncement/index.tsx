@@ -119,11 +119,14 @@ const AdminAnnouncements = () => {
           },
         });
         if (response.status === 200) {
-          await Swal.fire(
-            "Deleted!",
-            "Your content has been deleted.",
-            "success"
-          );
+          await Swal.fire({
+            title:"Deleted!",
+            text:"Your announcement has been deleted.",
+            icon:"success",
+            customClass: {
+              icon: "swal-my-icon",
+            },
+          });
           getAnnouncementData();
           setAnnouncementData((prevData) =>
             prevData.filter((item) => item.id !== id)

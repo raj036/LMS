@@ -27,7 +27,6 @@ const ParentProfile = () => {
         },
       });
       setParentData(response?.data);
-      console.log(response.data.s_user_id)
       setStudUserID(response?.data?.s_user_id)
     } catch (error) {
       // console.error("Error getting Profile", error);
@@ -64,7 +63,6 @@ const ParentProfile = () => {
         confirmButtonText: "OK",
       });
     } catch (error) {
-      // console.error("error", error);
       Swal.fire({
         text: "Form not updated due to some issue",
         icon: "error",

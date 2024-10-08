@@ -61,7 +61,7 @@ const FessCreate = () => {
         fetchCourses();
     }, [user.token]);
 
-    const handleInputChange = (field, value) => {
+    const handleInputChange = (field:any, value:any) => {
         setFormData((prevData) => ({
             ...prevData,
             [field]: value,
@@ -115,10 +115,8 @@ const FessCreate = () => {
         fetchCourses();
     }, [user.token]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault();
-        console.log("Submitting fee data:", formData);
-
         try {
             await axios.post("/api/fees/create_fees/", formData, {
                 headers: {
@@ -168,7 +166,6 @@ const FessCreate = () => {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setFeeData(response.data);
-            // console.log(response.data)
         } catch (error) {
             console.error("Error fetching fees:", error);
         }
@@ -179,7 +176,7 @@ const FessCreate = () => {
     }, [user.token]);
 
     const handleBackClick = () => {
-        navigate(-1); // Navigate to the previous page
+        navigate(-1); 
       };
     
 

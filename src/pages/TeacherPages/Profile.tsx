@@ -4,6 +4,7 @@ import Topbar from "components/Topbar";
 import axios from "helper/axios";
 import { useAuthContext } from "hooks/useAuthContext";
 import React, { useEffect, useState } from "react";
+import ReactFlagsSelect from "react-flags-select";
 import Swal from "sweetalert2";
 
 const TeacherProfile = () => {
@@ -113,15 +114,30 @@ const TeacherProfile = () => {
     emergency_contact_number: "",
     languages: "",
   });
+  const [copyAddress, setCopyAddress] = useState(false);
 
   const handleChange = (field: any, value: any) => {
     setFormData((prevFormData) => ({
-      // ...prevFormData,
-      // [section]: {
       ...prevFormData,
       [field]: value,
-      // },
     }));
+
+    if (copyAddress && field === "current_address") {
+      setFormData((prevData: any) => ({
+        ...prevData,
+        permanent_address: value,
+      }));
+    }
+  };
+
+  const handleCheckboxChange = () => {
+    setCopyAddress(!copyAddress);
+    if (!copyAddress) {
+      setFormData((prevData:any) => ({
+        ...prevData,
+        permanent_address: prevData.current_address,
+      }));
+    }
   };
 
   const handleSubmit = (e: any) => {
@@ -552,7 +568,7 @@ const TeacherProfile = () => {
                   value={formData.name}
                   onChange={(e) => handleChange("name", e.target.value)}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -584,18 +600,18 @@ const TeacherProfile = () => {
                 Gender<span className="text-red-500">*</span>
               </Heading>
               {/* <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"> */}
-                <select
-                  name="gender"
-                  className="p-3 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[8px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  value={formData.gender}
-                  onChange={(e) => handleChange("gender", e.target.value)}
-                  required
-                >
-                     <option value="">Select a Gender...</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
+              <select
+                name="gender"
+                className="p-3 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[8px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                value={formData.gender}
+                onChange={(e) => handleChange("gender", e.target.value)}
+                required
+              >
+                <option value="">Select a Gender...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
               {/* </div> */}
             </div>
             <div className="sm:w-[400px]">
@@ -605,7 +621,14 @@ const TeacherProfile = () => {
               >
                 Nationality<span className="text-red-500">*</span>
               </Heading>
-              <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+              <ReactFlagsSelect
+                  selected={formData.nationality} // Bind to formData's nationality value
+                  onSelect={(value) => handleChange("nationality", value)} // Use existing handleChange function
+                  searchable // Enable search
+                  placeholder="Select Country" // Optional placeholder
+                  className=" bg-teal-900 border border-teal-90 text-sm rounded-md border-none focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                />
+              {/* <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
                   type="text"
                   name="nationality"
@@ -617,7 +640,7 @@ const TeacherProfile = () => {
                   }}
                   required
                 />
-              </div>
+              </div> */}
             </div>
             <div className="sm:w-[400px]">
               <Heading
@@ -636,7 +659,7 @@ const TeacherProfile = () => {
                     handleChange("marital_status", e.target.value)
                   }
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -819,6 +842,13 @@ const TeacherProfile = () => {
                 className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
               >
                 Permanent address<span className="text-red-500">*</span>
+                <input
+                    type="checkbox"
+                    checked={copyAddress}
+                    onChange={handleCheckboxChange}
+                    className="mx-1"
+                  />
+                  <span>Same as Current</span>
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
@@ -860,7 +890,7 @@ const TeacherProfile = () => {
                     handleChange("dependent_name", e.target.value)
                   }
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -881,7 +911,7 @@ const TeacherProfile = () => {
                   value={formData.relation}
                   onChange={(e) => handleChange("relation", e.target.value)}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, "");// Remove non-alphabetic characters
                   }}
                   required
                 />
@@ -1029,20 +1059,15 @@ const TeacherProfile = () => {
                 size="s"
                 className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
               >
-                Percentage<span className="text-red-500">*</span>
+                Percentage/Grade<span className="text-red-500">*</span>
               </Heading>
               <div className="h-[47px] rounded-lg pl-[23px] pr-[35px] items-center justify-center font-medium bg-teal-900 border border-teal-90 !text-white-A700 text-sm focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
                 <input
                   type="text"
-                  maxLength={3}
-                  minLength={2}
                   name="percentage"
                   className="bg-transparent outline-none w-full h-full px-2"
                   value={formData.percentage}
                   onChange={(e) => handleChange("percentage", e.target.value)}
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                  }}
                   required
                 />
               </div>
@@ -1071,7 +1096,7 @@ const TeacherProfile = () => {
                   value={formData.skill}
                   onChange={(e) => handleChange("skill", e.target.value)}
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />

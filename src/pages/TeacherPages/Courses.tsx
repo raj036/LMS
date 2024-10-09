@@ -29,7 +29,7 @@ const MyCourses = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      // console.log(response.data)
+      console.log(response)
       setCourseData(response?.data);
     } catch (error) {
       // console.error(error);
@@ -44,6 +44,7 @@ const MyCourses = () => {
         },
       });
       setCourseDetails(response.data.related_course_details);
+      console.log(response);
       // setSelectedCourseDetailId(response.data.related_course_details);
     } catch (error) {
       // console.log(error);

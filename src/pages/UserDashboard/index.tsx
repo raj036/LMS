@@ -1,12 +1,9 @@
 import Topbar from "components/Topbar";
 import React, { useEffect, useState } from "react";
-import {
-  BookOpenTextIcon,
-  EllipsisVertical,
-  EyeIcon,
-} from "lucide-react";
+import { BookOpenTextIcon, EllipsisVertical, EyeIcon } from "lucide-react";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
+import { format } from "date-fns";
 
 const UserDashboard = () => {
   const { user }: any = useAuthContext();
@@ -21,8 +18,8 @@ const UserDashboard = () => {
         },
       });
       setCourseData(response.data);
-    } catch (error) {
-    }
+      console.log(response.data);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -33,7 +30,7 @@ const UserDashboard = () => {
     <>
       <Topbar heading="Dashboard" />
       <div className="p-4 sm:p-7 flex flex-wrap">
-        {courseData.map((course, index) => (
+        {courseData.map((course: any, index: any) => (
           <div key={index} className="w-full mb-6">
             <div
               className={`flex items-center justify-between md:h-20 m-4 p-4 w-[300px] sm:w-full bg-white rounded-lg shadow-md cursor-pointer ${
@@ -51,8 +48,8 @@ const UserDashboard = () => {
                     {course.course_info.subject_name} -{" "}
                     {course.course_info.standard_name}
                     <h3 className="font-semibold mb-2">
-                  Module: {course.course_info.module_name}
-                </h3>
+                      Module: {course.course_info.module_name}
+                    </h3>
                   </span>
                 </div>
               </div>
@@ -66,26 +63,33 @@ const UserDashboard = () => {
                 {course.lessons.map((lesson: any, lessonIndex: any) => (
                   <div
                     key={lessonIndex}
-                    className="mb-4 p-3 bg-white rounded shadow"
+                    className="mb-4 p-3 bg-white rounded shadow flex place-items-end justify-between"
                   >
-                    <h5 className="font-medium my-3">{lesson.title}</h5>
-                    {lesson.content_info.content_path ? (
-                      <>
-                        {lesson.content_info.content_path.map(
-                          (path, pathIndex) => (
-                            <a
-                              target="_blank"
-                              className="text-[#3f5de4ce] flex items-center  gap-2"
-                              href={path}
-                            >
-                              <EyeIcon /> {lesson.content_info.description}
-                            </a>
-                          )
-                        )}
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    <div className="">
+                      <h5 className="font-medium my-3">{lesson.title}</h5>
+
+                      {lesson.content_info.content_path ? (
+                        <>
+                          {lesson.content_info.content_path.map(
+                            (path: any, pathIndex: any) => (
+                              <a
+                                target="_blank"
+                                className="text-[#3f5de4ce] flex items-center  gap-2"
+                                key={pathIndex}
+                                href={path}
+                              >
+                                <EyeIcon /> {lesson.content_info.description}
+                              </a>
+                            )
+                          )}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <p className="mb-[4px] text-[14px]">
+                      {format(lesson.content_info.created_on, "dd-MM-yy")}
+                    </p>
                   </div>
                 ))}
               </div>

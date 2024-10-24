@@ -1,5 +1,5 @@
 import { useAuthContext } from "hooks/useAuthContext";
-import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
+import {  ChevronLast, ChevronFirst } from "lucide-react";
 import React, { useContext, createContext, useState, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -55,23 +55,6 @@ export default function Sidebar({ children }: SidebarProps) {
           <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3 my-1">{children}</ul>
           </SidebarContext.Provider>
-
-          {/* <div className="border-t flex p-3">
-            <div className="bg-indigo-200 text-indigo-500 font-bold p-4 rounded-md">
-              {user?.user_name.charAt(0).toUpperCase()}
-            </div>
-            <div
-              className={`
-                flex justify-between items-center
-                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-            `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">{user.user_name}</h4>
-                <span className="text-xs text-gray-600">{user.email_id}</span>
-              </div>
-            </div>
-          </div> */}
         </nav>
       </aside>
     </>

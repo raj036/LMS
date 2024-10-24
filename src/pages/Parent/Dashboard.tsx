@@ -41,9 +41,6 @@ const ParentDashboard = () => {
             <div className="flex items-center">
               <BookOpenTextIcon className="w-10 h-10 text-gray-600 p-2 rounded-[5px] bg-[#BCBCBC]" />
               <div className="ml-4">
-                {/* <span className="block text-gray-600 text-[15px]">
-                  {tab}
-                </span> */}
                 <span className="block font-semibold text-gray-800">
                   {tab}
                 </span>

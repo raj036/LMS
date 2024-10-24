@@ -2,7 +2,6 @@ import React from "react";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import { useLocation } from "react-router-dom";
-import UserSidebarLayout from "components/Sidebar/UserSidebarLayout";
 import HomeSideBar from "components/HomeSideBar";
 import TeacherSidebarLayout from "components/Sidebar/TeacherSidebarLayout";
 

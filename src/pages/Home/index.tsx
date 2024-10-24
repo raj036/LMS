@@ -19,6 +19,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/swiper-bundle.css";
 import "swiper/css/autoplay";
+import Chat from "/images/chat.png"
 
 export default function HomePage() {
   const { user }: any = useAuthContext();
@@ -126,7 +127,12 @@ export default function HomePage() {
         <title>ILATE</title>
       </Helmet>
 
-      <div className="flex flex-col items-center justify-between w-full pt-[25px] bg-white-A700">
+      <div className="relative flex flex-col items-center justify-between w-full pt-[25px] bg-white-A700">
+        <div className="fixed right-4 bottom-4 z-50">
+          <a href="http://192.46.213.94:8502/">
+            <img src={Chat} alt="chat icon" className="w-[60px] h-[60px] transform transition-transform duration-300 hover:scale-110"/>
+          </a>
+        </div>
         <div className="flex flex-col items-center justify-start w-full">
           <div className="flex flex-col items-center justify-start w-full">
             <div className="flex flex-col items-center justify-start w-full">
@@ -135,15 +141,15 @@ export default function HomePage() {
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="h-[675px] sm:h-[500px] w-full relative">
                       <Img
-                      loading="lazy"
+                        loading="eager"
                         src="images/img_rectangle_93.png"
                         alt="image"
                         className="justify-center h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                       />
                       <div className="justify-center h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto absolute">
                         <Img
-                        loading="lazy"
-                          src="images/img_image_39.png"
+                          loading="eager"
+                          src="images/img_image_39.webp"
                           alt="imagethirtynine"
                           className="justify-center z-5 h-[675px] sm:h-[500px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                         />
@@ -152,9 +158,6 @@ export default function HomePage() {
                           as="p"
                           className=" sm:w-[75%] w-[35%] sm:top-[32%] xs:text-[14px] lg:top-[42%] xs:w-[75%] xs:top-[34%] 3xl:top-[26%] top-[32%] right-0 left-0 m-auto text-center leading-[22px] absolute"
                         >
-                          {/* Unlock your academic potential with our tailored
-                          programs and experienced educators, guiding you
-                          towards success in international curricula. */}
                           Unleash Your Academic Brilliance: Customized Learning
                           Paths with Expert Educators for Global Curricula
                           Success
@@ -163,10 +166,6 @@ export default function HomePage() {
                           as="h1"
                           className="w-[65%] sm:w-[75%] sm:text-[22px] top-[18%] 3xl:top-[6%] xs:text-[18px] sm:top-[6%] right-0 left-0 m-auto text-center absolute"
                         >
-                          {/* ILATE Learning Centre
-                          <br />
-                          ILATE | A learning centre for IB, IGCSE, AS/A Level
-                          and ACT */}
                           Elevating Excellence: Premier Tutoring for IB, IGCSE,
                           <br />
                           AS/A Levels, and the ACT
@@ -195,17 +194,17 @@ export default function HomePage() {
                       </div>
                     </div>
                     <Img
-                    loading="lazy"
+                      loading="lazy"
                       src="images/img_mask_group(1).webp"
                       alt="image_one"
                       className="2xl:w-4/5 3xl:w-[50%] xs:w-[90%] mt-[-210px] sm:mt-[-57px] md:mt-[-117px] lg:mt-[-147px] 3xl:mt-[-297px] z-[11] object-cover"
                     />
                   </div>
                 </div>
-                <div className="h-[600px] w-full mt-[105px] sm:mt-[55px] relative">
+                <div className="min-h-[600px] w-full mt-[105px] sm:mt-[55px] relative">
                   <Slider
                     autoPlay
-                    autoPlayInterval={2000}
+                    autoPlayInterval={1000}
                     responsive={{
                       "0": { items: 1 },
                       "550": { items: 1 },
@@ -240,7 +239,7 @@ export default function HomePage() {
                                 </Text>
                               </div>
                               <Img
-                                src="images/img_image_55.png"
+                                src="images/img_image_55.webp"
                                 alt="imagefiftyfive"
                                 className="sm:h-[306px] xs:h-[256px] xs:w-[256px] sm:w-[306px] h-[426px] w-[426px] md:h-[346px] ml-[-88px] rounded-[50%]"
                               />
@@ -291,8 +290,8 @@ export default function HomePage() {
 
                 <div className="flex sm:block flex-row justify-start items-center w-full xs:mt-[230px] sm:mt-[300px] mt-[132px] md:mt-[100px] gap-[35px] max-w-[1400px]">
                   <Img
-                  loading="lazy"
-                    src="images/img_placeholder_image(1).png"
+                    loading="lazy"
+                    src="images/img_placeholder_image(1).webp"
                     alt="placeholder_one"
                     className="w-[51%] sm:w-[90%] my-0 mx-auto object-cover rounded-[20px]"
                   />
@@ -370,9 +369,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img
-                            loading="lazy"
-                            src="images/IBDP.svg" />
+                            <Img loading="lazy" src="images/IBDP.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -400,9 +397,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img 
-                            loading="lazy"
-                            src="images/IGCSE.svg" />
+                            <Img loading="lazy" src="images/IGCSE.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -429,9 +424,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img 
-                            loading="lazy"
-                            src="images/MYP.svg" />
+                            <Img loading="lazy" src="images/MYP.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -459,9 +452,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img 
-                            loading="lazy"
-                            src="images/Alevels.svg" />
+                            <Img loading="lazy" src="images/Alevels.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -489,9 +480,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] ml-[5px]"
                           >
-                            <Img 
-                            loading="lazy"
-                            src="images/SAT.svg" />
+                            <Img loading="lazy" src="images/SAT.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -519,9 +508,7 @@ export default function HomePage() {
                             shape="circle"
                             className="w-[72px] mt-[23px] ml-[26px] sm:mt-0 sm:ml-0"
                           >
-                            <Img 
-                            loading="lazy"
-                            src="images/AI.svg" />
+                            <Img loading="lazy" src="images/AI.svg" />
                           </Button>
                           <Heading
                             size="xl"
@@ -715,7 +702,7 @@ export default function HomePage() {
                 <div className="flex flex-row justify-center w-full mt-[141px] sm:mt-[166px] xs:mt-[86px] attch-img">
                   <div className="flex flex-col items-center justify-start w-full">
                     <div className="h-[227px] w-full z-[1] relative max-w-[1424px]">
-                    <div className="justify-center items-center h-[226px] xs:h-[170px] xs:top-[-50%] w-full left-0 bottom-0 right-0 top-[-100%] m-auto bg-teal-900 absolute rounded-[25px]">
+                      <div className="justify-center items-center h-[226px] xs:h-[170px] xs:top-[-50%] w-full left-0 bottom-0 right-0 top-[-100%] m-auto bg-teal-900 absolute rounded-[25px]">
                         <Heading
                           size="3xl"
                           as="h4"
@@ -730,11 +717,6 @@ export default function HomePage() {
                       </div>
                     </div>
                     <div className="h-[50vh] sm:h-[1080px]  xs:h-[1080px] 2xl:h-[500px] w-full mt-[-64px] relative">
-                      {/* <Img
-                        src="images/education.jpg"
-                        alt="image_two"
-                        className="justify-center h-[540px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute brightness-50"
-                      /> */}
                       <div className="absolute bottom-0 m-auto flex-row w-full flex sm:gap-16 translate-x-[50%] translate-y-[-50%] sm:flex-col sm:top-[40%] sm:right-[9%] right-[50%] top-[50%] justify-around">
                         <div className="flex flex-row justify-center items-start w-[16%] h-max right-[77%]  ">
                           <div className="flex flex-col items-center justify-center h-[102px] w-[103px] lg:h-[72px] lg:w-[73px] mt-[13px] gap-[7px] p-3.5 z-[1] bg-white-A700 rounded-full">
@@ -860,36 +842,6 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="flex flex-row justify-between w-[79%] bottom-[17%] right-0 left-0 m-auto absolute">
-                        <Heading
-                          size="2xl"
-                          as="h4"
-                          className="tracking-[0.20px]"
-                        >
-                          University offers
-                        </Heading>
-                        <Heading
-                          size="2xl"
-                          as="h4"
-                          className="tracking-[0.20px]"
-                        >
-                          University offers
-                        </Heading>
-                        <Heading
-                          size="2xl"
-                          as="h4"
-                          className="tracking-[0.20px]"
-                        >
-                          University offers
-                        </Heading>
-                        <Heading
-                          size="2xl"
-                          as="h4"
-                          className="tracking-[0.20px]"
-                        >
-                          University offers
-                        </Heading>
-                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -944,18 +896,18 @@ export default function HomePage() {
                       <Img
                         src="images/img_rectangle_8.png"
                         alt="image_three"
-                          className="h-[800px] sm:h-[474px] w-[66%] right-0 bottom-0 top-0 sm:top-[-90px] sm:m-0 m-auto object-cover absolute"
+                        className="h-[800px] sm:h-[474px] w-[66%] right-0 bottom-0 top-0 sm:top-[-90px] sm:m-0 m-auto object-cover absolute"
                       />
-                       <div className="h-[700px] sm:h-[444px] w-full top-0 sm:top-[-27%] right-0 left-0 m-auto absolute">
+                      <div className="h-[700px] sm:h-[444px] w-full top-0 sm:top-[-27%] right-0 left-0 m-auto absolute">
                         <Img
                           src="images/img_group_72.png"
                           alt="image_four"
-                           className="justify-center h-[700px] sm:h-[444px] w-full left-0 bottom-0 right-0 -sm:top-[-25%] top-0 m-auto object-cover absolute"
+                          className="justify-center h-[700px] sm:h-[444px] w-full left-0 bottom-0 right-0 -sm:top-[-25%] top-0 m-auto object-cover absolute"
                         />
                         <Img
-                          src="images/img_rectangle_7.png"
+                          src="images/img_rectangle_7.webp"
                           alt="image_five"
-                             className="h-[600px] w-[60%] sm:h-[350px] bottom-0 left-[15%] m-auto object-cover absolute rounded-[20px]"
+                          className="h-[600px] w-[60%] sm:h-[350px] bottom-0 left-[15%] m-auto object-cover absolute rounded-[20px]"
                         />
                       </div>
                     </div>
@@ -978,20 +930,14 @@ export default function HomePage() {
                   International curricula, Parent Involvement, etc
                 </Heading>
                 <div className="3xl:h-[800px] 3xl:mt-[8%] 2xl:h-[664px] h-[664px] sm:h-[1640px] xs:h-[1800px] md:h-[545px] md:mt-[20%] w-full 2xl:mt-[20%]  relative card-img-atch">
-                  {/* <Img
-                    src="images/img_rectangle_42.png"
-                    alt="image_six"
-                    className="h-[600px] w-full bottom-0 right-0 left-0 m-auto object-cover absolute"
-                  /> */}
                   <div className="flex gap-4 absolute sm:flex-col 3xl:top-[-39%] top-[-54%] 2xl:top-[-45%] lg:top-[-29%] sm:top-[-33%] xs:top-[-28%] w-full h-full">
                     <div className="sm:w-[90%] w-[30%] right-[7%] m-auto shadow-lg -absolute sm:h-[20%] xs:h-[21%] 2xl:h-[66%] 3xl:h-[43%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
-                          src="images/img_rectangle_47.png"
+                          src="images/img_rectangle_47.webp"
                           alt="image_seven"
                           className="w-full z-[1] object-cover rounded"
                         />
-                        {/* <div className="h-[533px] w-full mt-[-250px] ml-[27px] shadow-lg max-w-[360px]" /> */}
                       </div>
                       <div className="flex flex-col items-start justify-between w-full h-full gap-[34px] left-0 bottom-0 right-0 top-0 p-7 md:p-4 m-auto bg-white-A700 shadow-md -absolute rounded">
                         <Heading
@@ -1022,11 +968,10 @@ export default function HomePage() {
                     <div className="sm:w-[90%] w-[30%] right-0 left-0 m-auto shadow-lg -absolute sm:h-[21%] xs:h-[23%] 2xl:h-[66%] 3xl:h-[43%] md:h-[86%] lg:h-[76%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
-                          src="images/img_rectangle_46.png"
+                          src="images/img_rectangle_46.webp"
                           alt="image_seven"
                           className="w-full z-[1] object-cover rounded"
                         />
-                        {/* <div className="h-[533px] w-full mt-[-250px] ml-[27px] shadow-lg max-w-[360px]" /> */}
                       </div>
                       <div className="flex flex-col items-start justify-between w-full h-full gap-[34px] left-0 bottom-0 right-0 top-0 p-7 md:p-4 m-auto bg-white-A700 shadow-md -absolute rounded">
                         <Heading
@@ -1057,11 +1002,10 @@ export default function HomePage() {
                     <div className="sm:w-[90%] w-[30%] left-[8%] m-auto shadow-lg -absolute sm:h-[20%] 2xl:h-[66%] 3xl:h-[43%] xs:h-[21%] lg:h-[76%] md:h-[86%] sm:mb-[-270px]">
                       <div className="flex flex-col items-start justify-start w-full top-0 right-0 left-0 m-auto -absolute">
                         <Img
-                          src="images/img_rectangle_45.png"
+                          src="images/img_rectangle_45.webp"
                           alt="image_seven"
                           className="w-full z-[1] object-cover rounded"
                         />
-                        {/* <div className="h-[533px] w-full mt-[-250px] ml-[27px] shadow-lg max-w-[360px]" /> */}
                       </div>
                       <div className="flex flex-col items-start justify-between w-full h-full gap-[34px] left-0 bottom-0 right-0 top-0 p-7 md:p-4 m-auto bg-white-A700 shadow-md -absolute rounded">
                         <Heading
@@ -1185,11 +1129,6 @@ export default function HomePage() {
                                             </Text>
                                           </div>
                                           <div className="flex flex-row justify-around items-center w-[60%] md:w-full">
-                                            {/* <Img
-                                                src="images/img_testimonial_user_cover_167.png"
-                                                alt="circleimage"
-                                                className="h-[50px] w-[50px] rounded-[50%]"
-                                              /> */}
                                             <div className="flex flex-col items-start justify-start w-3/5 pt-[3px] gap-[3px]">
                                               <Heading
                                                 size="xs"
@@ -1198,13 +1137,6 @@ export default function HomePage() {
                                               >
                                                 {ele.name}
                                               </Heading>
-                                              {/* <Text
-                                                   size="xs"
-                                                   as="p"
-                                                   className="!text-blue_gray-900_01 tracking-[0.20px] !font-montserrat !font-normal"
-                                                 >
-                                                   Student
-                                                 </Text> */}
                                             </div>
                                           </div>
                                         </div>

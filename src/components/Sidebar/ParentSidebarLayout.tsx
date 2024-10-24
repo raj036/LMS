@@ -3,7 +3,6 @@ import Sidebar, { SidebarItem } from ".";
 import {
   LayoutDashboard,
   CalendarCheck2,
-  LibraryBig,
   UserRound,
   Mic2Icon,
 } from "lucide-react";

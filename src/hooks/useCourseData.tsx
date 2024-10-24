@@ -8,7 +8,6 @@ const useCourseData = () => {
   const [modules, setModules] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  // const [courseAll, setCourseAll] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {

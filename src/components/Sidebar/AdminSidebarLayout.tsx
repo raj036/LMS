@@ -6,7 +6,6 @@ import {
   BadgeInfo,
   Presentation,
   GraduationCap,
-  LibraryBig,
   Mail,
   IndianRupee,
   BookOpenText,
@@ -36,13 +35,6 @@ const AdminSidebarLayout = () => {
               active={location.pathname === "/users"}
             />
           </Link>
-          {/* <Link to={"/courses"}>
-            <SidebarItem
-              icon={<LibraryBig size={20} />}
-              text="Courses"
-              active={location.pathname === "/courses"}
-            />
-          </Link> */}
           <Link to={"/enrolled"}>
             <SidebarItem
               icon={<GraduationCap size={20} />}

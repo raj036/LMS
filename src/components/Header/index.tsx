@@ -102,26 +102,6 @@ export default function Header({ ...props }: Props) {
         </div>
 
         <div className="flex justify-end items-center gap-6 w-6/12">
-          {/*<Link to="#" className="">
-            <Text size="lg" as="p" className="!text-gray-900">
-              IAT
-            </Text>
-          </Link>
-          <Link to="#" className="">
-            <Text size="lg" as="p" className="!text-gray-900">
-              Academics
-            </Text>
-          </Link>
-          <Link to="#" className="">
-            <Text size="lg" as="p" className="!text-gray-900">
-              Careers
-            </Text>
-          </Link>
-           <Link to="#" className="">
-            <Text size="lg" as="p" className="!text-gray-900">
-              Campus life
-            </Text>
-          </Link> */}
           <Link to="/aboutus">
             <Text size="lg" as="p" className="!text-gray-900 sm:hidden">
               About us
@@ -156,7 +136,6 @@ export default function Header({ ...props }: Props) {
                   onClick={handleToggle}
                 />
               </div>
-              {/* {toggle && ( */}
               <div
                 className={`fixed w-[100%] transform duration-300 transition-all hidden sm:block z-20 top-0 h-[100vh] bg-[#fff] right-0 ${
                   toggle ? "translate-x-0" : "translate-x-full"
@@ -204,15 +183,6 @@ export default function Header({ ...props }: Props) {
               {/* )} */}
             </>
           ) : (
-            // <Link to="#" onClick={handleLogOut}>
-            //   <Button
-            //     variant="outline"
-            //     shape="square"
-            //     className="rounded-md font-bold min-w-[138px] hover:text-white-A700 hover:bg-deep_orange-500 transition"
-            //   >
-            //     Logout
-            //   </Button>
-            // </Link>
             <div>
               <button
                 id="dropdownAvatarNameButton"

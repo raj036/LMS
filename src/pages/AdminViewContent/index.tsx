@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/table";
 import DownloadIcon from "/images/download.png";
 import EyeIcn from "/images/eye.png";
-import DelIcon from "/images/delete.png";
 
 const AdminViewContent = () => {
   const [loading, setLoading] = useState(false);
@@ -72,7 +71,6 @@ const AdminViewContent = () => {
 
         if (response.status === 200) {
           Swal.fire("Deleted!", "Your content has been deleted.", "success");
-          // Refresh the course details after deletion
           getCourseDetails(detailId);
         } else {
           throw new Error("Failed to delete Content");
@@ -218,17 +216,6 @@ const AdminViewContent = () => {
                                             className="w-[24px] h-[24px] m-1"
                                           />
                                         </a>
-                                        {/* <button
-                                          onClick={() =>
-                                            deleteContent(lesson.lesson_id)
-                                          }
-                                        >
-                                          <img
-                                            src={DelIcon}
-                                            alt="deleteIcon"
-                                            className="w-[24px] h-[24px] m-1 ml-5 cursor-pointer"
-                                          />
-                                        </button> */}
                                       </div>
                                     </div>
                                   )

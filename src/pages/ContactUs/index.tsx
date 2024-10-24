@@ -78,7 +78,7 @@ export default function ContactUsPage() {
               <div className="h-[455px] sm:h-[200px] w-full relative">
                 <Img
                 loading="lazy"
-                  src="images/img_image_56.png"
+                  src="images/img_image_56.webp"
                   alt="imagefiftysix"
                   className="justify-center h-[500px] sm:h-[200px] w-full xs:w-100 left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
                 />
@@ -290,7 +290,6 @@ export default function ContactUsPage() {
               </div>
             </div>
           </div>
-          {/* <Footer className="flex justify-center items-center w-full p-[42px] bg-black-900" /> */}
         </div>
       </div>
     </>

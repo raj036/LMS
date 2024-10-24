@@ -100,16 +100,6 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm mr-2 !bg-white-A700 !text-black-900"
         />
-        {/* <Input
-          placeholder="Filter type..."
-          value={
-            (table.getColumn("User Type")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("User Type")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm !bg-white-A700 !text-black-900"
-        /> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

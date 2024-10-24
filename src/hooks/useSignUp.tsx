@@ -43,8 +43,6 @@ export const useSignup = () => {
           navigate("/login");
         }
       });
-      // localStorage.setItem("user", JSON.stringify(response.data));
-      // dispatch({ type: "LOGIN", payload: response.data });
     } catch (error) {
       setError(error);
       setIsLoading(false);

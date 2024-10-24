@@ -78,86 +78,16 @@ export default function Footer({ ...props }: Props) {
           <div className="flex flex-row md:flex-col justify-between items-start w-full gap-8">
             <div className="flex flex-col justify-start w-[30%] md:w-[40%] sm:w-[70%] xs:w-full gap-8">
               <Img
-                src="images/img_whatsapp_image_2024_02_13_338x379.png"
+                src="images/footerLogo.webp"
                 alt="whatsappimage"
                 loading="lazy"
                 className="w-[75%] object-cover"
+                width="600"
+                height="400"
               />
-              {/* <Text size="s" as="p" className="">
-                Copyright 2024 ILATE. All rights reserved.
-              </Text> */}
             </div>
             <div className="flex flex-col items-start justify-start w-[70%] md:w-full gap-10">
-              {/* <div className="flex flex-row justify-start items-start">
-                <Heading size="lg" as="h6" className="tracking-[0.20px]">
-                  Products
-                </Heading>
-                <Heading
-                  size="lg"
-                  as="h6"
-                  className="ml-[140px] tracking-[0.20px]"
-                >
-                  Company
-                </Heading>
-                <Heading
-                  size="lg"
-                  as="h6"
-                  className="ml-[136px] tracking-[0.20px]"
-                >
-                  Products
-                </Heading>
-                <Heading
-                  size="2xl"
-                  as="h4"
-                  className="ml-[110px] tracking-[0.20px]"
-                >
-                  Admissions Enquiry
-                </Heading>
-              </div> */}
               <div className="flex flex-row sm:flex-col justify-start items-start h-full">
-                {/* <div className="flex flex-col items-start justify-start w-2/12">
-                  <Heading size="xl" as="h6" className="mb-4 tracking-[0.20px]">
-                    Products
-                  </Heading>
-                  <ul className="flex flex-col items-start justify-start w-full">
-                    <li>
-                      <Link to="#">
-                        <Text as="p" className="hover:underline">
-                          Delta
-                        </Text>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="#">
-                        <Text as="p" className="hover:underline">
-                          Sigma
-                        </Text>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="#">
-                        <Text as="p" className="hover:underline">
-                          Zeta
-                        </Text>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="#">
-                        <Text as="p" className="hover:underline">
-                          Alpha
-                        </Text>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="#">
-                        <Text as="p" className="hover:underline">
-                          Acumen
-                        </Text>
-                      </Link>
-                    </li>
-                  </ul>
-                </div> */}
-                {/* <div className="flex"> */}
                 <div className="flex w-full md:w-6/12 justify-around sm:w-full">
                   <div className="flex flex-col items-start justify-start w-3/12 sm:w-full mb-8">
                     <Heading
@@ -291,7 +221,10 @@ export default function Footer({ ...props }: Props) {
                           type="text"
                           onChange={(value: any) => handleChange("name", value)}
                           onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                            e.target.value = e.target.value.replace(
+                              /[^a-zA-Z]/g,
+                              ""
+                            ); // Remove non-alphabetic characters
                           }}
                           required
                         />
@@ -357,25 +290,6 @@ export default function Footer({ ...props }: Props) {
                       </div>
                     </form>
                   </div>
-                  {/* <div className="flex flex-row justify-between items-center w-auto gap-10">
-                  <Text className="!font-raleway">
-                    <Link to="#" className="inline mx-1 hover:underline">
-                      Privacy Policy
-                    </Link>{" "}
-                    |{" "}
-                    <Link to="#" className="inline mx-1 hover:underline">
-                      Data & Security
-                    </Link>{" "}
-                    |{" "}
-                    <Link to="#" className="inline mx-1 hover:underline">
-                      Terms of Service
-                    </Link>{" "}
-                    |{" "}
-                    <Link to="#" className="inline mx-1 hover:underline">
-                      Data & Security
-                    </Link>
-                  </Text>
-                </div> */}
                 </div>
               </div>
             </div>
@@ -385,18 +299,6 @@ export default function Footer({ ...props }: Props) {
               Copyright 2024 ILATE. All rights reserved.
             </Text>
             <div className="flex flex-row justify-between items-center w-auto gap-[90px]">
-              {/* <div className="flex">
-                <Link to="#">
-                  <Img
-                    src="images/linkedIn.png"
-                    alt="image_ten"
-                    className="mr-2"
-                  />
-                </Link>
-                <Link to="#">
-                  <Img src="images/twitter.png" alt="image_ten" />
-                </Link>
-              </div> */}
               <Text size="s" as="p" className="!font-raleway sm:text-[12px]">
                 <Link to="#" className="inline mx-1 hover:underline">
                   Privacy Policy
@@ -409,10 +311,6 @@ export default function Footer({ ...props }: Props) {
                 <Link to="#" className="inline mx-1 hover:underline">
                   Terms of Service
                 </Link>{" "}
-                {/* |{" "}
-                <Link to="#" className="inline mx-1 hover:underline">
-                  Data & Security
-                </Link> */}
               </Text>
             </div>
           </div>

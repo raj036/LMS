@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Sidebar, { SidebarItem } from ".";
 import {
-  LayoutDashboard,
   CalendarCheck2,
   LibraryBig,
   UserRound,
@@ -30,13 +29,6 @@ const TeacherSidebarLayout = () => {
               active={location.pathname === "/dashboard/user"}
             />
           </Link>
-          {/* <Link to={"/dashboard/user"}>
-            <SidebarItem
-              icon={<LayoutDashboard size={20} />}
-              text="Dashboard"
-              active={location.pathname === "/dashboard/user"}
-            />
-          </Link> */}
           <Link to={"/dashboard/mycourses"}>
             <SidebarItem
               icon={<LibraryBig size={20} />}

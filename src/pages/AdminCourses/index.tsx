@@ -225,6 +225,7 @@ const Courses = () => {
           },
         }
       );
+      console.log(response.data)
       Swal.fire({
         icon: "success",
         title: "Course assigned successfully",

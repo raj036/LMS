@@ -142,6 +142,7 @@ const TeacherProfile = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    // console.log(formData);
     axios
       .post("api/teachers/", formData, {
         headers: {
@@ -150,7 +151,7 @@ const TeacherProfile = () => {
         },
       })
       .then((response) => {
-        // console.log(response);
+        console.log(response);
         Swal.fire({
           icon: "success",
           customClass: {
@@ -162,7 +163,7 @@ const TeacherProfile = () => {
         });
       })
       .catch((error) => {
-        // console.log(error.response.data.detail);
+        console.log(error.response.data.detail);
         const errorMessage = error.response.data.detail;
         Swal.fire({
           title: errorMessage,

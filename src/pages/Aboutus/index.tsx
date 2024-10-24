@@ -1,10 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Img, Button, Heading, Slider } from "../../components";
-import Header from "../../components/Header";
 import AliceCarousel, { EventObject, DotsItem } from "react-alice-carousel";
 import { Link } from "react-router-dom";
-import Footer from "components/Footer";
 
 export default function AboutusPage() {
   const [sliderState, setSliderState] = React.useState(0);
@@ -22,7 +20,7 @@ export default function AboutusPage() {
             <div className="flex flex-col items-center justify-start w-full">
               <div className="h-[500px] sm:h-[200px] w-full relative">
                 <Img
-                  src="images/img_image_41.png"
+                  src="images/img_image_41.webp"
                   loading="lazy"
                   alt="imagefortyone"
                   className="justify-center h-[500px] sm:h-[200px] w-full left-0 bottom-0 right-0 top-0 m-auto object-cover absolute"
@@ -150,19 +148,10 @@ export default function AboutusPage() {
                   <div className="h-[690px]  w-[34%] sm:w-[100%]  relative sm:mt-14">
                     <Img
                     loading="lazy"
-                      src="images/Group_798.png"
+                      src="images/Group_798.webp"
                       alt="imagefortytwo"
                       className="h-[447px] sm:h-[430px] w-[84%] sm:px-4 lg:w-full sm:w-[100%] right-0 top-0 m-auto object-cover absolute rounded-[20px] "
                     />
-                    {/* <div className="flex flex-row justify-start w-3/4 bottom-0 left-0 m-auto absolute sm:bottom-[40%]">
-                      <div className="flex flex-row justify-start w-full pt-7 sm:pt-3 bg-white-A700 rounded-[20px]">
-                        <Img
-                          src="images/img_image_43.png"
-                          alt="imagefortythree"
-                          className="w-[94%] mt-0.5 object-cover rounded-[20px]"
-                        />
-                      </div>
-                    </div> */}
                   </div>
                 </div>
               </div>
@@ -170,7 +159,7 @@ export default function AboutusPage() {
                 <div className="flex flex-row justify-start items-start w-[90%] gap-[42px] mx-auto sm:flex-col">
                   <div className="h-[500px] sm:w-full w-2/5 lg:w-[70%] relative">
                     <Img
-                      src="images/img_image_44.png"
+                      src="images/img_image_44.webp"
                       alt="imagefortyfour"
                       className="justify-center h-[501px] w-full left-0 bottom-0 right-0 top-0 m-auto rounded-[20px] object-cover absolute"
                     />
@@ -205,59 +194,6 @@ export default function AboutusPage() {
                     </div>
                   </div>
                   <div className="flex flex-col items-start justify-start sm:w-[100%] w-[60%] mt-10 sm:mt-0 gap-9 px-14">
-                    {/* <div className="flex flex-col w-full gap-[60px]">
-                      <div className="flex flex-row justify-between w-full">
-                        <Img
-                          src="images/img_image_45.png"
-                          alt="imagefortyfive"
-                          className="w-[18%] object-cover"
-                        />
-                        <Img
-                          src="images/img_image_46.png"
-                          alt="imagefortysix"
-                          className="w-[18%] object-cover"
-                        />
-                        <Img
-                          src="images/img_image_47.png"
-                          alt="imagefortyseven"
-                          className="w-[18%] object-cover"
-                        />
-                      </div>
-                      <div className="flex flex-row justify-between w-full">
-                        <Img
-                          src="images/img_image_48.png"
-                          alt="imagefortyeight"
-                          className="w-[18%] object-cover"
-                        />
-                        <Img
-                          src="images/img_image_49.png"
-                          alt="imagefortynine"
-                          className="w-[18%] object-cover"
-                        />
-                        <Img
-                          src="images/img_image_50.png"
-                          alt="imagefifty_one"
-                          className="w-[18%] object-cover"
-                        />
-                      </div>
-                      <div className="flex flex-row justify-between w-full">
-                        <Img
-                          src="images/img_image_51.png"
-                          alt="imagefiftyone"
-                          className="w-[18%] mt-2.5 object-cover"
-                        />
-                        <Img
-                          src="images/img_image_52.png"
-                          alt="imagefiftytwo"
-                          className="w-[20%] object-cover"
-                        />
-                        <Img
-                          src="images/img_image_53.png"
-                          alt="imagefiftythree"
-                          className="w-[20%] object-cover"
-                        />
-                      </div>
-                    </div> */}
                     <ul className="w-full flex flex-col justify-center items-start gap-14 sm:gap-4 mt-10">
                       <li className="flex justify-start items-center">
                         <Img
@@ -392,7 +328,7 @@ export default function AboutusPage() {
                   </div>
                 </div>
                 <Img
-                  src="images/img_image_54.png"
+                  src="images/img_image_54.webp"
                   alt="imagefiftyfour"
                   className="h-[545px] w-1/4 sm:w-[90%] right-[4%] top-0 m-auto object-cover absolute rounded-[20px] sm:hidden lg:h-[450px] lg:w-[30%] lg:top-[6%] md:w-[38%]"
                 />
@@ -436,7 +372,7 @@ export default function AboutusPage() {
                               </Text>
                             </div>
                             <Img
-                              src="images/img_image_55.png"
+                              src="images/img_image_55.webp"
                               alt="imagefiftyfive"
                               className="sm:h-[306px] xs:h-[256px] xs:w-[256px] sm:w-[306px] h-[426px] w-[426px] md:h-[346px] ml-[-88px] rounded-[50%]"
                             />

@@ -87,7 +87,7 @@ export default function SignUpPagePage() {
                     handleInputChange("user_name", value)
                   }
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^a-zA-Z]/g, ""); // Remove non-alphabetic characters
+                    e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
                   required
                 />

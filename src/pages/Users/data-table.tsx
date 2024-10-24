@@ -46,6 +46,7 @@ import {
 } from "@/components/ui/select";
 import axios from "helper/axios";
 import Swal from "sweetalert2";
+import { useBranch } from "hooks/Branch";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -83,6 +84,7 @@ export function DataTable<TData, TValue>({
     user_name: "",
     user_email: "",
     phone_no: "",
+    branch_id: "",
     user_type: "",
     user_password: "",
     repassword: "",
@@ -113,6 +115,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+  const { branchData } = useBranch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -256,6 +259,30 @@ export function DataTable<TData, TValue>({
                       handleInputChange("phone_no", e.target.value)
                     }
                   />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="phone_no" className="text-right">
+                Branch
+                  </Label>
+                <select
+                  name="branch_id"
+                  value={formData.branch_id}
+                  onChange={(e) => handleInputChange("branch_id", e.target.value)}
+                  className="col-span-3 !bg-gray-500 !text-white-A700"
+                  required
+                >
+                 <option value="" disabled hidden>Select Branch</option>
+                  {branchData.map((branch, index) => (
+                    <option 
+                    key={index} 
+                    value={branch.id} 
+                    className="!bg-gray-500 !text-white-A700" 
+                    style={{ color: 'white' }}
+                  >
+                    {branch.name}
+                  </option>
+                  ))}
+                </select>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="phone_no" className="text-right">

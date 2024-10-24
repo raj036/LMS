@@ -19,6 +19,11 @@ import TeacherAnnouncements from "pages/TeacherPages/Announcement";
 import ViewContent from "pages/TeacherPages/ViewContent";
 import CourseUpload from "pages/TeacherPages/CourseUpload";
 import AllowAttendance from "pages/TeacherPages/AllowAttendance";
+import Test_paper_create from "pages/TeacherPages/Test_paper_create";
+import ResultCard from "pages/TeacherPages/ResultCard ";
+import Question_prieview from "pages/TeacherPages/Question_prieview";
+import TeacherEditProfile from "pages/TeacherPages/TeacherEditProfile";
+
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -64,8 +69,25 @@ const UserRoutes = () => {
       element: user ? <TeacherProfile /> : <Navigate to="/login" />,
     },
     {
+      path: "/dashboard/Edit",
+      element: user ? <TeacherEditProfile /> : <Navigate to="/login" />,
+    },
+    {
       path: "/dashboard/myannouncements",
       element: user ? <TeacherAnnouncements /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/dashboard/testpapercreate",
+      element: user ? <Test_paper_create /> : <Navigate to="/login" />,
+    },
+    
+    {
+      path: "/dashboard/resultCard",
+      element: user ? <ResultCard /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/dashboard/questionprieview",
+      element: user ? <Question_prieview /> : <Navigate to="/login" />,
     },
     {
       path: "/content",

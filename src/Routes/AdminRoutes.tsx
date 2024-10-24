@@ -16,7 +16,7 @@ import path from "path";
 import AdminViewContent from "pages/AdminViewContent";
 import FessCreate from "pages/AdminFeesCreate";
 import AdminAssignedCourses from "pages/AdminAssignedCourses";
-
+import AdminBranch from "pages/Adminbranches";
 
 const AdminRoutes = () => {
   const { user }: any = useAuthContext();
@@ -55,8 +55,8 @@ const AdminRoutes = () => {
       element: <Courses />,
     },
     {
-      path: "payment",
-      element: <StudentPayment />,
+      path: "adminbranch",
+      element: <AdminBranch />,
     },
     {
       path: "fees",
@@ -65,6 +65,10 @@ const AdminRoutes = () => {
     {
       path: "AdminAssignedCourses",
       element: <AdminAssignedCourses />,
+    },
+    {
+      path: "payment",
+      element: <StudentPayment />,
     },
     {
       path: "announcement",
@@ -79,7 +83,7 @@ const AdminRoutes = () => {
       element: <AdminViewContent />
     }
   ];
-
+  
   const getProtectedElement = (element: any, path: any) => {
     return user ? element : <Navigate to="/login" state={{ from: path }} />;
   };

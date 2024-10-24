@@ -4,15 +4,18 @@ import { Img, Button, Text, Heading, Input } from "../../components";
 import { Link } from "react-router-dom";
 import { useSignup } from "hooks/useSignUp";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useBranch } from "hooks/Branch";
 
 export default function SignUpPagePage() {
   const { signup, error, setError, isLoading } = useSignup();
   const [forgetVisible, setForgetVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
+  const { branchData } = useBranch();
   const [formData, setFormData] = useState({
     user_name: "",
     user_email: "",
     phone_no: "",
+    branch_id: "",
     user_password: "",
     repassword: "",
   });
@@ -31,7 +34,8 @@ export default function SignUpPagePage() {
         formData.user_name,
         formData.user_email,
         formData.user_password,
-        formData.phone_no
+        formData.phone_no,
+        formData.branch_id
       );
     } else {
       setError("Password Do Not Match");
@@ -89,6 +93,7 @@ export default function SignUpPagePage() {
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
+
                   required
                 />
                 <Heading
@@ -133,11 +138,33 @@ export default function SignUpPagePage() {
                   }
                   placeholder="Enter Your Phone (10 Digit)*"
                   className="w-full mt-[18px] font-inter rounded-[5px]"
-                  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-                  }}
                   required
                 />
+
+                {/* Branch Selection */}
+                <Heading size="lg" as="h2" className="mt-5 !text-black-900 !font-inter !font-semibold">
+                  Branch
+                </Heading>
+                <select
+                  name="branch_id"
+                  value={formData.branch_id}
+                  onChange={(e) => handleInputChange("branch_id", e.target.value)}
+                  className="w-full mt-[18px] font-inter rounded-[5px] bg-teal-900 appearance-none px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-teal-900 text-white-A700_63 !text-white"
+                  required
+                >
+                 <option value="" disabled hidden>Select Branch</option>
+                  {branchData.map((branch, index) => (
+                    <option 
+                    key={index} 
+                    value={branch.id} 
+                    className="bg-teal-900 !text-white" 
+                    style={{ color: 'white' }}
+                  >
+                    {branch.name}
+                  </option>
+                  ))}
+                </select>
+
                 <Heading
                   size="lg"
                   as="h3"
@@ -156,7 +183,6 @@ export default function SignUpPagePage() {
                     onChange={(value: any) =>
                       handleInputChange("user_password", value)
                     }
-                    minLength={8}
                     autoComplete="on"
                     placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
@@ -190,7 +216,6 @@ export default function SignUpPagePage() {
                       handleInputChange("repassword", value)
                     }
                     name="repassword"
-                    minLength={8}
                     placeholder="Minimum 8 characters*"
                     className="w-full -[35px] font-inter rounded-[5px]"
                     required
@@ -270,7 +295,7 @@ export default function SignUpPagePage() {
               Sign Up
             </Button> */}
             <Img
-            loading="lazy"
+              loading="lazy"
               src="images/img_reshot_illustra.png"
               alt="reshotillustra"
               className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8 md:mt-32"

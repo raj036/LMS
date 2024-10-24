@@ -6,11 +6,13 @@ import {
   BadgeInfo,
   Presentation,
   GraduationCap,
+  LibraryBig,
   Mail,
   IndianRupee,
   BookOpenText,
   Mic2Icon,
-  BookMarked
+  BookMarked,
+  Home
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -35,6 +37,13 @@ const AdminSidebarLayout = () => {
               active={location.pathname === "/users"}
             />
           </Link>
+          {/* <Link to={"/courses"}>
+            <SidebarItem
+              icon={<LibraryBig size={20} />}
+              text="Courses"
+              active={location.pathname === "/courses"}
+            />
+          </Link> */}
           <Link to={"/enrolled"}>
             <SidebarItem
               icon={<GraduationCap size={20} />}
@@ -66,7 +75,7 @@ const AdminSidebarLayout = () => {
           <Link to={"/enquiry"}>
             <SidebarItem
               icon={<BadgeInfo size={20} />}
-              text="Enquiry"
+              text="Admission"
               active={location.pathname === "/enquiry"}
             />
           </Link>
@@ -84,6 +93,15 @@ const AdminSidebarLayout = () => {
               active={location.pathname === "/courses"}
             />
           </Link>
+
+          <Link to={"/adminbranch"}>
+            <SidebarItem
+              icon={<Home size={20} />}
+              text="Branch"
+              active={location.pathname === "/branch"}
+            />
+          </Link>
+
           <Link to={"/announcement"}>
             <SidebarItem
               icon={<Mic2Icon size={20} />}

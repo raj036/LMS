@@ -8,11 +8,7 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const signup = async (
-    user_name: any,
-    user_email: any,
-    user_password: any,
-    phone_no: any
-  ) => {
+user_name: any, user_email: any, user_password: any, phone_no: any, branch_id: any  ) => {
     setError(null);
     setIsLoading(true);
     try {
@@ -21,6 +17,7 @@ export const useSignup = () => {
         user_email,
         user_password,
         phone_no,
+        branch_id,
       });
       if (response.data.status_code === 500) {
         throw new Error("Email Already in Use");
@@ -34,15 +31,14 @@ export const useSignup = () => {
         text: "Kindly Login to Continue.",
         confirmButtonColor: "#7066E0",
         icon: "success",
-        customClass: {
-          icon: "swal-my-icon",
-        },
         confirmButtonText: "Yes",
       }).then((result: { isConfirmed: any }) => {
         if (result.isConfirmed) {
           navigate("/login");
         }
       });
+      // localStorage.setItem("user", JSON.stringify(response.data));
+      // dispatch({ type: "LOGIN", payload: response.data });
     } catch (error) {
       setError(error);
       setIsLoading(false);

@@ -208,7 +208,7 @@ const Courses = () => {
       ...prevData,
       teacher_id: selectedTeacherId,
       course_id: courseId,
-      course_content_id: [courseDetailId],
+      course_content_id: courseDetailId, 
     }));
   };
 
@@ -225,7 +225,6 @@ const Courses = () => {
           },
         }
       );
-      console.log(response.data)
       Swal.fire({
         icon: "success",
         title: "Course assigned successfully",

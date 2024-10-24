@@ -15,10 +15,9 @@ import MyCourses from "pages/MyCourses";
 import Attendance from "pages/Attendance";
 import Payments from "pages/Payments";
 import UserProfile from "pages/UserProfile";
-import ParentReports from "pages/Parent/report";
-import ParentAnnouncements from "pages/Parent/announcements";
-import ParentDashboard from "pages/Parent/Dashboard";
 import StudentAnnouncements from "pages/UserAnnounceement";
+import Assessment from "pages/Assessment";
+import EditProfile from "pages/UserProfile/EditProfile";
 
 const UserRoutes = () => {
   const { user } = useAuthContext();
@@ -62,6 +61,14 @@ const UserRoutes = () => {
     {
       path: "/dashboard/profile",
       element: user ? <UserProfile /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/dashboard/Editprofile",
+      element: user ? <EditProfile /> : <Navigate to="/login" />,
+    },
+    {
+      path: "/dashboard/assessment",
+      element: user ? <Assessment /> : <Navigate to="/login" />,
     },
     {
       path: "/dashboard/myannouncement",

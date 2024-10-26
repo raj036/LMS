@@ -266,7 +266,6 @@ const TeacherEditProfile = () => {
           confirmButtonColor: "#7066E0",
           confirmButtonText: "OK",
         });
-        console.log(updateData)
       })
 
       .catch((error) => {

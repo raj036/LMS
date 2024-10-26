@@ -12,7 +12,6 @@ export const useBranch = () => {
                 setIsLoading(true);
                 const response = await axios.get('/api/branches/get_all/');
                 setBranchData(response.data.all_branches);
-                console.log('data',response.data)
             } catch (err) {
                 setError('Failed to fetch branch data');
                 console.error(err);

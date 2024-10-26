@@ -225,8 +225,8 @@ const FessCreate = () => {
                 </button>
 
                 {isModalOpen && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-sm">
-                        <div className="bg-white p-6 rounded-md shadow-lg w-1/2">
+                    <div className="fixed inset-0 flex items-center justify-center z-50 opacity-1 bg-black bg-opacity-50 backdrop-blur-sm">
+                        <div className="bg-white p-6 rounded-md shadow-lg w-1/2 z-50">
                             <h2 className="text-lg font-bold mb-4">Create Batch</h2>
                             <form onSubmit={handleSubmit1}>
                                 <div className="mb-4">

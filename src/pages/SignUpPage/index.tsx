@@ -149,7 +149,7 @@ export default function SignUpPagePage() {
                   name="branch_id"
                   value={formData.branch_id}
                   onChange={(e) => handleInputChange("branch_id", e.target.value)}
-                  className="w-full mt-[18px] font-inter rounded-[5px] bg-teal-900 appearance-none px-3 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-teal-900 text-white-A700_63 !text-white"
+                  className="p-3 bg-teal-900 border border-teal-90 !text-white-A700 text-sm rounded-[5px] focus:ring-white-A700 focus:border-white-A700 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                   required
                 >
                  <option value="" disabled hidden>Select Branch</option>
@@ -157,7 +157,7 @@ export default function SignUpPagePage() {
                     <option 
                     key={index} 
                     value={branch.id} 
-                    className="bg-teal-900 !text-white" 
+                    className="bg-teal-900 !text-[white]" 
                     style={{ color: 'white' }}
                   >
                     {branch.name}
@@ -286,7 +286,7 @@ export default function SignUpPagePage() {
               </>
             )}
           </div>
-          <div className="flex flex-col items-end justify-start sm:items-center mt-[21px] sm:mt-0 gap-[81px]">
+          <div className="flex flex-col items-end justify-start sm:items-center mt-[21px] sm:mt-0 gap-[81px] w-[90%] md:w-auto">
             {/* <Button
               color="teal_900"
               size="sm"

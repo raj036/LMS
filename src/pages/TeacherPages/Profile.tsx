@@ -162,7 +162,7 @@ const TeacherProfile = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             {renderField("Name", userData.name)}
-            {renderField("Email", userData.email)}
+            {/* {renderField("Email", userData.email)} */}
             {renderField("Date of Birth", userData.employee.dob)}
             {renderField("Gender", userData.employee.gender)}
             {renderField("Nationality", userData.employee.nationality)}

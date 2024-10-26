@@ -33,7 +33,7 @@ const AssessmentTabs = () => {
       setLessons(response.data);
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setError("Failed to fetch lessons");
       setLoading(false);
     }
@@ -109,13 +109,6 @@ const AssessmentTabs = () => {
                   <li>Once you start, you cannot go back to previous questions</li>
                   <li>Make sure you're ready before beginning</li>
               </ul>
-              <div class="mt-4">
-                  <input type="checkbox" id="confirmCheck" class="form-check-input">
-                  <label for="confirmCheck" class="form-check-label ms-2">
-                      I understand that this test has time limits and I cannot return to previous questions
-                      required
-                  </label>
-              </div>
           </div>
       `,
       icon: "warning",
@@ -197,7 +190,6 @@ const AssessmentTabs = () => {
       question_id: questions[+index].id,
       user_answer: answer,
     }));
-    console.log('dat', answersToSubmit);
     try {
       const response = await axios.post(
         "/api/lesson-test-questions/student-answers/all/",
@@ -211,7 +203,6 @@ const AssessmentTabs = () => {
         }
 
       );
-      console.log('Question_ans', response.data)
       await Swal.fire({
         title: isAutoSubmit ? "Time's up! Test Submitted" : "Test Submitted Successfully",
         text: "Kindly wait for the result",

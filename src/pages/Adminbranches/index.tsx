@@ -136,7 +136,7 @@ const AdminBranch = () => {
                     </button>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-3/5 flex flex-col items-center justify-center itr ml-60">
+                <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 mt-6 flex flex-col items-center justify-center itr ">
                     <div className="flex items-center space-x-4 mb-8">
                         <label className="text-lg font-medium text-gray-700 dark:text-gray-300">
                             Select Branch
@@ -157,7 +157,7 @@ const AdminBranch = () => {
                     </div>
 
                     {activeTab === 'students' && admissionDetails.length > 0 && (
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid grid-cols-1 gap-6">
                             {currentItems.map((student) => (
                                 <div key={student.user_id} className="bg-gray-50 dark:bg-gray-700 shadow-md rounded-lg p-6 transition duration-300 ease-in-out transform hover:scale-105">
                                     <div className="grid grid-cols-1 gap-4">

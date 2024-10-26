@@ -404,7 +404,7 @@ export default function LoginPage() {
             </Text>
             {forgetError && <p className="text-[red] mt-4">{forgetError}</p>}
           </div>
-          <div className="flex flex-col items-end justify-start sm:items-center mt-[21px] sm:mt-0 gap-[81px]">
+          <div className="flex flex-col items-end justify-start sm:items-center mt-[21px] sm:mt-0 gap-[81px] w-[90%] md:w-auto">
             <img
               loading="lazy"
               src="images/img_reshot_illustra.webp"
@@ -412,7 +412,6 @@ export default function LoginPage() {
               className="w-[80%] p-1 sm:w-[90%] md:w-[100%] sm:mt-2 xs:w-[100%] sm:mb-8 md:p-8"
               width="800"  // Explicit width
               height="600" // Explicit height
-              
             />
           </div>
         </div>

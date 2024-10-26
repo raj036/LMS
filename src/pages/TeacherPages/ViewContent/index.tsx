@@ -42,7 +42,6 @@ const ViewContent = () => {
         },
       });
       setCourseData(response.data);
-      console.log(response)
     } catch (error) {
       // console.log(error);
     }

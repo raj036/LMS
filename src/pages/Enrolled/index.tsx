@@ -40,7 +40,6 @@ const Enrolled = () => {
         setData([]);
         Swal.fire({
           icon: "info",
-          title: "Error",
           customClass: {
             icon: "swal-my-icon",
           },

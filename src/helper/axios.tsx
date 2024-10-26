@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  // baseURL: "https://il8rigour.com/",
+  // baseURL: "https://il8lc.com/",
   // baseURL: "http://il8rigour.com:8000/",
   // baseURL: "https://ilate.onrender.com/",
   baseURL: "http://192.168.29.82:8001/",

@@ -28,7 +28,6 @@ const TestPaperCreate = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log("Question Papers Data:", response.data); // Check the API response here
         setQuestionPapers(response.data);
       } catch (error) {
         console.error("Error fetching question papers:", error);

@@ -48,26 +48,18 @@ Notifications: SweetAlert2 for success and error popups
 
 **Install dependencies:**
 
-yarn install
-# or
 npm install
 
 **Start the development server:**
 
-yarn dev
-# or
 npm run dev
 
 **Build for Production**
 
 To create a production-ready build, run:
 
-yarn build
-# or
 npm run build
 
 To preview the production build locally:
 
-yarn preview
-# or
 npm run preview

@@ -14,14 +14,17 @@ export default function LoginPage() {
   });
   const [forgetData, setForgetData] = useState<any>({
     email: "",
+    otp: "",
     new_password: "",
     confirm_new_password: "",
   });
   const [loadUpdate, setLoadUpdate] = useState(false);
+  const [loadSendOTP, setLoadSendOTP] = useState(false);
   const [visible, setVisible] = useState(false);
   const [forgetVisible, setForgetVisible] = useState(false);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [forgetPass, setForgetPass] = useState(false);
+  const [resetStep, setResetStep] = useState(1); // 1 for email entry, 2 for OTP and password
   const { login, isLoading, error } = useLogin();
   const [forgetError, setForgetError] = useState("");
   const navigate = useNavigate();
@@ -60,14 +63,57 @@ export default function LoginPage() {
   const clearInputFields = () => {
     setForgetData({
       email: "",
+      otp: "",
       new_password: "",
       confirm_new_password: "",
     });
   };
 
-  const handleUpdate = async (e: any) => {
+  // Function to send OTP
+  const handleSendOTP = async () => {
+    const { email } = forgetData;
+    if (!email) {
+      setForgetError("Please enter your email");
+      return;
+    }
+
+    try {
+      setLoadSendOTP(true);
+      await axios.post("/api/send_otp", null, { params: { email } });
+      setForgetError("");
+      Swal.fire({
+        icon: "success",
+        title: "OTP Sent Successfully",
+        text: "Please check your email for the verification code",
+        showConfirmButton: true,
+        confirmButtonColor: "#7066E0",
+        confirmButtonText: "Ok",
+      });
+      setResetStep(2);
+    } catch (error) {
+      setForgetError(error.response?.data?.detail || "Failed to send OTP. Please try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Error Sending OTP",
+        text: error.response?.data?.detail || "Failed to send OTP. Please try again.",
+        showConfirmButton: true,
+        confirmButtonColor: "red",
+      });
+    } finally {
+      setLoadSendOTP(false);
+    }
+  };
+
+  // Function to reset password with OTP
+  const handleResetPassword = async (e: any) => {
     e.preventDefault();
-    const { email, new_password, confirm_new_password } = forgetData;
+    const { email, otp, new_password, confirm_new_password } = forgetData;
+
+    if (!email || !otp || !new_password || !confirm_new_password) {
+      setForgetError("All fields are required");
+      return;
+    }
+
     if (new_password !== confirm_new_password) {
       setForgetError("Passwords do not match. Please try again.");
       return;
@@ -75,45 +121,49 @@ export default function LoginPage() {
 
     try {
       setLoadUpdate(true);
-      const encodedEmail = encodeURIComponent(email);
-      const encodedNewPassword = encodeURIComponent(new_password);
-      const encodedConfirmNewPassword =
-        encodeURIComponent(confirm_new_password);
+      const response = await axios.put("/api/reset_password", null, {
+        params: {
+          otp: parseInt(otp),
+          email,
+          new_password,
+          confirm_new_password,
+        },
+      });
 
-      const url = `/api/reset_password?email=${encodedEmail}&new_password=${encodedNewPassword}&confirm_new_password=${encodedConfirmNewPassword}`;
-      const response = await axios.put(url);
       setForgetError("");
       Swal.fire({
         icon: "success",
         title: "Password Updated Successfully",
         showConfirmButton: true,
         confirmButtonColor: "#7066E0",
-          confirmButtonText: "Yes",
+        confirmButtonText: "Login Now",
       });
-      navigate("/login");
       clearInputFields();
-      setForgetPass(!forgetPass);
-      setLoadUpdate(false);
+      setForgetPass(false);
+      setResetStep(1);
     } catch (error) {
-      setForgetError(error.response.data.detail);
+      setForgetError(error.response?.data?.detail || "Error while resetting password");
       Swal.fire({
         icon: "error",
-        title: "Error While Changing Password ",
-        text: forgetError,
+        title: "Error While Resetting Password",
+        text: error.response?.data?.detail || "Error while resetting password",
         customClass: {
           icon: "swal-my-icon",
         },
         showConfirmButton: true,
         confirmButtonColor: "red",
-        // timer: 5000,
       });
+    } finally {
       setLoadUpdate(false);
-      navigate("/login");
     }
   };
 
-  const handleUpdateClick = () => {
-    handleUpdate({ preventDefault: () => {} });
+  const handleSendOTPClick = () => {
+    handleSendOTP();
+  };
+
+  const handleResetPasswordClick = () => {
+    handleResetPassword({ preventDefault: () => { } });
   };
 
   return (
@@ -126,129 +176,216 @@ export default function LoginPage() {
         />
       </Helmet>
 
-      <div className="flex flex-row  justify-end w-full h-full px-[20px] py-16 sm:mb-8 sm:py-5 bg-white-A700">
+      <div className="flex flex-row justify-end w-full h-full px-[20px] py-16 sm:mb-8 sm:py-5 bg-white-A700">
         <div className="flex flex-row sm:flex-col-reverse justify-between items-start w-full my-[75px] sm:my-1 mx-auto max-w-[1350px]">
           <div className="flex flex-col items-center justify-start w-[70%] sm:w-[100%] md:w-[140%] p-5 border rounded-lg border-teal-900 bg-teal-900/5">
             {forgetPass ? (
-              <>
-                <Text
-                  size="xl"
-                  as="p"
-                  className="mt-[18px] !text-black-900 !font-inter w-full"
-                >
-                  Update your password
-                </Text>
-                <Heading
-                  size="lg"
-                  as="h2"
-                  className="mt-5 !text-black-900 !font-inter !font-semibold w-full"
-                >
-                  Email
-                </Heading>
-                <Input
-                  color="teal_900"
-                  size="xs"
-                  variant="fill"
-                  type="email"
-                  name="email"
-                  required
-                  onChange={(value: any) => handleForgetChange("email", value)}
-                  placeholder="Enter your email id"
-                  className="w-full mt-[18px] font-inter rounded-[5px]"
-                />
-                <Heading
-                  size="lg"
-                  as="h3"
-                  className="mt-[19px] !text-black-900 !font-inter !font-semibold w-full"
-                >
-                  New Password
-                </Heading>
-                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+              resetStep === 1 ? (
+                // Step 1: Email entry for password reset
+                <>
+                  <Text
+                    size="xl"
+                    as="p"
+                    className="mt-[18px] !text-black-900 !font-inter w-full"
+                  >
+                    Reset your password
+                  </Text>
+                  <Heading
+                    size="lg"
+                    as="h2"
+                    className="mt-5 !text-black-900 !font-inter !font-semibold w-full"
+                  >
+                    Email
+                  </Heading>
                   <Input
                     color="teal_900"
                     size="xs"
                     variant="fill"
-                    type={forgetVisible ? "text" : "password"}
-                    name="new_password"
+                    type="email"
+                    name="email"
                     required
-                    onChange={(value: any) =>
-                      handleForgetChange("new_password", value)
-                    }
-                    placeholder="Minimum 8 characters*"
-                    className="w-full -[35px] font-inter rounded-[5px]"
+                    onChange={(value: any) => handleForgetChange("email", value)}
+                    placeholder="Enter your email id"
+                    className="w-full mt-[18px] font-inter rounded-[5px]"
                   />
-                  <span
-                    onClick={() => {
-                      setForgetVisible(!forgetVisible);
-                    }}
-                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  <Button
+                    color="teal_900"
+                    disabled={loadSendOTP}
+                    size="md"
+                    className="mt-[40px] font-inter font-medium text-base rounded-[5px] border border-teal-900 hover:bg-white-A700 hover:text-teal-900"
+                    onClick={handleSendOTPClick}
                   >
-                    {forgetVisible ? <EyeIcon /> : <EyeOffIcon />}
-                  </span>
-                </div>
-                <Heading
-                  size="lg"
-                  as="h3"
-                  className="mt-[19px] !text-black-900 !font-inter !font-semibold w-full"
-                >
-                  Confirm New Password
-                </Heading>
-                <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                    {loadSendOTP ? (
+                      <>
+                        <svg
+                          aria-hidden="true"
+                          role="status"
+                          className="inline mr-3 w-4 h-4 text-white animate-spin"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="#E5E7EB"
+                          ></path>
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                        <span>Sending OTP...</span>
+                      </>
+                    ) : (
+                      <span>Send OTP</span>
+                    )}
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="mt-[10px] font-inter font-medium text-base text-teal-900 hover:underline"
+                    onClick={() => {
+                      setForgetPass(false);
+                      setResetStep(1);
+                      clearInputFields();
+                    }}
+                  >
+                    Back to Login
+                  </Button>
+                </>
+              ) : (
+                // Step 2: OTP verification and new password
+                <>
+                  <Text
+                    size="xl"
+                    as="p"
+                    className="mt-[18px] !text-black-900 !font-inter w-full"
+                  >
+                    Reset your password
+                  </Text>
+                  <Heading
+                    size="lg"
+                    as="h2"
+                    className="mt-5 !text-black-900 !font-inter !font-semibold w-full"
+                  >
+                    Enter Your Otp
+                  </Heading>
                   <Input
                     color="teal_900"
                     size="xs"
                     variant="fill"
-                    type={confirmVisible ? "text" : "password"}
-                    name="confirm_new_password"
+                    type="text"
+                    name="otp"
                     required
-                    onChange={(value: any) =>
-                      handleForgetChange("confirm_new_password", value)
-                    }
-                    placeholder="Minimum 8 characters*"
-                    className="w-full -[35px] font-inter rounded-[5px]"
+                    autoComplete="off"
+                    onChange={(value: any) => handleForgetChange("otp", value)}
+                    placeholder="Enter 6-digit code"
+                    className="w-full mt-[18px] font-inter rounded-[5px]"
                   />
-                  <span
-                    onClick={() => {
-                      setConfirmVisible(!confirmVisible);
-                    }}
-                    className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                  <Heading
+                    size="lg"
+                    as="h3"
+                    className="mt-[19px] !text-black-900 !font-inter !font-semibold w-full"
                   >
-                    {confirmVisible ? <EyeIcon /> : <EyeOffIcon />}
-                  </span>
-                </div>
-                <Button
-                  color="teal_900"
-                  disabled={isLoading}
-                  size="md"
-                  className="mt-[40px] font-inter font-medium text-base rounded-[5px] border border-teal-900 hover:bg-white-A700 hover:text-teal-900"
-                  onClick={handleUpdateClick}
-                >
-                  {loadUpdate ? (
-                    <>
-                      <svg
-                        aria-hidden="true"
-                        role="status"
-                        className="inline mr-3 w-4 h-4 text-white animate-spin"
-                        viewBox="0 0 100 101"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                          fill="#E5E7EB"
-                        ></path>
-                        <path
-                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                          fill="currentColor"
-                        ></path>
-                      </svg>
-                      <span>Loading...</span>
-                    </>
-                  ) : (
-                    <span>Update</span>
-                  )}
-                </Button>
-              </>
+                    New Password
+                  </Heading>
+                  <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                    <Input
+                      color="teal_900"
+                      size="xs"
+                      variant="fill"
+                      type={forgetVisible ? "text" : "password"}
+                      name="new_password"
+                      required
+                      onChange={(value: any) =>
+                        handleForgetChange("new_password", value)
+                      }
+                      placeholder="Minimum 8 characters*"
+                      className="w-full -[35px] font-inter rounded-[5px]"
+                    />
+                    <span
+                      onClick={() => {
+                        setForgetVisible(!forgetVisible);
+                      }}
+                      className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                    >
+                      {forgetVisible ? <EyeIcon /> : <EyeOffIcon />}
+                    </span>
+                  </div>
+                  <Heading
+                    size="lg"
+                    as="h3"
+                    className="mt-[19px] !text-black-900 !font-inter !font-semibold w-full"
+                  >
+                    Confirm New Password
+                  </Heading>
+                  <div className="flex items-center w-full bg-[#002D51] mt-3.5 rounded-[5px]">
+                    <Input
+                      color="teal_900"
+                      size="xs"
+                      variant="fill"
+                      type={confirmVisible ? "text" : "password"}
+                      name="confirm_new_password"
+                      required
+                      onChange={(value: any) =>
+                        handleForgetChange("confirm_new_password", value)
+                      }
+                      placeholder="Minimum 8 characters*"
+                      className="w-full -[35px] font-inter rounded-[5px]"
+                    />
+                    <span
+                      onClick={() => {
+                        setConfirmVisible(!confirmVisible);
+                      }}
+                      className="text-[#ffffff7f] mr-[20px] cursor-pointer"
+                    >
+                      {confirmVisible ? <EyeIcon /> : <EyeOffIcon />}
+                    </span>
+                  </div>
+                  <Button
+                    color="teal_900"
+                    disabled={loadUpdate}
+                    size="md"
+                    className="mt-[40px] font-inter font-medium text-base rounded-[5px] border border-teal-900 hover:bg-white-A700 hover:text-teal-900"
+                    onClick={handleResetPasswordClick}
+                  >
+                    {loadUpdate ? (
+                      <>
+                        <svg
+                          aria-hidden="true"
+                          role="status"
+                          className="inline mr-3 w-4 h-4 text-white animate-spin"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="#E5E7EB"
+                          ></path>
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                        <span>Resetting Password...</span>
+                      </>
+                    ) : (
+                      <span>Reset Password</span>
+                    )}
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="md"
+                    className="mt-[10px] font-inter font-medium text-base text-teal-900 hover:underline"
+                    onClick={() => {
+                      setResetStep(1);
+                    }}
+                  >
+                    Back to Email Entry
+                  </Button>
+                </>
+              )
             ) : (
               <>
                 <form
@@ -341,7 +478,11 @@ export default function LoginPage() {
                         size="s"
                         as="h4"
                         className="!text-indigo-500 !font-inter w-full justify-end flex cursor-pointer"
-                        onClick={() => setForgetPass(true)}
+                        onClick={() => {
+                          setForgetPass(true);
+                          setResetStep(1);
+                          clearInputFields();
+                        }}
                       >
                         Forgot Password?
                       </Heading>

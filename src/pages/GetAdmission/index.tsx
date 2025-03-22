@@ -131,7 +131,7 @@ const index = () => {
     if (fieldName === "date_of_joining" && value) {
       const selectedDate = new Date(value);
 
-      selectedDate.setFullYear(selectedDate.getFullYear() + 2);
+      selectedDate.setFullYear(selectedDate.getFullYear());
 
       const formattedDate = selectedDate.toISOString().split("T")[0];
 
@@ -401,7 +401,7 @@ const index = () => {
                   size="s"
                   className="block my-4 text-sm font-medium text-gray-900 dark:text-white-A700"
                 >
-                  Referred By<span className="text-red-500">*</span>
+                  Referred By
                 </Heading>
                 <Input
                   size="xs"
@@ -415,7 +415,7 @@ const index = () => {
                   onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // Remove non-alphabetic characters
                   }}
-                  required
+                  
                 />
               </div>
               <div className="sm:col-span-2">

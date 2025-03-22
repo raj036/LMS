@@ -14,6 +14,7 @@ import {
     DialogContent,
     DialogFooter,
     DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import Swal from "sweetalert2";
@@ -21,12 +22,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useAuthContext } from "hooks/useAuthContext";
 import axios from "helper/axios";
-import { ArrowLeft } from "lucide-react"; // Add the arrow icon
-import { useNavigate } from "react-router-dom"; // Add this for navigation
+import { ArrowLeft, Edit } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const FessCreate = () => {
     const { user }: any = useAuthContext();
     const [isDialogue, setIsDialogue] = useState(false);
+    const [isEditDialogue, setIsEditDialogue] = useState(false);
     const [years, setYears] = useState<number>(0);
     const [formData, setFormData] = useState({
         course_id: "",
@@ -37,15 +39,28 @@ const FessCreate = () => {
         amount: "",
         year: years,
     });
+    const [editFormData, setEditFormData] = useState({
+        fee_id: "",
+        course_id: "",
+        standard_id: "",
+        subject_id: "",
+        module_id: "",
+        batch_id: "",
+        amount: "",
+        year: "",
+    });
     const [courses, setCourses] = useState([]);
     const [standards, setStandards] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [modules, setModules] = useState([]);
+    const [editStandards, setEditStandards] = useState([]);
+    const [editSubjects, setEditSubjects] = useState([]);
+    const [editModules, setEditModules] = useState([]);
     const [batchData, setBatchData] = useState([]);
     const [feeData, setFeeData] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [Batch, setBatch] = useState({ size: '' });
-    const navigate = useNavigate(); // Use the useNavigate hook
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -77,12 +92,36 @@ const FessCreate = () => {
         }
     };
 
+    const handleEditInputChange = (field: any, value: any) => {
+        setEditFormData((prevData) => ({
+            ...prevData,
+            [field]: value,
+        }));
+
+        if (field === 'course_id') {
+            handleEditCourseChange(value);
+        } else if (field === 'standard_id') {
+            handleEditStandardChange(value);
+        } else if (field === 'subject_id') {
+            handleEditSubjectChange(value);
+        }
+    };
+
     const handleCourseChange = (courseId) => {
         const selectedCourse = courses.find((c) => c.course_id.toString() === courseId);
         if (selectedCourse) {
             setStandards(selectedCourse.standards || []);
             setSubjects([]);
             setModules([]);
+        }
+    };
+
+    const handleEditCourseChange = (courseId) => {
+        const selectedCourse = courses.find((c) => c.course_id.toString() === courseId);
+        if (selectedCourse) {
+            setEditStandards(selectedCourse.standards || []);
+            setEditSubjects([]);
+            setEditModules([]);
         }
     };
 
@@ -94,10 +133,25 @@ const FessCreate = () => {
         }
     };
 
+    const handleEditStandardChange = (standardId) => {
+        const selectedStandard = editStandards.find((s) => s.standard_id.toString() === standardId);
+        if (selectedStandard) {
+            setEditSubjects(selectedStandard.subjects || []);
+            setEditModules([]);
+        }
+    };
+
     const handleSubjectChange = (subjectId) => {
         const selectedSubject = subjects.find((s) => s.subject_id.toString() === subjectId);
         if (selectedSubject) {
             setModules(selectedSubject.modules || []);
+        }
+    };
+
+    const handleEditSubjectChange = (subjectId) => {
+        const selectedSubject = editSubjects.find((s) => s.subject_id.toString() === subjectId);
+        if (selectedSubject) {
+            setEditModules(selectedSubject.modules || []);
         }
     };
 
@@ -161,6 +215,42 @@ const FessCreate = () => {
         }
     };
 
+    const handleEditSubmit = async (e: any) => {
+        e.preventDefault();
+        try {
+            await axios.put(`/api/fees/update_fees/${editFormData.fee_id}/`, editFormData, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+
+            Swal.fire({
+                icon: "success",
+                title: `Fee Updated Successfully`,
+                customClass: {
+                    icon: "swal-my-icon",
+                },
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            setIsEditDialogue(false);
+            fetchFees();
+        } catch (error) {
+            console.error("Error updating fee:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error updating fee.",
+                customClass: {
+                    icon: "swal-my-icon",
+                },
+                text: error?.response?.data?.message || "Please try again later.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+    };
+
     const fetchFees = async () => {
         try {
             const response = await axios.get(`/api/fees/all_fees/`, {
@@ -212,6 +302,27 @@ const FessCreate = () => {
         }));
     };
 
+    // Function to handle edit action
+    const handleEdit = (fee) => {
+        // Set the form data with the selected fee's values
+        setEditFormData({
+            fee_id: fee.fee_id,
+            course_id: fee.course_id.toString(),
+            standard_id: fee.standard_id.toString(),
+            subject_id: fee.subject_id.toString(),
+            module_id: fee.module_id.toString(),
+            batch_id: fee.batch_id.toString(),
+            amount: fee.amount.toString(),
+            year: fee.year.toString(),
+        });
+
+        // Load the dependencies for the dropdowns
+        handleEditCourseChange(fee.course_id.toString());
+
+        // Open the edit dialog
+        setIsEditDialogue(true);
+    };
+
     return (
         <>
             <Topbar heading={"Fees"} />
@@ -256,10 +367,12 @@ const FessCreate = () => {
                 )}
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="bg-teal-900 hover:!bg-blue-900 text-white  py-2 px-4 rounded-lg transition duration-300 text-white-A700 mt-4"
+                    className="bg-teal-900 hover:!bg-blue-900 text-white py-2 px-4 rounded-lg transition duration-300 text-white-A700 mt-4"
                 >
                     Create Batch
                 </button>
+
+                {/* Create Fee Dialog */}
                 <Dialog open={isDialogue} onOpenChange={setIsDialogue}>
                     <div className="flex justify-end my-4">
                         <DialogTrigger asChild>
@@ -401,6 +514,145 @@ const FessCreate = () => {
                     </DialogContent>
                     <DialogFooter />
                 </Dialog>
+
+                {/* Edit Fee Dialog */}
+                <Dialog open={isEditDialogue} onOpenChange={setIsEditDialogue}>
+                    <DialogContent className="overflow-scroll">
+                        <DialogHeader>
+                            <DialogTitle>Edit Fee</DialogTitle>
+                        </DialogHeader>
+                        <form onSubmit={handleEditSubmit} className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_course_id" className="text-right">
+                                    Course
+                                </Label>
+                                <select
+                                    id="edit_course_id"
+                                    className="col-span-3"
+                                    value={editFormData.course_id}
+                                    onChange={(e) => handleEditInputChange("course_id", e.target.value)}
+                                    required
+                                >
+                                    <option value="">Select course...</option>
+                                    {courses.map((course) => (
+                                        <option key={course.course_id} value={course.course_id}>
+                                            {course.course_name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_standard_id" className="text-right">
+                                    Standard
+                                </Label>
+                                <select
+                                    id="edit_standard_id"
+                                    className="col-span-3"
+                                    value={editFormData.standard_id}
+                                    onChange={(e) => handleEditInputChange("standard_id", e.target.value)}
+                                    required
+                                >
+                                    <option value="">Select standard...</option>
+                                    {editStandards.map((standard) => (
+                                        <option key={standard.standard_id} value={standard.standard_id}>
+                                            {standard.standard_name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_subject_id" className="text-right">
+                                    Subject
+                                </Label>
+                                <select
+                                    id="edit_subject_id"
+                                    className="col-span-3"
+                                    value={editFormData.subject_id}
+                                    onChange={(e) => handleEditInputChange("subject_id", e.target.value)}
+                                    // required
+                                >
+                                    <option value="">Select subject...</option>
+                                    {editSubjects.map((subject) => (
+                                        <option key={subject.subject_id} value={subject.subject_id}>
+                                            {subject.subject_name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_module_id" className="text-right">
+                                    Module
+                                </Label>
+                                <select
+                                    id="edit_module_id"
+                                    className="col-span-3"
+                                    value={editFormData.module_id}
+                                    onChange={(e) => handleEditInputChange("module_id", e.target.value)}
+                                    // required
+                                >
+                                    <option value="">Select module...</option>
+                                    {editModules.map((module) => (
+                                        <option key={module.module_id} value={module.module_id}>
+                                            {module.module_name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_batch_id" className="text-right">
+                                    Batch
+                                </Label>
+                                <select
+                                    id="edit_batch_id"
+                                    className="col-span-3"
+                                    value={editFormData.batch_id}
+                                    onChange={(e) => handleEditInputChange("batch_id", e.target.value)}
+                                    required
+                                >
+                                    <option value="">Select batch...</option>
+                                    {batchData.map((batch) => (
+                                        <option key={batch.id} value={batch.id}>
+                                            {batch.size}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_year" className="text-right">
+                                    Year
+                                </Label>
+                                <Input
+                                    id="edit_year"
+                                    type="number"
+                                    className="col-span-3"
+                                    value={editFormData.year}
+                                    onChange={(e) => handleEditInputChange("year", e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="edit_amount" className="text-right">
+                                    Amount
+                                </Label>
+                                <Input
+                                    type="number"
+                                    id="edit_amount"
+                                    className="col-span-3"
+                                    value={editFormData.amount}
+                                    onChange={(e) => handleEditInputChange("amount", e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="flex justify-end">
+                                <Button type="submit" className="bg-teal-900 hover:!bg-blue-900 mr-2">Update</Button>
+                                <Button type="button" onClick={() => setIsEditDialogue(false)} className="bg-gray-500 hover:bg-gray-600">Cancel</Button>
+                            </div>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -411,7 +663,7 @@ const FessCreate = () => {
                             <TableHead>Batch</TableHead>
                             <TableHead>year</TableHead>
                             <TableHead>Amount</TableHead>
-
+                            <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -424,6 +676,15 @@ const FessCreate = () => {
                                 <TableCell>{fee.batch_name}</TableCell>
                                 <TableCell>{fee.year}</TableCell>
                                 <TableCell>{fee.amount}</TableCell>
+                                <TableCell>
+                                    <Button 
+                                        onClick={() => handleEdit(fee)} 
+                                        className="bg-teal-900 hover:!bg-blue-900"
+                                        size="sm"
+                                    >
+                                        <Edit className="h-4 w-4 mr-1" /> Edit
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

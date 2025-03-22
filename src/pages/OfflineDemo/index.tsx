@@ -113,7 +113,7 @@ const index = () => {
           <div className="flex items-center justify-start gap-4 my-4">
             <div>
               <img
-              loading="lazy"
+                loading="lazy"
                 src={profileImg}
                 className="w-28 h-28 rounded-full border"
                 alt="Profile"
@@ -211,7 +211,7 @@ const index = () => {
                     size="s"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white-A700"
                   >
-                    {i.label}
+                    {i.label} <span className="text-red-500">*</span>
                   </Heading>
                   <Input
                     size="xs"
@@ -225,6 +225,7 @@ const index = () => {
                   />
                 </div>
               ))}
+
               <div className="flex w-full justify-around items-center my-1">
                 <Heading
                   size="s"

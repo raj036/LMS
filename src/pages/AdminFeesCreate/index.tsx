@@ -113,6 +113,15 @@ const FessCreate = () => {
             setStandards(selectedCourse.standards || []);
             setSubjects([]);
             setModules([]);
+            
+            // Reset dependent fields
+            setFormData(prev => ({
+                ...prev,
+                standard_id: "",
+                subject_id: "",
+                module_id: "",
+                course_id: courseId
+            }));
         }
     };
 
@@ -122,6 +131,15 @@ const FessCreate = () => {
             setEditStandards(selectedCourse.standards || []);
             setEditSubjects([]);
             setEditModules([]);
+            
+            // Reset dependent fields
+            setEditFormData(prev => ({
+                ...prev,
+                standard_id: "",
+                subject_id: "",
+                module_id: "",
+                course_id: courseId
+            }));
         }
     };
 
@@ -130,6 +148,14 @@ const FessCreate = () => {
         if (selectedStandard) {
             setSubjects(selectedStandard.subjects || []);
             setModules([]);
+            
+            // Reset dependent fields
+            setFormData(prev => ({
+                ...prev,
+                subject_id: "",
+                module_id: "",
+                standard_id: standardId
+            }));
         }
     };
 
@@ -138,6 +164,14 @@ const FessCreate = () => {
         if (selectedStandard) {
             setEditSubjects(selectedStandard.subjects || []);
             setEditModules([]);
+            
+            // Reset dependent fields
+            setEditFormData(prev => ({
+                ...prev,
+                subject_id: "",
+                module_id: "",
+                standard_id: standardId
+            }));
         }
     };
 
@@ -145,6 +179,13 @@ const FessCreate = () => {
         const selectedSubject = subjects.find((s) => s.subject_id.toString() === subjectId);
         if (selectedSubject) {
             setModules(selectedSubject.modules || []);
+            
+            // Update form data
+            setFormData(prev => ({
+                ...prev,
+                module_id: "",
+                subject_id: subjectId
+            }));
         }
     };
 
@@ -152,22 +193,29 @@ const FessCreate = () => {
         const selectedSubject = editSubjects.find((s) => s.subject_id.toString() === subjectId);
         if (selectedSubject) {
             setEditModules(selectedSubject.modules || []);
+            
+            // Update form data
+            setEditFormData(prev => ({
+                ...prev,
+                module_id: "",
+                subject_id: subjectId
+            }));
         }
     };
 
     useEffect(() => {
-        const fetchCourses = async () => {
+        const fetchBatches = async () => {
             try {
                 const response = await axios.get(`/api/batches/`, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
                 setBatchData(response.data);
             } catch (error) {
-                console.error("Error fetching courses:", error);
+                console.error("Error fetching batches:", error);
             }
         };
 
-        fetchCourses();
+        fetchBatches();
     }, [user.token]);
 
     const handleSubmit = async (e: any) => {
@@ -286,6 +334,12 @@ const FessCreate = () => {
                 timer: 1500,
             });
             setIsModalOpen(false);
+            // Refresh batch data after creating new batch
+            const response = await axios.get(`/api/batches/`, {
+                headers: { Authorization: `Bearer ${user.token}` },
+            });
+            setBatchData(response.data);
+            setBatch({ size: '' });
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -303,24 +357,56 @@ const FessCreate = () => {
     };
 
     // Function to handle edit action
-    const handleEdit = (fee) => {
-        // Set the form data with the selected fee's values
-        setEditFormData({
-            fee_id: fee.fee_id,
-            course_id: fee.course_id.toString(),
-            standard_id: fee.standard_id.toString(),
-            subject_id: fee.subject_id.toString(),
-            module_id: fee.module_id.toString(),
-            batch_id: fee.batch_id.toString(),
-            amount: fee.amount.toString(),
-            year: fee.year.toString(),
-        });
+    const handleEdit = async (fee) => {
+        try {
+            // Set the form data with the selected fee's values
+            setEditFormData({
+                fee_id: fee.fee_id,
+                course_id: fee.course_id.toString(),
+                standard_id: fee.standard_id.toString(),
+                subject_id: fee.subject_id.toString(),
+                module_id: fee.module_id.toString(),
+                batch_id: fee.batch_id.toString(),
+                amount: fee.amount.toString(),
+                year: fee.year.toString(),
+            });
 
-        // Load the dependencies for the dropdowns
-        handleEditCourseChange(fee.course_id.toString());
-
-        // Open the edit dialog
-        setIsEditDialogue(true);
+            // First, load the course data
+            const selectedCourse = courses.find((c) => c.course_id.toString() === fee.course_id.toString());
+            if (selectedCourse) {
+                setEditStandards(selectedCourse.standards || []);
+                
+                // Then load standard data
+                const selectedStandard = selectedCourse.standards.find(
+                    (s) => s.standard_id.toString() === fee.standard_id.toString()
+                );
+                
+                if (selectedStandard) {
+                    setEditSubjects(selectedStandard.subjects || []);
+                    
+                    // Then load subject data
+                    const selectedSubject = selectedStandard.subjects.find(
+                        (s) => s.subject_id.toString() === fee.subject_id.toString()
+                    );
+                    
+                    if (selectedSubject) {
+                        setEditModules(selectedSubject.modules || []);
+                    }
+                }
+            }
+            
+            // Open the edit dialog
+            setIsEditDialogue(true);
+        } catch (error) {
+            console.error("Error setting up edit form:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Error loading fee data.",
+                text: "Please try again later.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
     };
 
     return (
@@ -541,6 +627,7 @@ const FessCreate = () => {
                                     ))}
                                 </select>
                             </div>
+
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="edit_standard_id" className="text-right">
                                     Standard
@@ -560,6 +647,7 @@ const FessCreate = () => {
                                     ))}
                                 </select>
                             </div>
+
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="edit_subject_id" className="text-right">
                                     Subject
@@ -569,7 +657,7 @@ const FessCreate = () => {
                                     className="col-span-3"
                                     value={editFormData.subject_id}
                                     onChange={(e) => handleEditInputChange("subject_id", e.target.value)}
-                                    // required
+                                    required
                                 >
                                     <option value="">Select subject...</option>
                                     {editSubjects.map((subject) => (
@@ -579,6 +667,7 @@ const FessCreate = () => {
                                     ))}
                                 </select>
                             </div>
+
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="edit_module_id" className="text-right">
                                     Module
@@ -588,7 +677,7 @@ const FessCreate = () => {
                                     className="col-span-3"
                                     value={editFormData.module_id}
                                     onChange={(e) => handleEditInputChange("module_id", e.target.value)}
-                                    // required
+                                    required
                                 >
                                     <option value="">Select module...</option>
                                     {editModules.map((module) => (
@@ -598,6 +687,7 @@ const FessCreate = () => {
                                     ))}
                                 </select>
                             </div>
+
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="edit_batch_id" className="text-right">
                                     Batch
@@ -645,6 +735,7 @@ const FessCreate = () => {
                                     required
                                 />
                             </div>
+
                             <div className="flex justify-end">
                                 <Button type="submit" className="bg-teal-900 hover:!bg-blue-900 mr-2">Update</Button>
                                 <Button type="button" onClick={() => setIsEditDialogue(false)} className="bg-gray-500 hover:bg-gray-600">Cancel</Button>
@@ -661,7 +752,7 @@ const FessCreate = () => {
                             <TableHead>Subject</TableHead>
                             <TableHead>Module</TableHead>
                             <TableHead>Batch</TableHead>
-                            <TableHead>year</TableHead>
+                            <TableHead>Year</TableHead>
                             <TableHead>Amount</TableHead>
                             <TableHead>Action</TableHead>
                         </TableRow>
@@ -677,8 +768,8 @@ const FessCreate = () => {
                                 <TableCell>{fee.year}</TableCell>
                                 <TableCell>{fee.amount}</TableCell>
                                 <TableCell>
-                                    <Button 
-                                        onClick={() => handleEdit(fee)} 
+                                    <Button
+                                        onClick={() => handleEdit(fee)}
                                         className="bg-teal-900 hover:!bg-blue-900"
                                         size="sm"
                                     >

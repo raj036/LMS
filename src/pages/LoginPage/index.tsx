@@ -274,14 +274,17 @@ export default function LoginPage() {
                     color="teal_900"
                     size="xs"
                     variant="fill"
-                    type="text"
-                    name="otp"
+                    type="number"
+                    name="otp_code"
                     required
                     autoComplete="off"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     onChange={(value: any) => handleForgetChange("otp", value)}
                     placeholder="Enter 6-digit code"
-                    className="w-full mt-[18px] font-inter rounded-[5px]"
+                    className="w-full mt-[18px] font-inter rounded-[5px] appearance-none "
                   />
+
                   <Heading
                     size="lg"
                     as="h3"
@@ -295,8 +298,9 @@ export default function LoginPage() {
                       size="xs"
                       variant="fill"
                       type={forgetVisible ? "text" : "password"}
-                      name="new_password"
+                      name="new_pass" // Changed from "new_password" to a unique name
                       required
+                      autoComplete="new-password" // Proper autocomplete attribute
                       onChange={(value: any) =>
                         handleForgetChange("new_password", value)
                       }
@@ -325,8 +329,9 @@ export default function LoginPage() {
                       size="xs"
                       variant="fill"
                       type={confirmVisible ? "text" : "password"}
-                      name="confirm_new_password"
+                      name="confirm_pass" // Changed from "confirm_new_password" to a unique name
                       required
+                      autoComplete="new-password" // Proper autocomplete attribute
                       onChange={(value: any) =>
                         handleForgetChange("confirm_new_password", value)
                       }
@@ -455,7 +460,7 @@ export default function LoginPage() {
                           type={visible ? "text" : "password"}
                           required
                           name="user_password"
-                          autoComplete="on"
+                          autoComplete="current-password"
                           onChange={(value: any) =>
                             handleChange("user_password", value)
                           }

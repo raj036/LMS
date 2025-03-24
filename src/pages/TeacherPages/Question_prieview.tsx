@@ -174,7 +174,7 @@ const QuestionPreview = () => {
                         <li
                             key={lesson.id}
                             onClick={() => handleLessonSelect(lesson)}
-                            className="w-96 mb-2 p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:bg-gray-50 transition duration-200 cursor-pointer"
+                            className="w-76 mb-2 p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:bg-gray-50 transition duration-200 cursor-pointer"
                         >
                             <div className="flex items-center justify-between">
                                 <div>

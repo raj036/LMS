@@ -166,10 +166,14 @@ const AdminViewContent = () => {
                                       className="flex justify-end"
                                     >
                                       <a
-                                        href={encodeURI(path)}
+                                        href={path}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="mr-2"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          window.open(path, "_blank");
+                                        }}
                                       >
                                         <img
                                           src={EyeIcn}
@@ -177,6 +181,7 @@ const AdminViewContent = () => {
                                           className="w-[24px] h-[24px] m-1"
                                         />
                                       </a>
+
                                       <div
                                         key={pathIndex}
                                         className="flex justify-end relative"
@@ -198,9 +203,8 @@ const AdminViewContent = () => {
                                                   document.createElement("a");
                                                 a.style.display = "none";
                                                 a.href = url;
-                                                a.download = `file_${
-                                                  contentIndex + 1
-                                                }`;
+                                                a.download = `file_${contentIndex + 1
+                                                  }`;
                                                 document.body.appendChild(a);
                                                 a.click();
                                                 window.URL.revokeObjectURL(url);

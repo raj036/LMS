@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ArrowUpDown } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -29,30 +30,10 @@ export type User = {
   user_email: string;
   user_name: string;
   user_type: string;
+  created_on: string;
 };
 
 export const columns: ColumnDef<User>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() || table.getIsSomePageRowsSelected()
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: true,
-  //   enableHiding: true,
-  // },
   {
     id: "user_id",
     accessorKey: "user_id",
@@ -62,17 +43,6 @@ export const columns: ColumnDef<User>[] = [
     id: "User Name",
     accessorKey: "user_name",
     header: "User Name",
-    // header: ({ column }) => {
-    //   return (
-    //     <Button
-    //       variant="ghost"
-    //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //     >
-    //       User Name
-    //       <ArrowUpDown className="ml-2 h-4 w-4" />
-    //     </Button>
-    //   );
-    // },
   },
   {
     id: "User Email",
@@ -83,24 +53,27 @@ export const columns: ColumnDef<User>[] = [
     id: "Phone",
     accessorKey: "phone_no",
     header: "Phone",
-    // cell: ({ row }) => {
-    //   const amount = parseFloat(row.getValue("amount"));
-    //   const formatted = new Intl.NumberFormat("en-US", {
-    //     style: "currency",
-    //     currency: "INR",
-    //   }).format(amount);
-
-    //   return <div className="text-left font-medium">{formatted}</div>;
-    // },
   },
   {
     id: "created_on",
     accessorKey: "created_on",
-    header: "Created",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created 
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: (value: any) => {
       let date = new Date(value.getValue());
       return date.toLocaleString();
     },
+    // Enable sorting for this column
+    sortingFn: 'datetime',
   },
   {
     id: "updated_on",
